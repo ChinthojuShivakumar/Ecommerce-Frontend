@@ -1,0 +1,302 @@
+[
+  {
+    "id": "0",
+    "name": "Wireless Headphones",
+    "category": "Electronics",
+    "description": "Over-ear noise-cancelling headphones with 30 hours of battery life.",
+    "price": 99.99,
+    "stock": 20,
+    "rating": 4.6,
+    "image": "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg"
+  },
+  {
+    "id": "1",
+    "name": "Running Shoes",
+    "category": "Footwear",
+    "description": "Lightweight breathable running shoes for all terrain.",
+    "price": 59.95,
+    "stock": 35,
+    "rating": 4.2,
+    "image": "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg"
+  },
+  {
+    "id": "2",
+    "name": "Smart Watch",
+    "category": "Wearables",
+    "description": "Fitness smartwatch with heart-rate, steps, and sleep tracking.",
+    "price": 149.99,
+    "stock": 12,
+    "rating": 4.7,
+    "image": "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg"
+  },
+  {
+    "id": "3",
+    "name": "Bluetooth Speaker",
+    "category": "Electronics",
+    "description": "Portable speaker with 360\u00b0 sound and waterproof design.",
+    "price": 39.99,
+    "stock": 50,
+    "rating": 4.4,
+    "image": "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg"
+  },
+  {
+    "id": "4",
+    "name": "Coffee Mug Set",
+    "category": "Home & Kitchen",
+    "description": "Ceramic coffee mugs (set of 4) with comfortable grip.",
+    "price": 22.49,
+    "stock": 100,
+    "rating": 4.1,
+    "image": "https://images.pexels.com/photos/1419928/pexels-photo-1419928.jpeg"
+  },
+  {
+    "id": "5",
+    "name": "Men's Cotton T-shirt",
+    "category": "Clothing",
+    "description": "Classic round-neck cotton t-shirt in black.",
+    "price": 14.99,
+    "stock": 80,
+    "rating": 4.3,
+    "image": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+  },
+  {
+    "id": "6",
+    "name": "Gaming Keyboard",
+    "category": "Electronics",
+    "description": "Mechanical keyboard with customizable RGB lighting.",
+    "price": 79.95,
+    "stock": 10,
+    "rating": 4.6,
+    "image": "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg"
+  },
+  {
+    "id": "7",
+    "name": "Laptop Backpack",
+    "category": "Accessories",
+    "description": "Water-resistant backpack with USB charging port.",
+    "price": 35.0,
+    "stock": 40,
+    "rating": 4.2,
+    "image": "https://images.pexels.com/photos/115725/pexels-photo-115725.jpeg"
+  },
+  {
+    "id": "8",
+    "name": "Beard Trimmer",
+    "category": "Beauty & Personal Care",
+    "description": "Rechargeable beard trimmer with multiple comb lengths.",
+    "price": 29.99,
+    "stock": 30,
+    "rating": 4.5,
+    "image": "https://images.pexels.com/photos/3992879/pexels-photo-3992879.jpeg"
+  },
+  {
+    "id": "9",
+    "name": "Skincare Kit",
+    "category": "Beauty & Personal Care",
+    "description": "Daily essentials kit with moisturizer, cleanser, and sunscreen.",
+    "price": 49.99,
+    "stock": 45,
+    "rating": 4.4,
+    "image": "https://images.pexels.com/photos/3992879/pexels-photo-3992879.jpeg"
+  },
+  {
+    "id": "10",
+    "name": "LED Desk Lamp",
+    "category": "Home & Kitchen",
+    "description": "Adjustable LED lamp with touch control and USB port.",
+    "price": 25.99,
+    "stock": 75,
+    "rating": 4.3,
+    "image": "https://images.pexels.com/photos/1419928/pexels-photo-1419928.jpeg"
+  },
+  {
+    "id": "11",
+    "name": "Casual Sneakers",
+    "category": "Footwear",
+    "description": "Unisex sneakers perfect for everyday wear.",
+    "price": 45.0,
+    "stock": 60,
+    "rating": 4.2,
+    "image": "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg"
+  },
+  {
+    "id": "12",
+    "name": "Bluetooth Earbuds",
+    "category": "Electronics",
+    "description": "True wireless earbuds with charging case.",
+    "price": 49.99,
+    "stock": 38,
+    "rating": 4.3,
+    "image": "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg"
+  },
+  {
+    "id": "13",
+    "name": "Electric Kettle",
+    "category": "Home & Kitchen",
+    "description": "1.5L stainless steel electric kettle with auto shut-off.",
+    "price": 29.95,
+    "stock": 100,
+    "rating": 4.5,
+    "image": "https://images.pexels.com/photos/1419928/pexels-photo-1419928.jpeg"
+  },
+  {
+    "id": "14",
+    "name": "Desk Organizer",
+    "category": "Home & Kitchen",
+    "description": "Multi-compartment organizer for stationery and gadgets.",
+    "price": 19.99,
+    "stock": 55,
+    "rating": 4.0,
+    "image": "https://images.pexels.com/photos/1419928/pexels-photo-1419928.jpeg"
+  },
+  {
+    "id": "15",
+    "name": "Denim Jacket",
+    "category": "Clothing",
+    "description": "Classic fit denim jacket with button closure.",
+    "price": 59.99,
+    "stock": 25,
+    "rating": 4.5,
+    "image": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+  },
+  {
+    "id": "16",
+    "name": "Hair Dryer",
+    "category": "Beauty & Personal Care",
+    "description": "Ionic hair dryer with cool shot and diffuser.",
+    "price": 34.95,
+    "stock": 22,
+    "rating": 4.4,
+    "image": "https://images.pexels.com/photos/3992879/pexels-photo-3992879.jpeg"
+  },
+  {
+    "id": "17",
+    "name": "Leather Wallet",
+    "category": "Accessories",
+    "description": "Men's slim RFID-blocking leather wallet.",
+    "price": 24.99,
+    "stock": 45,
+    "rating": 4.2,
+    "image": "https://images.pexels.com/photos/115725/pexels-photo-115725.jpeg"
+  },
+  {
+    "id": "18",
+    "name": "Makeup Brush Set",
+    "category": "Beauty & Personal Care",
+    "description": "12-piece brush set for face, eyes, and lips.",
+    "price": 27.5,
+    "stock": 40,
+    "rating": 4.6,
+    "image": "https://images.pexels.com/photos/3992879/pexels-photo-3992879.jpeg"
+  },
+  {
+    "id": "19",
+    "name": "Classic Novel",
+    "category": "Books",
+    "description": "A timeless literary masterpiece with beautiful prose.",
+    "price": 9.99,
+    "stock": 100,
+    "rating": 4.8,
+    "image": "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg"
+  },
+  {
+    "id": "20",
+    "name": "RC Drone",
+    "category": "Electronics",
+    "description": "Quadcopter drone with HD camera and remote control.",
+    "price": 89.99,
+    "stock": 18,
+    "rating": 4.5,
+    "image": "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg"
+  },
+  {
+    "id": "21",
+    "name": "Kids Puzzle Set",
+    "category": "Toys & Games",
+    "description": "Colorful 100-piece puzzle for kids aged 4+.",
+    "price": 14.99,
+    "stock": 70,
+    "rating": 4.4,
+    "image": "https://images.pexels.com/photos/4215115/pexels-photo-4215115.jpeg"
+  },
+  {
+    "id": "22",
+    "name": "Notebook Journal",
+    "category": "Books",
+    "description": "Hardcover journal with ruled pages and elastic closure.",
+    "price": 12.5,
+    "stock": 90,
+    "rating": 4.6,
+    "image": "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg"
+  },
+  {
+    "id": "23",
+    "name": "Scented Candles",
+    "category": "Home & Kitchen",
+    "description": "Set of 3 soy wax candles in lavender, vanilla, and sandalwood.",
+    "price": 21.95,
+    "stock": 35,
+    "rating": 4.3,
+    "image": "https://images.pexels.com/photos/1419928/pexels-photo-1419928.jpeg"
+  },
+  {
+    "id": "24",
+    "name": "Yoga Mat",
+    "category": "Fitness",
+    "description": "Non-slip yoga mat with carrying strap.",
+    "price": 29.99,
+    "stock": 60,
+    "rating": 4.7,
+    "image": "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg"
+  },
+  {
+    "id": "25",
+    "name": "Portable Blender",
+    "category": "Home & Kitchen",
+    "description": "USB rechargeable blender for smoothies and shakes.",
+    "price": 32.5,
+    "stock": 48,
+    "rating": 4.4,
+    "image": "https://images.pexels.com/photos/1419928/pexels-photo-1419928.jpeg"
+  },
+  {
+    "id": "26",
+    "name": "Wrist Brace Support",
+    "category": "Health",
+    "description": "Adjustable wrist brace for pain relief and support.",
+    "price": 17.99,
+    "stock": 33,
+    "rating": 4.1,
+    "image": "https://images.pexels.com/photos/3992879/pexels-photo-3992879.jpeg"
+  },
+  {
+    "id": "27",
+    "name": "Water Bottle",
+    "category": "Accessories",
+    "description": "1L BPA-free water bottle with flip-top lid.",
+    "price": 15.0,
+    "stock": 72,
+    "rating": 4.3,
+    "image": "https://images.pexels.com/photos/115725/pexels-photo-115725.jpeg"
+  },
+  {
+    "id": "28",
+    "name": "Men's Leather Belt",
+    "category": "Clothing",
+    "description": "Formal genuine leather belt with metal buckle.",
+    "price": 19.99,
+    "stock": 44,
+    "rating": 4.2,
+    "image": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+  },
+  {
+    "id": "29",
+    "name": "Toy Car Set",
+    "category": "Toys & Games",
+    "description": "Mini die-cast cars pack for kids.",
+    "price": 18.99,
+    "stock": 65,
+    "rating": 4.5,
+    "image": "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg"
+  }
+]

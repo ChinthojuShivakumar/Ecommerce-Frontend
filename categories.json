@@ -1,0 +1,46 @@
+[
+  {
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1580894894510-39981397b5b4"
+  },
+  {
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1600185365928-3b4dcaf3e0c4"
+  },
+  {
+    "category": "Wearables",
+    "image": "https://images.unsplash.com/photo-1519744792095-2f2205e87b6f"
+  },
+  {
+    "category": "Home & Kitchen",
+    "image": "https://images.unsplash.com/photo-1571689936291-ec7d4e1a63d4"
+  },
+  {
+    "category": "Clothing",
+    "image": "https://images.unsplash.com/photo-1602810313183-83b3a0d9874f"
+  },
+  {
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1571508601939-6ae3f439b3a3"
+  },
+  {
+    "category": "Beauty & Personal Care",
+    "image": "https://images.unsplash.com/photo-1602144126748-4350b97ddcc0"
+  },
+  {
+    "category": "Books",
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794"
+  },
+  {
+    "category": "Toys & Games",
+    "image": "https://images.unsplash.com/photo-1601233747545-c7801dcdab9f"
+  },
+  {
+    "category": "Fitness",
+    "image": "https://images.unsplash.com/photo-1599058917212-dc162602d7f4"
+  },
+  {
+    "category": "Health",
+    "image": "https://images.unsplash.com/photo-1610386114596-b8a1f37b42cd"
+  }
+]

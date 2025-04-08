@@ -1,0 +1,46 @@
+[
+  {
+    "category": "Electronics",
+    "image": "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg"
+  },
+  {
+    "category": "Footwear",
+    "image": "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg"
+  },
+  {
+    "category": "Wearables",
+    "image": "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg"
+  },
+  {
+    "category": "Home & Kitchen",
+    "image": "https://images.pexels.com/photos/1419928/pexels-photo-1419928.jpeg"
+  },
+  {
+    "category": "Clothing",
+    "image": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+  },
+  {
+    "category": "Accessories",
+    "image": "https://images.pexels.com/photos/115725/pexels-photo-115725.jpeg"
+  },
+  {
+    "category": "Beauty & Personal Care",
+    "image": "https://images.pexels.com/photos/3992879/pexels-photo-3992879.jpeg"
+  },
+  {
+    "category": "Books",
+    "image": "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg"
+  },
+  {
+    "category": "Toys & Games",
+    "image": "https://images.pexels.com/photos/4215115/pexels-photo-4215115.jpeg"
+  },
+  {
+    "category": "Fitness",
+    "image": "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg"
+  },
+  {
+    "category": "Health",
+    "image": "https://images.pexels.com/photos/3992879/pexels-photo-3992879.jpeg"
+  }
+]
