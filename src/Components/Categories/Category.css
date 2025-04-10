@@ -22,13 +22,37 @@
   height: 100px;
   object-fit: cover;
   border-radius: 10px;
+  transition: ease-in-out 0.2s;
+
 }
 
 .cat-img:hover {
-    transform: scale(1.1);
-    transition: ease-in-out 0.2s;
+  transform: scale(1.1);
 }
 
 .cat-item li {
   list-style: none;
+}
+
+@media screen and (min-width: 641px) and (max-width: 768) {
+  .cat-items {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto;
+    gap: 10px;
+    justify-content: start;
+    align-items: center;
+    padding: 0 1rem 0 1rem;
+    font-size: smaller;
+  }
+}
+@media screen and (max-width: 640px) {
+  .cat-items {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto;
+    gap: 10px;
+    justify-content: start;
+    align-items: center;
+    padding: 0 1rem 0 1rem;
+    font-size: smaller;
+  }
 }
