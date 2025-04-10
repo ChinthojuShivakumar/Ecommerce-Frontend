@@ -3,15 +3,26 @@ import "./header.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 import { SCREEN_WIDTH } from "../../Constants/Constant";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navItems = ["Home", "Products", "Orders", "Cart", "My Profile"];
   const [isSmallScreen, setIsSmallScreen] = useState(SCREEN_WIDTH);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleHamburger = (e) => {
     e.preventDefault();
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleNavigate = (e, item) => {
+    e.preventDefault();
+    if (item === "Home") {
+      navigate("/");
+      return;
+    }
+    navigate(`/${item.toLowerCase()}`);
   };
 
   useEffect(() => {
@@ -40,7 +51,11 @@ const Header = () => {
       <div className={`nav-list ${isMenuOpen && "show"}`}>
         {navItems.map((item, i) => {
           return (
-            <li className="list-item" key={i}>
+            <li
+              className="list-item"
+              key={i}
+              onClick={(e) => handleNavigate(e, item)}
+            >
               {item}
             </li>
           );
