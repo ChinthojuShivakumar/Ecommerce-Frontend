@@ -9,7 +9,7 @@ import "./product.css";
 const Products = () => {
   return (
     <div className="product-container">
-      <div className="category-list">
+      {/* <div className="category-list">
         {categoryList?.map((category) => {
           return (
             <div className="">
@@ -28,16 +28,37 @@ const Products = () => {
             </div>
           );
         })}
-      </div>
-      {/* <div className="product-list">
-        {productsList?.map((product) => {
-          return (
-            <Suspense fallback={"Loading..."}>
-              <ProductCard product={product} />
-            </Suspense>
-          );
-        })}
       </div> */}
+      <div>
+        <h1>Your Top Products here</h1>
+      </div>
+      <div className="product-list">
+        {productsList
+          ?.sort(() => 0.5 - Math.random()) // randomly shuffle
+          .slice(0, 5)
+          ?.map((product) => {
+            return (
+              <Suspense key={product.id} fallback={"Loading..."}>
+                <ProductCard product={product} />
+              </Suspense>
+            );
+          })}
+      </div>
+      <div>
+        <h1>Discover New Products</h1>
+      </div>
+      <div className="product-list">
+        {productsList
+          ?.sort(() => 0.5 - Math.random()) // randomly shuffle
+          .slice(0, 5)
+          ?.map((product) => {
+            return (
+              <Suspense key={product.id} fallback={"Loading..."}>
+                <ProductCard product={product} />
+              </Suspense>
+            );
+          })}
+      </div>
     </div>
   );
 };

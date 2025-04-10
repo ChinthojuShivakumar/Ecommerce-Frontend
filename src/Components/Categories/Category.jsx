@@ -7,7 +7,7 @@ const Category = () => {
       <div className="cat-items">
         {categoryList?.map((category, i) => {
           return (
-            <ul className="cat-item">
+            <ul className="cat-item" key={i}>
               <img
                 className="cat-img"
                 src={category.image}
