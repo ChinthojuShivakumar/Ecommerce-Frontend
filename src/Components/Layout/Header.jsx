@@ -35,7 +35,9 @@ const Header = () => {
   return (
     <div className="nav-container">
       <div className="nav-header">
-        <h1>Instant Delivery</h1>
+        <h1 onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+          Instant Delivery Services
+        </h1>
         <p className="hamburger" onClick={handleHamburger}>
           {isMenuOpen ? (
             <span className={`${!isMenuOpen ? "show" : "hide"}`}>
