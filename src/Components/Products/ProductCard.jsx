@@ -1,11 +1,21 @@
 import React from "react";
 import "./product.css";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+  const handleRedirectDetailPage = (e, product) => {
+    e.preventDefault();
+    navigate(`/product?q=${product.name}`);
+    return;
+  };
   return (
-    <div className="card-container">
+    <div
+      className="card-container"
+      onClick={(e) => handleRedirectDetailPage(e, product)}
+    >
       <div className="card-image">
-        <img src={product.image} alt={product.name} loading="lazy"/>
+        <img src={product.image} alt={product.name} loading="lazy" />
       </div>
       <div className="card-body">
         <h1 className="card-product-title">{product.name}</h1>
