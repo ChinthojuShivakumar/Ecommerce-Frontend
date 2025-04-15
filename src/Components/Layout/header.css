@@ -127,3 +127,85 @@
     z-index: 0;
   }
 }
+
+/* Modal Styling For Sign Up and Sign In */
+
+.m-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0px;
+  overflow-y: auto;
+}
+
+.m-container.signup {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media screen and (max-width: 640px) {
+  .m-container.signup {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+  .m-container.signup {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  position: relative;
+}
+
+.input-container input {
+  padding: 0.6rem 0.2rem;
+  font-size: 1rem;
+  border: 2px solid black;
+  border-radius: 0.2rem;
+}
+
+/* .input-container label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.input-container > input:focus + label {
+  top: 0px;
+} */
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 10px 0px;
+}
+
+.close,
+.submit {
+  width: 10rem;
+  height: 2.7rem;
+  border: none;
+  font-size: 1rem;
+  box-shadow: 0px 0px 1px 0px;
+  border-radius: 0.1rem;
+  cursor: pointer;
+}
+
+.close {
+  background-color: red;
+  color: white;
+}
+
+.submit {
+  background-color: green;
+  color: white;
+}

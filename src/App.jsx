@@ -10,6 +10,7 @@ const ProductDetail = React.lazy(() =>
 const ProductByCategory = React.lazy(() =>
   import("./Pages/Products/ProductByCategory")
 );
+const Cart = React.lazy(() => import("./Pages/Cart/Cart"));
 
 function App() {
   return (
@@ -96,6 +97,27 @@ function App() {
               }
             >
               <ProductDetail />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                  }}
+                >
+                  Loading...
+                </div>
+              }
+            >
+              <Cart />
             </Suspense>
           }
         />
