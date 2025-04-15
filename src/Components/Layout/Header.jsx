@@ -8,6 +8,7 @@ import Modal from "../Modal/Modal";
 
 const Header = () => {
   const navItems = [
+    "Admin",
     "Home",
     "Products",
     "Orders",

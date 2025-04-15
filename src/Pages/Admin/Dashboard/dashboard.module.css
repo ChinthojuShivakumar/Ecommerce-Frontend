@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+}
+
+.sidemenu {
+  width: 15%;
+  height: 100vh;
+  background-color: rgb(99, 76, 121);
+  position: fixed;
+}
+
+.body {
+  background-color: antiquewhite;
+  width: 88%;
+  height: 100vh;
+  margin-left: 14.2rem;
+  padding: 1rem;
+}

@@ -1,0 +1,40 @@
+import React, { useState } from "react";
+import style from "./sidemenu.module.css";
+import { useNavigate } from "react-router-dom";
+
+const SideMenu = () => {
+  const menuList = ["Dashboard", "Products", "Bookings", ""];
+  const navigate = useNavigate();
+  const [activeMenu, setActiveMenu] = useState("Dashboard");
+  const handleClickMenu = (e, item) => {
+    e.preventDefault();
+    if (item === "Dashboard") {
+      navigate("/admin");
+      setActiveMenu(item);
+      return;
+    }
+    navigate(`/admin/${item.toLowerCase()}`);
+    setActiveMenu(item);
+  };
+  return (
+    <div className={style.container}>
+      <ul className={style.listitems}>
+        {menuList?.map((item, i) => {
+          return (
+            <li
+              className={`${style.listitem} ${
+                activeMenu === item ? style.active : ""
+              }`}
+              key={i}
+              onClick={(e) => handleClickMenu(e, item)}
+            >
+              {item}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+export default SideMenu;

@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0.4rem 0rem;
+  font-size: 1.5rem;
+}
+
+.listitems {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  width: 100%;
+  padding: 0px 0.2rem;
+}
+
+.listitem {
+  cursor: pointer;
+  padding: 0.6rem 0px;
+  padding-left: 1rem;
+}
+
+.listitem:hover {
+  background-color: grey;
+  width: 100%;
+}
+
+.listitem.active {
+    background-color: gray;
+}
