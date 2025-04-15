@@ -1,0 +1,28 @@
+.cart-container {
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card-content {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  border: 2px solid white;
+  padding: 1rem 2rem;
+  margin: 10px 10px;
+  border-radius: 0.2rem;
+  box-shadow: 0px 0.11px 1px 0.1px;
+  grid-column: span 4/4;
+}
+
+.cart-image img {
+  width: 250px;
+  height: 150px;
+}
+
+.price-content {
+  grid-column: span 2/3;
+}

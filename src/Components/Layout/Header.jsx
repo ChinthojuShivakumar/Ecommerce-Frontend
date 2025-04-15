@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./header.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
-import { SCREEN_WIDTH } from "../../Constants/Constant";
+import { LOGO_WIDTH, SCREEN_WIDTH } from "../../Constants/Constant";
 import { useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
 
@@ -64,7 +64,7 @@ const Header = () => {
     <div className="nav-container">
       <div className="nav-header">
         <h1 onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-          Instant Delivery Services
+          {!LOGO_WIDTH ? "Instant Delivery Services" : "IDS"}
         </h1>
         <p className="hamburger" onClick={handleHamburger}>
           {isMenuOpen ? (

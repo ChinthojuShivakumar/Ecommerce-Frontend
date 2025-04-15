@@ -145,6 +145,17 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
+@media screen and (max-width: 640px) {
+  .m-container.signup {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+  .m-container.signup {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .input-container {
   display: flex;
   flex-direction: column;
