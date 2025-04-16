@@ -5,17 +5,26 @@ import { useNavigate } from "react-router-dom";
 const SideMenu = () => {
   const menuList = ["Dashboard", "Category", "Products", "Bookings"];
   const navigate = useNavigate();
-  const [activeMenu, setActiveMenu] = useState("Dashboard");
+  
   const handleClickMenu = (e, item) => {
     e.preventDefault();
     if (item === "Dashboard") {
       navigate("/admin");
-      setActiveMenu(item);
+      // setActiveMenu(item);
       return;
     }
     navigate(`/admin/${item.toLowerCase()}`);
-    setActiveMenu(item);
+    // setActiveMenu(item);
+    return;
   };
+  const getActiveMenu = () => {
+    if (location.pathname === "/admin") return "Dashboard";
+    const pathPart = location.pathname.split("/")[2]; // e.g., "category"
+    return pathPart?.charAt(0).toUpperCase() + pathPart?.slice(1); // "Category"
+  };
+
+  const activeMenu = getActiveMenu();
+
   return (
     <div className={style.container}>
       <ul className={style.listitems}>
@@ -24,7 +33,7 @@ const SideMenu = () => {
             <li
               className={`${style.listitem} ${
                 activeMenu === item ? style.active : ""
-              }`}
+              } ${style.clickable}`}
               key={i}
               onClick={(e) => handleClickMenu(e, item)}
             >

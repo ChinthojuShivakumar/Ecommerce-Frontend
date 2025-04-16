@@ -7,6 +7,14 @@
   height: 5rem;
   box-shadow: 2px 0px 2px 0px 0.2px;
   color: white;
+  /* position: none; */
+  z-index: 1;
+}
+
+.nav-container.admin {
+  background-color: cornflowerblue !important;
+  position: sticky;
+  top: 0;
 }
 
 .nav-header {
@@ -33,6 +41,7 @@
 
 .list-item {
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 .list-item:hover {

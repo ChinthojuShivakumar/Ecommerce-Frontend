@@ -13,12 +13,16 @@ const Products = () => {
           <SideMenu />
         </div>
         <div className={style.body}>
-          <div>
-            <h1>Product Listing Page</h1>
+          <div className={style.add}>
+            <button type="button">Add Product</button>
           </div>
-          <div>
-            <div className={style.add}>
-              <button type="button">Add Product</button>
+          <div className={style.tableContainer}>
+            <div className={style.listCount}>
+              <h3>Total Products List</h3>
+              <p>
+                Showing <strong>6</strong> of{" "}
+                <strong>{productList.length}</strong> bookings
+              </p>
             </div>
             <table className={style.table}>
               <thead className={style.tablehead}>
@@ -28,15 +32,13 @@ const Products = () => {
                       <th className={style.th} key={index}>
                         {key}
                       </th>
-                      
                     ))}
                 </tr>
-                
               </thead>
               <tbody className={style.body}>
                 {productList.map((product) => {
                   return (
-                    <tr className={style.tablerow}>
+                    <tr key={product.id} className={style.tablerow}>
                       <td className={style.td}>{product.id}</td>
                       <td className={style.td}>{product.name}</td>
                       <td className={style.td}>{product.category}</td>

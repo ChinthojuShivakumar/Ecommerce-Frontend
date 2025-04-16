@@ -9,10 +9,12 @@
   height: 100vh;
   background-color: cornflowerblue;
   position: fixed;
+  border-radius: 0.3rem;
+  margin: 0.2rem;
 }
 
 .body {
-  background-color: antiquewhite;
+  background-color: white;
   width: 88%;
   height: 100vh;
   margin-left: 14.2rem;

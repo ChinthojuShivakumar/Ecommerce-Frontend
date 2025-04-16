@@ -16,9 +16,16 @@ const Category = () => {
           <div>
             <h1>Category Listing Page</h1>
           </div>
-          <div>
-            <div className={style.add}>
-              <button type="button">Add Category</button>
+          <div className={style.add}>
+            <button type="button">Add Category</button>
+          </div>
+          <div className={style.tableContainer}>
+            <div className={style.listCount}>
+              <h3>Total Products List</h3>
+              <p>
+                Showing <strong>6</strong> of{" "}
+                <strong>{categoryList.length}</strong> bookings
+              </p>
             </div>
             <table className={style.table}>
               <thead className={style.tablehead}>
@@ -32,9 +39,9 @@ const Category = () => {
                 </tr>
               </thead>
               <tbody className={style.body}>
-                {categoryList.map((product) => {
+                {categoryList.map((product, i) => {
                   return (
-                    <tr className={style.tablerow}>
+                    <tr key={i} className={style.tablerow}>
                       <td className={style.td}>{product.category}</td>
                       <td className={`${style.tablecell} ${style.td}`}>
                         <img

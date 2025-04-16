@@ -1,84 +1,99 @@
 .container {
-    display: flex;
-    justify-content: start;
-    align-items: start;
-  }
-  
-  .sidemenu {
-    width: 15%;
-    height: 100vh;
-    background-color: cornflowerblue;
-    position: fixed;
-  }
-  
-  .body {
-    background-color: antiquewhite;
-    width: 88%;
-    height: 100vh;
-    margin-left: 14.2rem;
-    padding: 1rem;
-  }
-  
-  .table {
-    width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  .tablehead {
-    background-color: cornflowerblue;
-    color: whitesmoke;
-    text-transform: capitalize;
-  }
-  
-  .th {
-    border: 1px solid black;
-    padding: 15px 0px;
-  }
-  
-  .image {
-    width: 100px;
-    height: 100px;
-    border-radius: 1rem;
-  }
-  
-  .tablecell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-  }
-  
-  .td {
-    width: auto;
-    text-align: center;
-    border: 1px solid black;
-  }
+  display: flex;
+  justify-content: start;
+  align-items: start;
+}
 
-  .add {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-  }
-  
-  .add > button {
-    width: 10rem;
-    height: 40px;
-    border: none;
-    border-radius: 0.2rem;
-    font-size: 1rem;
-    background-color: cornflowerblue;
-    color: whitesmoke;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-  }
-  
-  .add > button:hover {
-    border: 2px solid rgba(55, 122, 246);
-    background-color: inherit;
-    color: rgba(55, 122, 246);
-  }
-  
+.sidemenu {
+  width: 15%;
+  height: 100vh;
+  background-color: cornflowerblue;
+  position: fixed;
+  border-radius: 0.3rem;
+  margin: 0.2rem;
+}
+
+.body {
+  background-color: white;
+  width: 88%;
+  height: 100vh;
+  margin-left: 14.2rem;
+  padding: 1rem;
+}
+
+.table {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tablehead {
+  background-color: cornflowerblue;
+  color: whitesmoke;
+  text-transform: capitalize;
+}
+
+.th {
+  border: 1px solid black;
+  padding: 15px 0px;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  border-radius: 1rem;
+}
+
+.tablecell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.td {
+  width: auto;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.add {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.add > button {
+  width: 10rem;
+  height: 40px;
+  border: none;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  background-color: cornflowerblue;
+  color: whitesmoke;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.add > button:hover {
+  border: 2px solid rgba(55, 122, 246);
+  background-color: inherit;
+  color: rgba(55, 122, 246);
+}
+
+.tableContainer {
+  background-color: whitesmoke;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0px 0.02rem 0.05rem 0px;
+  margin-top: 10px;
+}
+
+.listCount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
