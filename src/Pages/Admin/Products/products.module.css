@@ -21,7 +21,7 @@
 
 .table {
   width: 100%;
-  border: 2px solid black;
+  border: 1px solid black;
   border-collapse: collapse;
   margin-top: 10px;
 }
@@ -36,3 +36,24 @@
   border: 1px solid black;
   padding: 15px 0px;
 }
+
+.image {
+  width: 100px;
+  height: 100px;
+  border-radius: 1rem;
+}
+
+.tablecell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.td {
+  width: auto;
+  text-align: center;
+  border: 1px solid black;
+}
+
+

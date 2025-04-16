@@ -28,8 +28,27 @@ const Products = () => {
                     ))}
                 </tr>
               </thead>
-              <tbody>
-               
+              <tbody className={style.body}>
+                {productList.map((product) => {
+                  return (
+                    <tr className={style.tablerow}>
+                      <td className={style.td}>{product.id}</td>
+                      <td className={style.td}>{product.name}</td>
+                      <td className={style.td}>{product.category}</td>
+                      <td className={style.td}>{product.description}</td>
+                      <td className={style.td}>Rs.{product.price}</td>
+                      <td className={style.td}>{product.stock}</td>
+                      <td className={style.td}>⭐{product.rating}</td>
+                      <td className={`${style.tablecell} ${style.td}`}>
+                        <img
+                          className={style.image}
+                          src={product.image}
+                          alt={product.name}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
