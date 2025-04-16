@@ -1,10 +1,10 @@
 import React from "react";
-import style from "./products.module.css";
-import productList from "../../../../updated_products.json";
+import style from "./category.module.css";
 import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
+import categoryList from "../../../../updated_categories.json";
 
-const Products = () => {
+const Category = () => {
   return (
     <div>
       <Header />
@@ -14,36 +14,28 @@ const Products = () => {
         </div>
         <div className={style.body}>
           <div>
-            <h1>Product Listing Page</h1>
+            <h1>Category Listing Page</h1>
           </div>
           <div>
             <div className={style.add}>
-              <button type="button">Add Product</button>
+              <button type="button">Add Category</button>
             </div>
             <table className={style.table}>
               <thead className={style.tablehead}>
                 <tr className={style.tablerow}>
-                  {productList?.[0] &&
-                    Object.keys(productList[0]).map((key, index) => (
+                  {categoryList?.[0] &&
+                    Object.keys(categoryList[0]).map((key, index) => (
                       <th className={style.th} key={index}>
                         {key}
                       </th>
-                      
                     ))}
                 </tr>
-                
               </thead>
               <tbody className={style.body}>
-                {productList.map((product) => {
+                {categoryList.map((product) => {
                   return (
                     <tr className={style.tablerow}>
-                      <td className={style.td}>{product.id}</td>
-                      <td className={style.td}>{product.name}</td>
                       <td className={style.td}>{product.category}</td>
-                      <td className={style.td}>{product.description}</td>
-                      <td className={style.td}>Rs.{product.price}</td>
-                      <td className={style.td}>{product.stock}</td>
-                      <td className={style.td}>⭐{product.rating}</td>
                       <td className={`${style.tablecell} ${style.td}`}>
                         <img
                           className={style.image}
@@ -63,4 +55,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Category;

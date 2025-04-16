@@ -7,8 +7,9 @@
 .sidemenu {
   width: 15%;
   height: 100vh;
-  background-color: rgb(99, 76, 121);
+  background-color: cornflowerblue;
   position: fixed;
+  border-radius: 0.2rem;
 }
 
 .body {
@@ -56,4 +57,28 @@
   border: 1px solid black;
 }
 
+.add {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
 
+.add > button {
+  width: 10rem;
+  height: 40px;
+  border: none;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  background-color: cornflowerblue;
+  color: whitesmoke;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.add > button:hover {
+  border: 2px solid rgba(55, 122, 246);
+  background-color: inherit;
+  color: rgba(55, 122, 246);
+}

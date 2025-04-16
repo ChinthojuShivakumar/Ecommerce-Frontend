@@ -3,7 +3,7 @@ import style from "./sidemenu.module.css";
 import { useNavigate } from "react-router-dom";
 
 const SideMenu = () => {
-  const menuList = ["Dashboard", "Products", "Bookings", ""];
+  const menuList = ["Dashboard", "Category", "Products", "Bookings"];
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState("Dashboard");
   const handleClickMenu = (e, item) => {
