@@ -36,7 +36,7 @@ const Bookings = () => {
                       <td className={style.td}>{product.productName}</td>
                       <td className={style.td}>{product.userId}</td>
                       <td className={style.td}>{product.quantity}</td>
-                      <td className={style.td}>{product.totalPrice}</td>
+                      <td className={style.td}>Rs.{product.totalPrice}</td>
                       <td className={style.td}>
                         {product.bookingDate.split("T")[0]}
                       </td>
