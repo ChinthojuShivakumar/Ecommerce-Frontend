@@ -1,0 +1,63 @@
+[
+    {
+      "bookingId": "B001",
+      "productId": "0",
+      "productName": "Wireless Headphones",
+      "userId": "U1001",
+      "quantity": 1,
+      "totalPrice": 99.99,
+      "bookingDate": "2025-04-15T10:30:00Z",
+      "status": "Confirmed"
+    },
+    {
+      "bookingId": "B002",
+      "productId": "2",
+      "productName": "Smart Watch",
+      "userId": "U1002",
+      "quantity": 2,
+      "totalPrice": 299.98,
+      "bookingDate": "2025-04-14T16:45:00Z",
+      "status": "Pending"
+    },
+    {
+      "bookingId": "B003",
+      "productId": "5",
+      "productName": "Men's Cotton T-shirt",
+      "userId": "U1003",
+      "quantity": 3,
+      "totalPrice": 44.97,
+      "bookingDate": "2025-04-13T12:10:00Z",
+      "status": "Shipped"
+    },
+    {
+      "bookingId": "B004",
+      "productId": "19",
+      "productName": "Classic Novel",
+      "userId": "U1004",
+      "quantity": 1,
+      "totalPrice": 9.99,
+      "bookingDate": "2025-04-12T09:00:00Z",
+      "status": "Delivered"
+    },
+    {
+      "bookingId": "B005",
+      "productId": "24",
+      "productName": "Yoga Mat",
+      "userId": "U1001",
+      "quantity": 1,
+      "totalPrice": 29.99,
+      "bookingDate": "2025-04-15T14:00:00Z",
+      "status": "Confirmed"
+    },
+    {
+      "bookingId": "B006",
+      "productId": "13",
+      "productName": "Electric Kettle",
+      "userId": "U1002",
+      "quantity": 2,
+      "totalPrice": 59.9,
+      "bookingDate": "2025-04-10T11:30:00Z",
+      "status": "Shipped"
+    }
+  ]
+  
