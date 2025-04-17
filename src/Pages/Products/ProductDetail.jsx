@@ -56,7 +56,14 @@ const ProductDetail = () => {
                 const extension = image.split(".").pop().toLowerCase();
 
                 return IMAGE_EXTENSIONS.includes(extension) ? (
-                  <img src={image} alt={product?.name} />
+                  <img
+                    src={image}
+                    alt={product?.name}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/errorimage.png";
+                    }}
+                  />
                 ) : (
                   <video src={image} controls />
                 );

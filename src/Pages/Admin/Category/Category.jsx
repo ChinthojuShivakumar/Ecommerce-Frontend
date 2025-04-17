@@ -36,6 +36,7 @@ const Category = () => {
                         {key}
                       </th>
                     ))}
+                  <th className={style.th}>Action</th>
                 </tr>
               </thead>
               <tbody className={style.body}>
@@ -49,6 +50,12 @@ const Category = () => {
                           src={product.image}
                           alt={product.name}
                         />
+                      </td>
+                      <td className={`${style.td} `}>
+                        <div className={style.action}>
+                          <button className={style.edit}>Edit</button>
+                          <button className={style.delete}>Delete</button>
+                        </div>
                       </td>
                     </tr>
                   );

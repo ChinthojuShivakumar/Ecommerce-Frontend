@@ -23,7 +23,6 @@
   object-fit: cover;
   border-radius: 10px;
   transition: ease-in-out 0.2s;
-
 }
 
 .cat-img:hover {
@@ -32,6 +31,7 @@
 
 .cat-item li {
   list-style: none;
+  font-weight: normal;
 }
 
 @media screen and (min-width: 641px) and (max-width: 768) {

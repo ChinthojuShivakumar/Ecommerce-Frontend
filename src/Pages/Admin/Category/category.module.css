@@ -99,3 +99,43 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.action {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit,
+.delete {
+  border: none;
+  width: 5rem;
+  height: 50px;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+}
+
+.edit {
+  background-color: rgb(117, 117, 11);
+  border-radius: 0.2rem;
+}
+
+.delete {
+  background-color: rgb(209, 66, 66);
+  border-radius: 0.2rem;
+}
+
+.edit:hover {
+  background-color: white;
+  border: 2px solid rgb(107, 107, 24);
+  color: rgb(136, 136, 26);
+}
+.delete:hover {
+  background-color: white;
+  border: 2px solid red;
+  color: red;
+}
+

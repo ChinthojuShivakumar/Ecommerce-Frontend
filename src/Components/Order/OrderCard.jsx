@@ -17,15 +17,20 @@ const OrderCard = () => {
     <div className="card-container">
       <div className="card-content">
         <div className="card-image">
-          <img src={product.image} alt={product.name} />
+          <img
+            src={product.image}
+            alt={product.name}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/errorimage.png";
+            }}
+          />
         </div>
         <div className="card-body">
           <h1>{product.name}</h1>
           <p>RS.{product.price}</p>
         </div>
       </div>
-
-     
     </div>
   );
 };

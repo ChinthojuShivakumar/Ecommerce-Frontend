@@ -3,7 +3,6 @@
   justify-content: start;
   align-items: start;
   margin-top: 5.2rem;
-
 }
 
 .sidemenu {
@@ -56,10 +55,10 @@
 }
 
 .td {
-  width: auto;
+  width: 10%;
   text-align: center;
   border: 1px solid black;
-  padding: 0.6rem;
+  /* padding: 0.6rem; */
 }
 
 .add {
@@ -100,4 +99,53 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.action {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit,
+.delete,
+.view {
+  border: none;
+  width: 5rem;
+  height: 50px;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+  background-color: gainsboro;
+  border-radius: 0.2rem;
+}
+
+.edit {
+  background-color: rgb(117, 117, 11);
+}
+
+.delete {
+  background-color: rgb(209, 66, 66);
+}
+
+.view {
+  background-color: rgb(202, 12, 202);
+}
+
+.edit:hover {
+  background-color: white;
+  border: 2px solid rgb(107, 107, 24);
+  color: rgb(136, 136, 26);
+}
+.delete:hover {
+  background-color: white;
+  border: 2px solid red;
+  color: red;
+}
+.view:hover {
+  background-color: white;
+  border: 2px solid rgb(155, 19, 155);
+  color: rgb(142, 26, 142);
 }
