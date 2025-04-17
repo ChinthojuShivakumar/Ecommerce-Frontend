@@ -151,7 +151,7 @@
     "name": "Smart Refrigerator",
     "category": "Home Appliances",
     "description": "Smart refrigerator with touch screen, energy-saving features, and voice control.",
-    "price": 1200.00,
+    "price": 1200.0,
     "stock": 10,
     "rating": 4.2,
     "totalReviews": 210,
@@ -243,17 +243,14 @@
       "Durable Build Quality",
       "Anti-Ghosting Technology"
     ],
-    "offers": [
-      "10% off on purchases above ₹5000",
-      "Flat ₹200 off on exchange"
-    ]
+    "offers": ["10% off on purchases above ₹5000", "Flat ₹200 off on exchange"]
   },
   {
     "id": "8",
     "name": "Digital Camera",
     "category": "Cameras",
     "description": "Professional-grade digital camera with 4K recording and high-quality lens.",
-    "price": 799.00,
+    "price": 799.0,
     "stock": 30,
     "rating": 4.4,
     "totalReviews": 400,
@@ -276,10 +273,7 @@
       "Wi-Fi and Bluetooth Connectivity",
       "ISO 100-25600"
     ],
-    "offers": [
-      "Up to ₹10000 off on select models",
-      "No Cost EMI for 6 months"
-    ]
+    "offers": ["Up to ₹10000 off on select models", "No Cost EMI for 6 months"]
   },
   {
     "id": "9",
@@ -309,9 +303,6 @@
       "Durable Build",
       "Lightweight & Portable"
     ],
-    "offers": [
-      "Flat ₹500 off on ₹3000+ orders",
-      "10% off on first purchase"
-    ]
+    "offers": ["Flat ₹500 off on ₹3000+ orders", "10% off on first purchase"]
   }
 ]

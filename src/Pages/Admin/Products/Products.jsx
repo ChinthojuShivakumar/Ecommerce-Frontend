@@ -49,7 +49,7 @@ const Products = () => {
                       <td className={style.td}>{product.totalReviews}</td>
                       <td className={`${style.tablecell} ${style.td}`}>
                         <img
-                          className={style.image}
+                          className={style.images}
                           src={product.images[0]}
                           alt={product.name}
                         />
