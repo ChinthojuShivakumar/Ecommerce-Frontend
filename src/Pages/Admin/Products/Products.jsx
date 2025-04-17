@@ -46,13 +46,31 @@ const Products = () => {
                       <td className={style.td}>Rs.{product.price}</td>
                       <td className={style.td}>{product.stock}</td>
                       <td className={style.td}>⭐{product.rating}</td>
+                      <td className={style.td}>{product.totalReviews}</td>
                       <td className={`${style.tablecell} ${style.td}`}>
                         <img
                           className={style.image}
-                          src={product.image}
+                          src={product.images[0]}
                           alt={product.name}
                         />
                       </td>
+                      <td className={style.td} style={{width:"18%"}}>
+                        {Object.keys(product.specifications).map(
+                          (key, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                display: "flex",
+                              }}
+                            >
+                              <span style={{ fontWeight: "600" }}>{key} : </span>
+                              <span>{product.specifications[key]}</span>
+                            </div>
+                          )
+                        )}
+                      </td>
+                      <td className={style.td}>{product.highlights}</td>
+                      <td className={style.td}>{product.offers}</td>
                     </tr>
                   );
                 })}
