@@ -26,11 +26,9 @@ const ProductsList = () => {
             </div>
           }
         >
-          <div >
-            {productsList?.map((product) => {
-              return <ProductCard product={product} />;
-            })}
-          </div>
+          {productsList?.map((product) => {
+            return <ProductCard product={product} />;
+          })}
         </Suspense>
       </div>
     </div>
