@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-top: 5.2rem;
+
+}
+
+.sidemenu {
+  width: 15%;
+  height: calc(100vh - 6rem);
+  background-color: cornflowerblue;
+  position: fixed;
+  border-radius: 0.3rem;
+  margin: 0.2rem;
+}
+
+.body {
+  background-color: white;
+  width: 88%;
+  height: 100vh;
+  margin-left: 15%;
+  padding: 1rem;
+}

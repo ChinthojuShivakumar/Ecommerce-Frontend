@@ -3,11 +3,12 @@ import "./header.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 import { LOGO_WIDTH, SCREEN_WIDTH } from "../../Constants/Constant";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
 
 const Header = () => {
   const navItems = [
+    "Admin",
     "Home",
     "Products",
     "Orders",
@@ -21,6 +22,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [suOpen, setSUOpen] = useState(false);
+  const location = useLocation();
 
   const handleHamburger = (e) => {
     e.preventDefault();
@@ -53,6 +55,9 @@ const Header = () => {
     // return;
   };
 
+  // console.log(location.pathname.split("/"));
+  // console.log(location.pathname.split("/").filter((admin) => admin === "admin"));
+
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(SCREEN_WIDTH);
@@ -61,7 +66,11 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <div className="nav-container">
+    <div
+      className={`nav-container ${
+        location.pathname.includes("/admin") && "admin"
+      }`}
+    >
       <div className="nav-header">
         <h1 onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
           {!LOGO_WIDTH ? "Instant Delivery Services" : "IDS"}
@@ -79,17 +88,31 @@ const Header = () => {
         </p>
       </div>
       <div className={`nav-list ${isMenuOpen && "show"}`}>
-        {navItems.map((item, i) => {
-          return (
-            <li
-              className="list-item"
-              key={i}
-              onClick={(e) => handleNavigate(e, item)}
-            >
-              {item}
-            </li>
-          );
-        })}
+        {location.pathname.includes("/admin")
+          ? navItems
+              .filter((item) => ["sign out"].includes(item))
+              .map((item, i) => {
+                return (
+                  <li
+                    className="list-item"
+                    key={i}
+                    onClick={(e) => handleNavigate(e, item)}
+                  >
+                    {item}
+                  </li>
+                );
+              })
+          : navItems.map((item, i) => {
+              return (
+                <li
+                  className="list-item"
+                  key={i}
+                  onClick={(e) => handleNavigate(e, item)}
+                >
+                  {item}
+                </li>
+              );
+            })}
       </div>
       <Modal
         open={open}

@@ -14,20 +14,18 @@ const CartCard = () => {
     image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
   };
   return (
-    <div className="cart-container">
+    <div className="card-container">
       <div className="card-content">
-        <div className="cart-image">
+        <div className="card-image">
           <img src={product.image} alt={product.name} />
         </div>
-        <div className="cart-body">
+        <div className="card-body">
           <h1>{product.name}</h1>
           <p>RS.{product.price}</p>
         </div>
       </div>
 
-      <div className="price-content">
-        <h1>Price Drop</h1>
-      </div>
+     
     </div>
   );
 };

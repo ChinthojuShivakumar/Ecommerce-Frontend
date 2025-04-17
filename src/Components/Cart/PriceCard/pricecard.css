@@ -1,0 +1,13 @@
+.price-container {
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  height: 250px; /* fixed height */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.price-container h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}

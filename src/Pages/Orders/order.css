@@ -1,0 +1,20 @@
+.input-container.px {
+  width: 70%;
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+
+.order-card {
+  width: 100%;
+}
+
+.search-input {
+  padding: 2rem 0px;
+  font-weight: 600;
+  font-size: larger;
+}
+
+.search-input:focus {
+  outline: 1px solid blue;
+  border: 2px solid blue;
+}
