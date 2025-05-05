@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Alice Johnson",
+    "phoneNumber": 9876543210,
+    "password": "alice@123",
+    "email": "alice.johnson@example.com",
+    "isDeleted": false,
+    "deletedAt": null,
+    "status": "Active"
+  },
+  {
+    "name": "Bob Smith",
+    "phoneNumber": 9123456780,
+    "password": "bob@123",
+    "email": "bob.smith@example.com",
+    "isDeleted": false,
+    "deletedAt": null,
+    "status": "Active"
+  },
+  {
+    "name": "Charlie Lee",
+    "phoneNumber": 9012345678,
+    "password": "charlie@123",
+    "email": "charlie.lee@example.com",
+    "isDeleted": false,
+    "deletedAt": null,
+    "status": "Active"
+  },
+  {
+    "name": "David Brown",
+    "phoneNumber": 9988776655,
+    "password": "david@123",
+    "email": "david.brown@example.com",
+    "isDeleted": false,
+    "deletedAt": null,
+    "status": "Active"
+  },
+  {
+    "name": "Eva Green",
+    "phoneNumber": 9876501234,
+    "password": "eva@123",
+    "email": "eva.green@example.com",
+    "isDeleted": false,
+    "deletedAt": null,
+    "status": "Active"
+  }
+]

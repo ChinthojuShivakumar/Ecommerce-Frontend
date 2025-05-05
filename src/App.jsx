@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 import NotFound from "./Pages/NotFound/NotFound";
 import Order from "./Pages/Orders/Order";
 import AdminRoutes from "./Pages/Admin/Routes/Routes";
+import { ToastContainer } from "react-toastify";
 const Home = React.lazy(() => import("./Pages/Home/Home"));
 const ProductsList = React.lazy(() => import("./Pages/Products/ProductsList"));
 const ProductDetail = React.lazy(() =>
@@ -147,6 +148,7 @@ function App() {
         <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <ToastContainer limit={2} />
     </BrowserRouter>
   );
 }
