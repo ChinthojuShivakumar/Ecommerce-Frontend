@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "../../NotFound/NotFound";
+import UserList from "../Users/UserList";
 // import Category from "../Category/Category";
 // import Bookings from "../Bookings/Bookings";
 // import Products from "../Products/Products";
@@ -30,6 +31,27 @@ const AdminRoutes = () => {
             }
           >
             <Dashboard />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/users"
+        element={
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100vh",
+                }}
+              >
+                Loading...
+              </div>
+            }
+          >
+            <UserList />
           </Suspense>
         }
       />

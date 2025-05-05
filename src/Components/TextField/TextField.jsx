@@ -24,6 +24,7 @@ const TextField = ({
         name={name}
         onChange={onChange}
         // style={{  }}
+        max={type == "number" && 10}
       />
       <label className={styles.label} htmlFor={htmlFor}>
         {label}
