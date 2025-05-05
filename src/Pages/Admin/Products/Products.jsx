@@ -5,6 +5,15 @@ import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
 
 const Products = () => {
+  const HIDDEN_KEYS = [
+    "description",
+    "totalreviews",
+    "rating",
+    "specifications",
+    "offers",
+    "highlights",
+    "images"
+  ];
   return (
     <div>
       <Header />
@@ -28,11 +37,16 @@ const Products = () => {
               <thead className={style.tablehead}>
                 <tr className={style.tablerow}>
                   {productList?.[0] &&
-                    Object.keys(productList[0]).map((key, index) => (
-                      <th className={style.th} key={index}>
-                        {key}
-                      </th>
-                    ))}
+                    Object.keys(productList[0])
+                      .filter(
+                        (item) => !HIDDEN_KEYS.includes(item.toLowerCase())
+                      )
+                      .map((key, index) => (
+                        <th className={style.th} key={index}>
+                          {key}
+                        </th>
+                      ))}
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody className={style.body}>
@@ -42,19 +56,30 @@ const Products = () => {
                       <td className={style.td}>{product.id}</td>
                       <td className={style.td}>{product.name}</td>
                       <td className={style.td}>{product.category}</td>
-                      <td className={style.td}>{product.description}</td>
+                      {/* <td className={style.td}>{product.description}</td> */}
                       <td className={style.td}>Rs.{product.price}</td>
                       <td className={style.td}>{product.stock}</td>
-                      <td className={style.td}>⭐{product.rating}</td>
-                      <td className={style.td}>{product.totalReviews}</td>
-                      <td className={`${style.tablecell} ${style.td}`}>
+                      {/* <td className={style.td}>⭐{product.rating}</td> */}
+                      {/* <td className={style.td}>{product.totalReviews}</td> */}
+                      {/* <td className={`${style.tablecell} ${style.td}`}>
                         <img
                           className={style.image}
                           src={product.images[0]}
                           alt={product.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "/errorimage.png";
+                          }}
                         />
+                      </td> */}
+                      <td className={`${style.td} `}>
+                        <div className={style.action}>
+                          <button className={style.view}>View</button>
+                          <button className={style.edit}>Edit</button>
+                          <button className={style.delete}>Delete</button>
+                        </div>
                       </td>
-                      <td className={style.td} style={{width:"18%"}}>
+                      {/* <td className={style.td} style={{ width: "18%" }}>
                         {Object.keys(product.specifications).map(
                           (key, index) => (
                             <div
@@ -63,14 +88,16 @@ const Products = () => {
                                 display: "flex",
                               }}
                             >
-                              <span style={{ fontWeight: "600" }}>{key} : </span>
+                              <span style={{ fontWeight: "600" }}>
+                                {key} :{" "}
+                              </span>
                               <span>{product.specifications[key]}</span>
                             </div>
                           )
                         )}
-                      </td>
-                      <td className={style.td}>{product.highlights}</td>
-                      <td className={style.td}>{product.offers}</td>
+                      </td> */}
+                      {/* <td className={style.td}>{product.highlights}</td>
+                      <td className={style.td}>{product.offers}</td> */}
                     </tr>
                   );
                 })}

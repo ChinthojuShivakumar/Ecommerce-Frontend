@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import "./Modal.css";
+import styles from "./model.module.css";
 
 const Modal = ({
   open,
@@ -24,15 +24,15 @@ const Modal = ({
 
   if (!open) return null;
   return ReactDOM.createPortal(
-    <div className="modal-container">
-      <div className="modal-backdrop"></div>
+    <div className={styles.modalContainer}>
+      <div className={styles.modalBackdrop}></div>
       <div
-        className="modal-content"
+        className={styles.modalContent}
         onMouseEnter={mouseEvents ? () => setOpen(true) : null}
         onMouseLeave={mouseEvents ? () => setOpen(false) : null}
         style={style}
       >
-        <div className="modal-close-btn">
+        <div className={styles.modalClosebtn}>
           {/* <button onClick={onClose}>&times;</button> */}
           {children}
         </div>

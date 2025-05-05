@@ -15,7 +15,15 @@ const ProductCard = ({ product }) => {
       onClick={(e) => handleRedirectDetailPage(e, product)}
     >
       <div className="card-image">
-        <img src={product?.images[0]} alt={product.name} loading="lazy" />
+        <img
+          src={product?.images[0]}
+          alt={product.name}
+          loading="lazy"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/errorimage.png";
+          }}
+        />
       </div>
       <div className="card-body">
         <h1 className="card-product-title">{product.name}</h1>

@@ -50,9 +50,7 @@ const Header = () => {
   };
 
   const handleCloseModal = () => {
-    // e.preventDefault();
     setOpen(false);
-    // return;
   };
 
   // console.log(location.pathname.split("/"));

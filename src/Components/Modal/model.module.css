@@ -1,4 +1,4 @@
-.modal-container {
+.modalContainer {
   display: flex;
   position: fixed;
   top: 0;
@@ -11,13 +11,13 @@
   padding-top: 80px;
 }
 
-.modal-backdrop {
+.modalBackdrop {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
+.modalContent {
   position: relative;
   background-color: #fff;
   border-radius: 2px;

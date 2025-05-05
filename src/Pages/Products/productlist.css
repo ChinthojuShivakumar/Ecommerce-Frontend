@@ -43,16 +43,71 @@
   display: flex;
   gap: 10px;
 }
+.pd-left {
+  box-sizing: border-box;
+  padding: 1rem;
 
-.pd-image img {
+}
+.pd-left img,
+video {
   padding: 1rem 2rem;
   width: 500px;
   height: 500px;
 }
 
+.pd-image-container {
+  position: relative;
+  box-sizing: border-box;
+  /* padding: 1rem; */
+  box-shadow: 0px 0px 0.05rem 0px;
+}
+
+.arrows {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  top: 35%;
+  padding: 0px 15px;
+  box-sizing: border-box;
+}
+.left,
+.right {
+  height: 100px;
+  width: 36px;
+  border: none;
+  background-color: white;
+  box-shadow: 0px 0px 0.05rem 0px;
+  border-radius: 0.2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform all 0.2s ease-in-out;
+}
+
+.left:hover,
+.right:hover {
+  transform: scale(1.05);
+}
+.left.stop-cursor,
+.right.stop-cursor {
+  cursor: not-allowed;
+  background-color: gainsboro;
+  transform: scale(1);
+}
 .pd-body {
   width: 100%;
   padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  
+  
+}
+
+.pd-body > h1 {
+  font-size: 1.5rem;
 }
 
 .pd-price {
@@ -60,11 +115,20 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
+  position: relative;
+}
+
+.pd-price > p > span {
+  color: rgb(167, 165, 165);
+  font-size: 1rem;
+  position: absolute;
+  top: 0.3rem;
+  right: 2.7rem;
 }
 
 .pd-price > p:first-child {
   font-weight: bold;
-  font-size: x-large;
+  font-size: 1.5rem;
 }
 
 .pd-price > p:nth-child(2) {
@@ -82,25 +146,43 @@
   gap: 1rem;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .cta-b1,
 .cta-b2 {
-  width: 180px;
-  height: 35px;
+  width: 250px;
+  height: 50px;
   box-shadow: 0px 0px 0.05rem 0px;
   border-radius: 2px;
   cursor: pointer;
   font-weight: 600;
   font-size: medium;
+  color: white;
+
 }
 
 .cta-b1 {
-  background-color: yellow;
-  border: yellow;
+  background-color: orange;
+  border: orange;
 }
 .cta-b2 {
   background-color: orangered;
   border: orangered;
-  color: white;
+}
+
+.offers,
+.highlights,
+.specifications,
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.offers > h1,
+.highlights > h1,
+.specifications > h1,
+.description > h1 {
+  font-size: 1.2rem;
 }

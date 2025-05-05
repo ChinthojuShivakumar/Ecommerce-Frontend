@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./category.module.css";
 import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
 import categoryList from "../../../../updated_categories.json";
+import Modal from "../../../Components/Modal/Modal";
+import TextField from "../../../Components/TextField/TextField";
 
 const Category = () => {
+  const [open, setOpen] = useState(false);
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+  const handleModelOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <div>
       <Header />
@@ -17,7 +27,9 @@ const Category = () => {
             <h1>Category Listing Page</h1>
           </div>
           <div className={style.add}>
-            <button type="button">Add Category</button>
+            <button type="button" onClick={handleModelOpen}>
+              Add Category
+            </button>
           </div>
           <div className={style.tableContainer}>
             <div className={style.listCount}>
@@ -36,6 +48,7 @@ const Category = () => {
                         {key}
                       </th>
                     ))}
+                  <th className={style.th}>Action</th>
                 </tr>
               </thead>
               <tbody className={style.body}>
@@ -50,6 +63,12 @@ const Category = () => {
                           alt={product.name}
                         />
                       </td>
+                      <td className={`${style.td} `}>
+                        <div className={style.action}>
+                          <button className={style.edit}>Edit</button>
+                          <button className={style.delete}>Delete</button>
+                        </div>
+                      </td>
                     </tr>
                   );
                 })}
@@ -58,6 +77,27 @@ const Category = () => {
           </div>
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleCloseModal}
+        style={{
+          maxWidth: "600px",
+          // maxHeight: "300px",
+          width: "90%",
+          borderRadius: "2px",
+          position: "relative",
+          animation: "fadeInScale 0.3s ease",
+        }}
+      >
+        <TextField
+          htmlFor={"category"}
+          id={"category"}
+          type={"text"}
+          name={"category"}
+          label={"Category Name"}
+          required={true}
+        />
+      </Modal>
     </div>
   );
 };
