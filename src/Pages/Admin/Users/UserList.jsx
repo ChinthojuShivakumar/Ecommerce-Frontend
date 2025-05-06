@@ -5,12 +5,18 @@ import styles from "./user.module.css";
 import Modal from "../../../Components/Modal/Modal";
 import { errorMessage } from "../../../Utils/Alert";
 import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
+import { LIMIT } from "../../../Constants/Constant";
 
 const UserList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
   const [open, setOpen] = useState(false);
   const TABLE_KEYS = ["name", "phoneNumber", "email", "status"];
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
+  const [limit, setLimit] = useState(null);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [status, setStatus] = useState("");
   const handleCloseModal = () => {
     setOpen(false);
     clearInputs();
@@ -102,12 +108,23 @@ const UserList = () => {
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchUserList = async () => {
+  const fetchUserList = async (page, status = null) => {
+    const qP = new URLSearchParams();
+    qP.append("limit", LIMIT);
+    qP.append("page", page);
+    status !== "" && qP.append("status", status);
     try {
+      // if (page > totalPages) return;
       setLoading(true);
-      const response = await axiosInstanceV1.get(`${BASE_URL}/user`);
+      const response = await axiosInstanceV1.get(
+        `${BASE_URL}/user?${qP.toString()}`
+      );
       if (response.status === 200) {
+        // setUserList((prevData) => [...prevData, ...response.data.userList]);
         setUserList(response.data.userList);
+        setTotalPages(response.data.totalPages);
+        setLimit(response.data.limit);
+        setTotalUsers(response.data.totalUsers);
       } else {
         setUserList([]);
       }
@@ -161,8 +178,8 @@ const UserList = () => {
   };
 
   useEffect(() => {
-    fetchUserList();
-  }, []);
+    fetchUserList(page, status);
+  }, [page, status]);
   return (
     <div>
       <Header />
@@ -175,6 +192,20 @@ const UserList = () => {
             <button type="button" onClick={handleModelOpen}>
               Add User
             </button>
+          </div>
+          <div>
+            <select
+              name="status"
+              id="status"
+              onChange={(e) => setStatus(e.target.value)}
+              value={status}
+            >
+              <option value="" disabled>
+                Status
+              </option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
           </div>
           {loading ? (
             <div
@@ -194,8 +225,8 @@ const UserList = () => {
               <div className={styles.listCount}>
                 <h3>Total Users List</h3>
                 <p>
-                  Showing <strong>6</strong> of{" "}
-                  <strong>{userList.length}</strong> Users
+                  Showing <strong>{(page - 1) * limit + 1}</strong> of{" "}
+                  <strong>{totalUsers}</strong> Users
                 </p>
               </div>
               <table className={styles.table}>
@@ -247,6 +278,43 @@ const UserList = () => {
                   })}
                 </tbody>
               </table>
+              <div className={styles.paginationcontainer}>
+                <button
+                  type="button"
+                  className={`${styles.previous} ${
+                    userList.length == 0 && styles.disable
+                  }`}
+                  onClick={() => setPage((prev) => prev - 1)}
+                  disabled={page === 1}
+                >
+                  &lt;
+                </button>
+                <ul className={styles.pagebody}>
+                  {Array.from({ length: totalPages }).map((_, i) => {
+                    return (
+                      <li
+                        key={i}
+                        className={`${styles.pagenumber} ${
+                          i + 1 === page && styles.activepage
+                        } ${userList.length == 0 && styles.disable}`}
+                        onClick={() => setPage(i + 1)}
+                      >
+                        {i + 1}
+                      </li>
+                    );
+                  })}
+                </ul>
+                <button
+                  type="button"
+                  className={`${styles.next} ${
+                    userList.length == 0 && styles.disable
+                  }`}
+                  onClick={() => setPage((prev) => prev + 1)}
+                  disabled={page === totalPages}
+                >
+                  &gt;
+                </button>
+              </div>
             </div>
           )}
         </div>
