@@ -6,17 +6,25 @@ import Modal from "../../../Components/Modal/Modal";
 import { errorMessage } from "../../../Utils/Alert";
 import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
 import { LIMIT } from "../../../Constants/Constant";
+import { useSearchParams } from "react-router-dom";
 
 const UserList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
   const [open, setOpen] = useState(false);
   const TABLE_KEYS = ["name", "phoneNumber", "email", "status", "role"];
-  const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
-  const [limit, setLimit] = useState(null);
+  const [limit, setLimit] = useState(10);
   const [totalUsers, setTotalUsers] = useState(0);
   const [status, setStatus] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageFromUrl = parseInt(searchParams.get("page")) || 1;
+  const [page, setPage] = useState(pageFromUrl);
+
+  
+
+
+
   const handleCloseModal = () => {
     setOpen(false);
     clearInputs();
@@ -29,7 +37,7 @@ const UserList = () => {
     name: "",
     email: "",
     phoneNumber: "",
-    // password: "",
+    role: "",
     // confirmPassword: "",
     status: "",
   };
@@ -48,10 +56,10 @@ const UserList = () => {
       setInputs({ ...inputs, phoneNumber: e.target.value });
       return;
     }
-    // if (type == "password") {
-    //   setInputs({ ...inputs, password: e.target.value });
-    //   return;
-    // }
+    if (type == "role") {
+      setInputs({ ...inputs, role: e.target.value });
+      return;
+    }
     // if (type == "confirmpassword") {
     //   setInputs({ ...inputs, confirmPassword: e.target.value });
     //   return;
@@ -68,13 +76,14 @@ const UserList = () => {
     //   errorMessage("Password is not matched");
     //   return;
     // }
+
     if (!isEditing) {
       try {
         setLoading(true);
         const response = await axiosInstanceV1.post(`${BASE_URL}/user`, inputs);
         if (response.status === 201) {
           clearInputs();
-          fetchUserList();
+          fetchUserList(page, limit);
           return true;
         }
         setLoading(false);
@@ -92,8 +101,7 @@ const UserList = () => {
         );
         if (response.status === 202) {
           clearInputs();
-          fetchUserList();
-
+          fetchUserList(page, limit);
           return true;
         }
         setLoading(false);
@@ -112,7 +120,9 @@ const UserList = () => {
     const qP = new URLSearchParams();
     qP.append("limit", LIMIT);
     qP.append("page", page);
-    status !== "" && qP.append("status", status);
+    // console.log(status);
+
+    status !== "" && qP.append("status", inputs.status || status);
     try {
       // if (page > totalPages) return;
       setLoading(true);
@@ -150,6 +160,7 @@ const UserList = () => {
         email: findUser.email,
         phoneNumber: findUser.phoneNumber,
         status: findUser.status,
+        role: findUser.role,
       });
       setUserId(id);
       setIsEditing(true);
@@ -179,6 +190,7 @@ const UserList = () => {
 
   useEffect(() => {
     fetchUserList(page, status);
+    setSearchParams({ page });
   }, [page, status]);
   return (
     <div>
@@ -374,6 +386,22 @@ const UserList = () => {
               onChange={(e) => handleChange(e, "phonenumber")}
               value={inputs.phoneNumber}
             />
+          </div>
+          <div className={styles.inputcontainer}>
+            <select
+              name="status"
+              id="status"
+              onChange={(e) => handleChange(e, "role")}
+              value={inputs.role}
+              style={{ width: "100%" }}
+            >
+              <option value="" disabled>
+                Status
+              </option>
+              <option value="USER">User</option>
+              <option value="ADMIN">Admin</option>
+              <option value="SUPER ADMIN">Super Admin</option>
+            </select>
           </div>
           {/* <div className={styles.inputcontainer}>
             <label htmlFor="password" className={styles.label}>
