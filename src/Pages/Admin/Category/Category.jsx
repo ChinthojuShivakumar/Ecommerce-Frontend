@@ -8,10 +8,11 @@ import TextField from "../../../Components/TextField/TextField";
 import { useSearchParams } from "react-router-dom";
 import { LIMIT } from "../../../Constants/Constant";
 import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
+import Pagination from "../../../Components/Admin/Pagination/Pagination";
 
 const Category = () => {
   const [open, setOpen] = useState(false);
-  const TABLE_KEYS = ["category", "image"];
+  const TABLE_KEYS = ["category", "action"];
   const [totalPages, setTotalPages] = useState(null);
   const [limit, setLimit] = useState(10);
   const [totalCategories, setTotalCategories] = useState(0);
@@ -96,21 +97,20 @@ const Category = () => {
                         {key}
                       </th>
                     ))}
-                  <th className={style.th}>Action</th>
                 </tr>
               </thead>
               <tbody className={style.body}>
                 {categoryList.map((product, i) => {
                   return (
-                    <tr key={i} className={style.tablerow}>
+                    <tr key={i} className={`${style.tablerow} `}>
                       <td className={style.td}>{product.category}</td>
-                      <td className={`${style.tablecell} ${style.td}`}>
+                      {/* <td className={`${style.tablecell} ${style.td}`}>
                         <img
                           className={style.image}
                           src={product.image}
                           alt={product.name}
                         />
-                      </td>
+                      </td> */}
                       <td className={`${style.td} `}>
                         <div className={style.action}>
                           <button className={style.edit}>Edit</button>
@@ -122,6 +122,12 @@ const Category = () => {
                 })}
               </tbody>
             </table>
+            <Pagination
+              data={categoryList}
+              page={page}
+              setPage={setPage}
+              totalPages={totalPages}
+            />
           </div>
         </div>
       </div>

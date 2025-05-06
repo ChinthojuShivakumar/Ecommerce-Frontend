@@ -52,11 +52,15 @@
   align-items: center;
   padding: 1rem;
 }
+/* .tablerow {
+  padding: 2rem;
+} */
 
 .td {
   width: auto;
   text-align: center;
   border: 1px solid black;
+  padding: 0.3rem 0px;
 }
 
 .add {
