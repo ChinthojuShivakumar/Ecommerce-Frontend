@@ -19,11 +19,133 @@ const Category = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
+  const [categoryId, setCategoryId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const handleCloseModal = () => {
     setOpen(false);
   };
   const handleModelOpen = () => {
     setOpen(true);
+  };
+
+  const initialState = {
+    name: "",
+    image: "",
+    imagePreview: "",
+  };
+
+  const [inputs, setInputs] = useState(initialState);
+
+  const handleChange = (e, type) => {
+    e.preventDefault();
+    if (type == "name") {
+      setInputs({ ...inputs, name: e.target.value });
+      return;
+    }
+    if (type == "image") {
+      const fR = new FileReader();
+      fR.onloadend = () => {
+        setInputs({
+          ...inputs,
+          imagePreview: fR.result, // For display
+          image: e.target.files[0],
+        });
+      };
+      fR.readAsDataURL(e.target.files[0]);
+
+      return;
+    }
+    if (type == "phonenumber") {
+      setInputs({ ...inputs, phoneNumber: e.target.value });
+      return;
+    }
+    if (type == "role") {
+      setInputs({ ...inputs, role: e.target.value });
+      return;
+    }
+    // if (type == "confirmpassword") {
+    //   setInputs({ ...inputs, confirmPassword: e.target.value });
+    //   return;
+    // }
+    // if (type == "status") {
+    //   setInputs({ ...inputs, status: e.target.value });
+    //   return;
+    // }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // if (inputs.password !== inputs.confirmPassword) {
+    //   errorMessage("Password is not matched");
+    //   return;
+    // }
+    const fD = new FormData();
+    fD.append("name", inputs.name);
+    fD.append("image", inputs.image);
+
+    if (!isEditing) {
+      try {
+        setLoading(true);
+        const response = await axiosInstanceV1.post(
+          `${BASE_URL}/category`,
+          fD,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        if (response.status === 201) {
+          clearInputs();
+          fetchCategoryList(page, limit);
+          return true;
+        }
+        setLoading(false);
+      } catch (error) {
+        clearInputs();
+        setLoading(false);
+        return error;
+      }
+    } else {
+      try {
+        setLoading(true);
+        const response = await axiosInstanceV1.put(
+          `${BASE_URL}/category/${categoryId}`,
+          fD,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        if (response.status === 202) {
+          clearInputs();
+          fetchCategoryList(page, limit);
+          return true;
+        }
+        setLoading(false);
+      } catch (error) {
+        clearInputs();
+        setLoading(false);
+        return error;
+      }
+    }
+  };
+
+  const handleEdit = (e, id) => {
+    e.preventDefault();
+
+    const findCategory = categoryList.find((category) => category._id === id);
+    if (!findCategory) {
+      clearInputs();
+      return;
+    } else {
+      clearInputs();
+      setInputs({
+        ...inputs,
+        name: findCategory.name,
+        imagePreview: findCategory.image,
+        image: findCategory.image,
+      });
+      setCategoryId(id);
+      setIsEditing(true);
+      setOpen(true);
+    }
   };
 
   const [categoryList, setCategoryList] = useState([]);
@@ -46,7 +168,7 @@ const Category = () => {
         setCategoryList(response.data.categoryList);
         setTotalPages(response.data.totalPages);
         setLimit(response.data.limit);
-        setTotalCategories(response.data.totalUsers);
+        setTotalCategories(response.data.totalCategories);
       } else {
         setUserList([]);
       }
@@ -57,6 +179,29 @@ const Category = () => {
 
       return error;
     }
+  };
+
+  const deleteCategory = async (id) => {
+    try {
+      setLoading(true);
+      const response = await axiosInstanceV1.delete(
+        `${BASE_URL}/category/${id}`
+      );
+      if (response.status === 202) {
+        fetchCategoryList(page, limit);
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      return error;
+    }
+  };
+
+  const clearInputs = () => {
+    setInputs(initialState);
+    setOpen(false);
+    setIsEditing(false);
+    setCategoryId(null);
   };
 
   useEffect(() => {
@@ -72,9 +217,9 @@ const Category = () => {
           <SideMenu />
         </div>
         <div className={style.body}>
-          <div>
+          {/* <div>
             <h1>Category Listing Page</h1>
-          </div>
+          </div> */}
           <div className={style.add}>
             <button type="button" onClick={handleModelOpen}>
               Add Category
@@ -82,10 +227,10 @@ const Category = () => {
           </div>
           <div className={style.tableContainer}>
             <div className={style.listCount}>
-              <h3>Total Products List</h3>
+              <h3>Total Category List</h3>
               <p>
-                Showing <strong>6</strong> of <strong>{totalCategories}</strong>{" "}
-                bookings
+                Showing <strong>{(page - 1) * limit + 1}</strong> of{" "}
+                <strong>{totalCategories}</strong> Categories
               </p>
             </div>
             <table className={style.table}>
@@ -103,7 +248,7 @@ const Category = () => {
                 {categoryList.map((product, i) => {
                   return (
                     <tr key={i} className={`${style.tablerow} `}>
-                      <td className={style.td}>{product.category}</td>
+                      <td className={style.td}>{product.name}</td>
                       {/* <td className={`${style.tablecell} ${style.td}`}>
                         <img
                           className={style.image}
@@ -113,8 +258,18 @@ const Category = () => {
                       </td> */}
                       <td className={`${style.td} `}>
                         <div className={style.action}>
-                          <button className={style.edit}>Edit</button>
-                          <button className={style.delete}>Delete</button>
+                          <button
+                            className={style.edit}
+                            onClick={(e) => handleEdit(e, product._id)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className={style.delete}
+                            onClick={() => deleteCategory(product._id)}
+                          >
+                            Delete
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -143,14 +298,57 @@ const Category = () => {
           animation: "fadeInScale 0.3s ease",
         }}
       >
-        <TextField
+        {/* <TextField
           htmlFor={"category"}
           id={"category"}
           type={"text"}
           name={"category"}
           label={"Category Name"}
           required={true}
-        />
+        /> */}
+        <div className={style.modalcontent}>
+          <div className={style.inputcontainer}>
+            <label htmlFor="name" className={style.label}>
+              Category Name
+            </label>
+            <input
+              id="name"
+              className={style.input}
+              type="text"
+              required
+              name="name"
+              onChange={(e) => handleChange(e, "name")}
+              value={inputs.name}
+            />
+          </div>
+          <div className={style.imagecontainer}>
+            {inputs.imagePreview && (
+              <img
+                className={style?.image}
+                src={inputs.imagePreview}
+                alt={"image"}
+              />
+            )}
+            <input
+              type="file"
+              name="file"
+              id="file"
+              onChange={(e) => handleChange(e, "image")}
+            />
+          </div>
+          <div className={style.action}>
+            <button className={style.cancel} onClick={handleCloseModal}>
+              Cancel
+            </button>
+            <button
+              className={style.submit}
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Submit"}
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   );
