@@ -1,19 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./category.module.css";
 import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
 import categoryList from "../../../../updated_categories.json";
 import Modal from "../../../Components/Modal/Modal";
 import TextField from "../../../Components/TextField/TextField";
+import { useSearchParams } from "react-router-dom";
+import { LIMIT } from "../../../Constants/Constant";
+import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
 
 const Category = () => {
   const [open, setOpen] = useState(false);
+  const TABLE_KEYS = ["category", "image"];
+  const [totalPages, setTotalPages] = useState(null);
+  const [limit, setLimit] = useState(10);
+  const [totalCategories, setTotalCategories] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageFromUrl = parseInt(searchParams.get("page")) || 1;
+  const [page, setPage] = useState(pageFromUrl);
   const handleCloseModal = () => {
     setOpen(false);
   };
   const handleModelOpen = () => {
     setOpen(true);
   };
+
+  const [categoryList, setCategoryList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCategoryList = async () => {
+    const qP = new URLSearchParams();
+    qP.append("limit", LIMIT);
+    qP.append("page", page);
+    console.log("calling");
+
+    try {
+      // if (page > totalPages) return;
+      setLoading(true);
+      const response = await axiosInstanceV1.get(
+        `${BASE_URL}/category?${qP.toString()}`
+      );
+      if (response.status === 200) {
+        // setUserList((prevData) => [...prevData, ...response.data.userList]);
+        setCategoryList(response.data.categoryList);
+        setTotalPages(response.data.totalPages);
+        setLimit(response.data.limit);
+        setTotalCategories(response.data.totalUsers);
+      } else {
+        setUserList([]);
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error.message);
+
+      return error;
+    }
+  };
+
+  useEffect(() => {
+    fetchCategoryList(page, limit);
+    setSearchParams({ page });
+  }, [page]);
 
   return (
     <div>
@@ -35,15 +83,15 @@ const Category = () => {
             <div className={style.listCount}>
               <h3>Total Products List</h3>
               <p>
-                Showing <strong>6</strong> of{" "}
-                <strong>{categoryList.length}</strong> bookings
+                Showing <strong>6</strong> of <strong>{totalCategories}</strong>{" "}
+                bookings
               </p>
             </div>
             <table className={style.table}>
               <thead className={style.tablehead}>
                 <tr className={style.tablerow}>
-                  {categoryList?.[0] &&
-                    Object.keys(categoryList[0]).map((key, index) => (
+                  {TABLE_KEYS &&
+                    TABLE_KEYS.map((key, index) => (
                       <th className={style.th} key={index}>
                         {key}
                       </th>

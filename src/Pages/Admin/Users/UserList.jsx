@@ -7,6 +7,7 @@ import { errorMessage } from "../../../Utils/Alert";
 import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
 import { LIMIT } from "../../../Constants/Constant";
 import { useSearchParams } from "react-router-dom";
+import Pagination from "../../../Components/Admin/Pagination/Pagination";
 
 const UserList = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -20,10 +21,6 @@ const UserList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
-
-  
-
-
 
   const handleCloseModal = () => {
     setOpen(false);
@@ -291,7 +288,7 @@ const UserList = () => {
                   })}
                 </tbody>
               </table>
-              <div className={styles.paginationcontainer}>
+              {/* <div className={styles.paginationcontainer}>
                 <button
                   type="button"
                   className={`${styles.previous} ${
@@ -327,7 +324,13 @@ const UserList = () => {
                 >
                   &gt;
                 </button>
-              </div>
+              </div> */}
+              <Pagination
+                data={userList}
+                page={page}
+                totalPages={totalPages}
+                setPage={setPage}
+              />
             </div>
           )}
         </div>
