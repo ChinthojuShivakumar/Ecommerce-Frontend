@@ -11,7 +11,7 @@ const UserList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
   const [open, setOpen] = useState(false);
-  const TABLE_KEYS = ["name", "phoneNumber", "email", "status"];
+  const TABLE_KEYS = ["name", "phoneNumber", "email", "status", "role"];
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
   const [limit, setLimit] = useState(null);
@@ -257,6 +257,7 @@ const UserList = () => {
                         >
                           {user.status}
                         </td>
+                        <td className={styles.td}>{user.role}</td>
                         <td className={`${styles.td} `}>
                           <div className={styles.action}>
                             <button
