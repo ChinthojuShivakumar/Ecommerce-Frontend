@@ -17,7 +17,7 @@
 .body {
   background-color: white;
   width: 85%;
-  height: 100vh;
+  /* height: 100vh; */
   margin-left: 15%;
   padding: 1rem;
 }
@@ -61,7 +61,7 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
 
 .cancel,
@@ -84,6 +84,10 @@
 
 .submit {
   background-color: green;
+}
+
+.submit:disabled {
+  cursor: not-allowed;
 }
 
 .inputcontainer {
@@ -206,4 +210,81 @@
   gap: 1rem;
   justify-content: center;
   align-items: center;
+}
+
+select {
+  padding: 0.6rem;
+  width: 10rem;
+  border-radius: 0.2rem;
+}
+
+/* pagination */
+
+.paginationcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.pagebody {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.pagenumber {
+  list-style: none;
+  border: 2px solid white;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: rgba(158, 158, 158, 0.5);
+  color: white;
+  box-shadow: 0px 0px 0.1rem 0px;
+}
+
+.next,
+.previous {
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  border-radius: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  cursor: pointer;
+  background-color: rgba(158, 158, 158, 0.5);
+  color: white;
+  box-shadow: 0px 0px 0.1rem 0px;
+}
+
+.next:hover,
+.previous:hover,
+.pagenumber:hover {
+  background-color: #2196f3;
+  color: white;
+}
+
+.next:disabled,
+.previous:disabled {
+  cursor: not-allowed;
+}
+
+.activepage {
+  background-color: #2196f3;
+}
+
+.disable {
+  pointer-events: none;
+  cursor: not-allowed;
 }
