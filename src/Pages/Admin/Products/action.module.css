@@ -1,0 +1,131 @@
+.container {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-top: 5.2rem;
+}
+
+.sidemenu {
+  width: 15%;
+  height: 100vh;
+  background-color: cornflowerblue;
+  position: fixed;
+  border-radius: 0.2rem;
+  border-radius: 0.3rem;
+  margin: 0.2rem;
+}
+
+.body {
+  background-color: white;
+  width: 88%;
+  height: calc(100vh - 6rem);
+  margin-left: 15%;
+  padding: 1rem;
+}
+
+.modalcontent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  box-sizing: border-box;
+  /* flex-wrap: wrap; */
+  margin-top: 1rem;
+}
+
+.inputcontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputcontainer .input {
+  padding: 0.6rem;
+  border: 1px solid #9e9e9e;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  border-radius: 0.2rem;
+}
+
+.inputcontainer > .input:focus {
+  border: 2px solid #2196f3;
+}
+
+input[type="file"]::file-selector-button {
+  border: none;
+  padding: 0.4rem;
+  width: 150px;
+  background-color: #2196f3;
+  color: white;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file {
+  border: 1px solid #9e9e9e;
+  /* width: 100%; */
+  padding: 2rem 1rem;
+  border-radius: 0.2rem;
+  grid-column: span 2;
+  border-style: dotted;
+}
+
+.imagecontainer {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.image {
+  width: 150px;
+  height: 150px;
+  border-radius: 0.2rem;
+}
+
+.action {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.cancel,
+.submit {
+  width: 10rem;
+  height: 40px;
+  border: none;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  background-color: cornflowerblue;
+  color: whitesmoke;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.cancel {
+  background-color: red !important;
+}
+
+.submit {
+  background-color: green;
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+}
+
+
+
+/* input:invalid {
+    border: 1px solid red
+}
+input:valid {
+    border: 1px solid green
+} */

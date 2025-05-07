@@ -3,6 +3,7 @@ import style from "./products.module.css";
 import productList from "../../../../updated_products.json";
 import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const HIDDEN_KEYS = [
@@ -12,8 +13,9 @@ const Products = () => {
     "specifications",
     "offers",
     "highlights",
-    "images"
+    "images",
   ];
+  const navigate = useNavigate();
   return (
     <div>
       <Header />
@@ -23,7 +25,12 @@ const Products = () => {
         </div>
         <div className={style.body}>
           <div className={style.add}>
-            <button type="button">Add Product</button>
+            <button
+              type="button"
+              onClick={() => navigate("/admin/products/add")}
+            >
+              Add Product
+            </button>
           </div>
           <div className={style.tableContainer}>
             <div className={style.listCount}>
