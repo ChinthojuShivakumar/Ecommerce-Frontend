@@ -24,7 +24,7 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
-  const [productId, setProductId] = useState(null);
+  
   const [productList, setProductList] = useState([]);
 
   const fetchProductList = async () => {
