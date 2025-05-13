@@ -298,7 +298,10 @@ const Action = () => {
             </div>
           </div>
           <div className={styles.action}>
-            <button className={styles.cancel}>Cancel</button>
+            <button className={styles.cancel} onClick={()=>{
+              clearInputs()
+              navigate(-1)
+            }}>Cancel</button>
             <button
               className={styles.submit}
               onClick={handleSubmit}

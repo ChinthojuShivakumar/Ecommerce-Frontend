@@ -120,7 +120,7 @@ const Products = () => {
 
                       <td className={`${style.td} `}>
                         <div className={style.action}>
-                          <button className={style.view}>View</button>
+                          {/* <button className={style.view}>View</button> */}
                           <button
                             className={style.edit}
                             onClick={(e) => handleEdit(e, product)}
