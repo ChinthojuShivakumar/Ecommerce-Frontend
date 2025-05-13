@@ -15,6 +15,8 @@ const Products = () => {
     "rating",
     "stock",
     "totalReviews",
+    "highlights",
+    "specifications",
     "action",
   ];
   const [totalPages, setTotalPages] = useState(null);
@@ -24,7 +26,7 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
-  
+
   const [productList, setProductList] = useState([]);
 
   const fetchProductList = async () => {
@@ -118,6 +120,34 @@ const Products = () => {
 
                       <td className={style.td}>{product.stock}</td>
                       <td className={style.td}>{product.totalReviews}</td>
+                      <td className={style.td}>
+                        {product.highlights?.map((highlight) => (
+                          <li className={style.highlight}>{highlight}</li>
+                        ))}
+                      </td>
+                      <td className={style.td}>
+                        {" "}
+                        {product?.specifications &&
+                          Object.keys(product?.specifications).map(
+                            (key, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  display: "flex",
+                                  gap: "0.6rem",
+                                }}
+                                className={style.highlight}
+                              >
+                                <span style={{ fontWeight: "600" }}>
+                                  {key} :{" "}
+                                </span>
+                                <span style={{ fontWeight: "normal" }}>
+                                  {product?.specifications[key]}
+                                </span>
+                              </div>
+                            )
+                          )}
+                      </td>
 
                       <td className={`${style.td} `}>
                         <div className={style.action}>

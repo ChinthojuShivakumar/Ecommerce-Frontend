@@ -17,10 +17,15 @@ const Action = () => {
     price: "",
     rating: "",
     category: "",
+    highlights: ["Test 1", "Test 2", "Test 3"],
+    specifications: [{ key: "key 1", value: "Value 1" }],
   };
   const [inputs, setInputs] = useState(initialInputs);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hightLights, setHighLights] = useState("");
+  const [sK, setSK] = useState("");
+  const [sV, setSV] = useState("");
 
   const handleChange = (e, type) => {
     e.preventDefault();
@@ -128,9 +133,13 @@ const Action = () => {
 
     try {
       setLoading(true);
-      const response = await axiosInstanceV1.put(`/product/${location.state._id}`, fD, {
-        headers: { "Content-Type": "multipart/form-date" },
-      });
+      const response = await axiosInstanceV1.put(
+        `/product/${location.state._id}`,
+        fD,
+        {
+          headers: { "Content-Type": "multipart/form-date" },
+        }
+      );
       if (response.status === 202 && response.data.success) {
         clearInputs();
         navigate("/admin/products");
@@ -281,6 +290,51 @@ const Action = () => {
                 value={inputs.stock}
               />
             </div>
+            <div className={styles.inputcontainer}>
+              <label htmlFor="stock" className={styles.label}>
+                Highlights
+              </label>
+              <div className={styles.highlightinput}>
+                <input
+                  id="name"
+                  className={styles.input}
+                  type="text"
+                  required
+                  name="name"
+                  onChange={(e) => handleChange(e, "stock")}
+                  value={inputs.stock}
+                />
+                <button className={styles.plus}> Add </button>
+              </div>
+              <div>
+                {inputs.highlights.map((highlight) => {
+                  return (
+                    <div className={styles.highlight}>
+                      <ul className={styles.highlightlist}>
+                        <li className={styles.highlightitem}>{highlight}</li>
+                      <button className={styles.remove}> Remove </button>
+
+                      </ul>
+
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className={styles.inputcontainer}>
+              <label htmlFor="stock" className={styles.label}>
+                Specifications
+              </label>
+              <input
+                id="name"
+                className={styles.input}
+                type="text"
+                required
+                name="name"
+                onChange={(e) => handleChange(e, "stock")}
+                value={inputs.stock}
+              />
+            </div>
 
             <div className={styles.inputcontainer}>
               <div className={styles.imagecontainer}>
@@ -298,10 +352,15 @@ const Action = () => {
             </div>
           </div>
           <div className={styles.action}>
-            <button className={styles.cancel} onClick={()=>{
-              clearInputs()
-              navigate(-1)
-            }}>Cancel</button>
+            <button
+              className={styles.cancel}
+              onClick={() => {
+                clearInputs();
+                navigate(-1);
+              }}
+            >
+              Cancel
+            </button>
             <button
               className={styles.submit}
               onClick={handleSubmit}

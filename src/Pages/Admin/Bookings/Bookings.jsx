@@ -30,7 +30,7 @@ const Bookings = () => {
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
   const [bookingList, setBookingList] = useState([]);
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(""); 
 
   const fetchBookingList = async (status = "") => {
     const qP = new URLSearchParams();

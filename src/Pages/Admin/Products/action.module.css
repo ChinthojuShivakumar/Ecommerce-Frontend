@@ -125,6 +125,45 @@ input[type="file"]::file-selector-button {
   box-sizing: border-box;
 }
 
+.highlightinput {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+}
+.input {
+  width: 100%;
+}
+.plus,
+.remove {
+  width: 10%;
+  border-radius: 0.2rem;
+  border: none;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.remove {
+  background-color: red;
+}
+
+.highlightlist {
+  display: flex;
+
+  gap: 0.7rem;
+  margin-top: 0.6rem;
+}
+
+.highlightitem {
+  list-style: none;
+  padding: 0.8rem;
+  border: 1px solid white;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  box-shadow: 0 0.02rem 0.1rem 0;
+  width: 100%;
+}
+
 /* input:invalid {
     border: 1px solid red
 }
