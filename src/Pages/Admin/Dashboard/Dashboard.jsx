@@ -32,9 +32,9 @@ const Dashboard = () => {
         <div className={style.body}>
           <h1>Dash board home</h1>
           <div className={style.card}>
-            {COUNT_LIST.map((field) => {
+            {COUNT_LIST.map((field,i) => {
               return (
-                <ul>
+                <ul key={i}>
                   <div className={style.cardlist}>
                     <li>{field.name}</li>
                     <li>{field.count}</li>
