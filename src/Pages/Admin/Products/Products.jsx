@@ -71,6 +71,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchProductList();
+    setSearchParams({ page });
   }, [page]);
   return (
     <div>

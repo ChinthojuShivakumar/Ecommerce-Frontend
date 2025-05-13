@@ -30,11 +30,13 @@ const Bookings = () => {
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
   const [bookingList, setBookingList] = useState([]);
+  const [status, setStatus] = useState("");
 
-  const fetchBookingList = async () => {
+  const fetchBookingList = async (status = "") => {
     const qP = new URLSearchParams();
     qP.append("limit", LIMIT);
     qP.append("page", page);
+    status !== "" && qP.append("status", status);
     try {
       const response = await axiosInstanceV1.get(`/booking?${qP.toString()}`);
       if (response.status == 200) {
@@ -49,8 +51,9 @@ const Bookings = () => {
   };
 
   useEffect(() => {
-    fetchBookingList();
-  }, [page]);
+    fetchBookingList(status);
+    setSearchParams({ page });
+  }, [page, status]);
   return (
     <div>
       <Header />
@@ -59,9 +62,20 @@ const Bookings = () => {
           <SideMenu />
         </div>
         <div className={style.body}>
-          {/* <div>
-            <h1>Booking Listing Page</h1>
-          </div> */}
+          <div>
+            <select
+              name="status"
+              id="status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">Status</option>
+              <option value="PENDING">Pending</option>
+              <option value="CONFIRMED">Confirmed</option>
+              <option value="SHIPPED">Shipped</option>
+              <option value="DELIVERED">Delivered</option>
+            </select>
+          </div>
           <div className={style.tableContainer}>
             <div className={style.listCount}>
               <h3>Total Booking List</h3>
@@ -84,7 +98,7 @@ const Bookings = () => {
               <tbody className={style.body}>
                 {bookingList.map((product, i) => {
                   return (
-                    <tr key={product.bookingId} className={style.tablerow}>
+                    <tr key={i}  className={style.tablerow}>
                       {/* <td className={style.td}>{i}</td> */}
                       {/* <td className={style.td}>{product.product?._id}</td> */}
                       <td className={style.td}>{product.product?.name}</td>
