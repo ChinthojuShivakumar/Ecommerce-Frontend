@@ -121,7 +121,9 @@ input[type="file"]::file-selector-button {
   cursor: not-allowed;
 }
 
-
+.category {
+  box-sizing: border-box;
+}
 
 /* input:invalid {
     border: 1px solid red
