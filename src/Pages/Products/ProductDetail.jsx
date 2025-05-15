@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../Components/Layout/Header";
 // import ProductList from "../../../updated_products.json";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./productlist.css";
 
 const ProductDetail = () => {
@@ -11,12 +11,15 @@ const ProductDetail = () => {
   const [imageView, setImageView] = useState(0);
   const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
   console.log(location);
+  const navigate = useNavigate()
 
   const addToCart = (e, product) => {
     e.preventDefault();
+    navigate("/cart")
   };
   const butNow = (e, product) => {
     e.preventDefault();
+     navigate("/cart")
   };
 
   const handlePrevious = (e) => {
