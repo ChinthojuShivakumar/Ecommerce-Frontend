@@ -23,8 +23,12 @@ const Category = () => {
   const [isEditing, setIsEditing] = useState(false);
   const handleCloseModal = () => {
     setOpen(false);
+    setIsEditing(false);
+    clearInputs();
   };
   const handleModelOpen = () => {
+    setIsEditing(false);
+    clearInputs();
     setOpen(true);
   };
 

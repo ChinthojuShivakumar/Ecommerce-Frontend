@@ -135,7 +135,7 @@ input[type="file"]::file-selector-button {
 }
 .plus,
 .remove {
-  width: 10%;
+  width: 20%;
   border-radius: 0.2rem;
   border: none;
   background-color: green;
@@ -147,14 +147,14 @@ input[type="file"]::file-selector-button {
   background-color: red;
 }
 
-.highlightlist {
+.highlightlist, .speclist {
   display: flex;
 
   gap: 0.7rem;
   margin-top: 0.6rem;
 }
 
-.highlightitem {
+.highlightitem, .specitem {
   list-style: none;
   padding: 0.8rem;
   border: 1px solid white;
@@ -170,3 +170,28 @@ input[type="file"]::file-selector-button {
 input:valid {
     border: 1px solid green
 } */
+
+.specifications {
+  display: grid;
+grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  justify-content: end;
+  align-items: end;
+  
+}
+
+.plus.addkey {
+  width: 50%;
+  height: 45px;
+  
+  
+}
+
+.spec {
+  width: 100%;
+}
+
+.speccontainer {
+  width: 100%;
+}

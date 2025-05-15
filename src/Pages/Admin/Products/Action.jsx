@@ -17,8 +17,8 @@ const Action = () => {
     price: "",
     rating: "",
     category: "",
-    highlights: ["Test 1", "Test 2", "Test 3"],
-    specifications: [{ key: "key 1", value: "Value 1" }],
+    highlights: [],
+    specifications: {},
   };
   const [inputs, setInputs] = useState(initialInputs);
   const [isEditing, setIsEditing] = useState(false);
@@ -72,6 +72,67 @@ const Action = () => {
       setInputs({ ...inputs, description: e.target.value });
       return;
     }
+
+    if (type === "highlights") {
+      setHighLights(e.target.value);
+      return;
+    }
+    if (type === "key") {
+      setSK(e.target.value);
+      return;
+    }
+    if (type === "value") {
+      setSV(e.target.value);
+      return;
+    }
+  };
+
+  const addHighlight = (e) => {
+    e.preventDefault();
+
+    setInputs({ ...inputs, highlights: [...inputs.highlights, hightLights] });
+    setHighLights("");
+    return;
+  };
+
+  const removeHighlights = (e, index) => {
+    e.preventDefault();
+
+    const updatedHighLight = inputs.highlights.filter((_, i) => i !== index);
+    setInputs({ ...inputs, highlights: updatedHighLight });
+    return;
+  };
+  const addSpecification = (e) => {
+    e.preventDefault();
+
+    if (!sK) {
+      alert("Specification Key is Required");
+      return;
+    }
+    if (!sV) {
+      alert("Specification value is Required");
+      return;
+    }
+
+    setInputs({
+      ...inputs,
+      specifications: {
+        ...inputs.specifications, // keep existing specs
+        [sK]: sV, // add/update the key-value pair dynamically
+      },
+    });
+
+    setSK("");
+    setSV("");
+    return;
+  };
+
+  const removeSpecification = (e, key) => {
+    e.preventDefault();
+
+   const updatedSpecs = { ...inputs.specifications };
+  delete updatedSpecs[key];
+  setInputs({ ...inputs, specifications: updatedSpecs });
   };
 
   const [categoryList, setCategoryList] = useState([]);
@@ -111,6 +172,13 @@ const Action = () => {
     fD.append("description", inputs.description);
 
     inputs.images && inputs.images.map((image) => fD.append("image", image));
+    inputs.highlights &&
+      inputs.highlights.map((highlight) => fD.append("highlights", highlight));
+    // inputs.specifications &&
+    //   inputs.specifications.map((specification) =>
+    //     fD.append("specifications", JSON.stringify(specification))
+    //   );
+    fD.append("specifications", JSON.stringify(inputs.specifications));
 
     if (!isEditing) {
       try {
@@ -168,6 +236,8 @@ const Action = () => {
         price: location.state.price,
         rating: location.state.rating,
         stock: location.state.stock,
+        highlights: location.state.highlights,
+        specifications: location.state.specifications
       });
     }
   }, [location.state]);
@@ -301,39 +371,144 @@ const Action = () => {
                   type="text"
                   required
                   name="name"
-                  onChange={(e) => handleChange(e, "stock")}
-                  value={inputs.stock}
+                  onChange={(e) => handleChange(e, "highlights")}
+                  value={hightLights}
                 />
-                <button className={styles.plus}> Add </button>
+                <button className={styles.plus} onClick={addHighlight}>
+                  {" "}
+                  Add{" "}
+                </button>
               </div>
               <div>
-                {inputs.highlights.map((highlight) => {
+                {inputs.highlights.map((highlight, i) => {
                   return (
                     <div className={styles.highlight}>
                       <ul className={styles.highlightlist}>
                         <li className={styles.highlightitem}>{highlight}</li>
-                      <button className={styles.remove}> Remove </button>
-
+                        <button
+                          className={styles.remove}
+                          onClick={(e) => removeHighlights(e, i)}
+                        >
+                          {" "}
+                          Remove{" "}
+                        </button>
                       </ul>
-
                     </div>
                   );
                 })}
               </div>
             </div>
-            <div className={styles.inputcontainer}>
-              <label htmlFor="stock" className={styles.label}>
-                Specifications
-              </label>
-              <input
-                id="name"
-                className={styles.input}
-                type="text"
-                required
-                name="name"
-                onChange={(e) => handleChange(e, "stock")}
-                value={inputs.stock}
-              />
+            <div className={styles.specificationinput}>
+              <label htmlFor="">Specifications</label>
+              <div className={styles.specifications}>
+                <div className={styles.inputcontainer}>
+                  <label htmlFor="stock" className={styles.label}>
+                    Key
+                  </label>
+                  <input
+                    id="name"
+                    className={styles.input}
+                    type="text"
+                    required
+                    name="name"
+                    onChange={(e) => handleChange(e, "key")}
+                    value={sK}
+                  />
+                </div>
+                <div className={styles.inputcontainer}>
+                  <label htmlFor="stock" className={styles.label}>
+                    Value
+                  </label>
+                  <input
+                    id="name"
+                    className={styles.input}
+                    type="text"
+                    required
+                    name="name"
+                    onChange={(e) => handleChange(e, "value")}
+                    value={sV}
+                  />
+                </div>
+                <button
+                  className={`${styles.plus} ${styles.addkey}`}
+                  onClick={addSpecification}
+                >
+                  Add
+                </button>
+              </div>
+              {/* <div className={styles.speccontainer}>
+                {inputs.specifications.map((spec, i) => {
+                  return (
+                    <div className={styles.spec}>
+                      <ul className={styles.speclist}>
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: "10px",
+                            width: "100%",
+                          }}
+                        >
+                          <li
+                            style={{ width: "100%" }}
+                            className={styles.specitem}
+                          >
+                            {spec.key}
+                          </li>
+                          <li
+                            style={{ width: "100%" }}
+                            className={styles.specitem}
+                          >
+                            {spec.value}
+                          </li>
+                        </div>
+                        <button
+                          className={styles.remove}
+                          onClick={(e) => removeSpecification(e, i)}
+                        >
+                          {" "}
+                          Remove{" "}
+                        </button>
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div> */}
+              <div className={styles.speccontainer}>
+                {Object.entries(inputs.specifications).map(
+                  ([key, value], i) => (
+                    <div key={i} className={styles.spec}>
+                      <ul className={styles.speclist}>
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: "10px",
+                            width: "100%",
+                          }}
+                        >
+                          <li
+                            style={{ width: "100%" }}
+                            className={styles.specitem}
+                          >
+                            {key}
+                          </li>
+                          <li
+                            style={{ width: "100%" }}
+                            className={styles.specitem}
+                          >
+                            {value}
+                          </li>
+                        </div>
+                        <button
+                          className={styles.remove}
+                          onClick={(e) => removeSpecification(e, key)}
+                        >
+                          Remove
+                        </button>
+                      </ul>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
 
             <div className={styles.inputcontainer}>
