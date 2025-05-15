@@ -217,6 +217,8 @@ const Action = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      console.log(error);
+      
       return error;
     }
   };
