@@ -1,12 +1,29 @@
-import React, { Suspense } from "react";
-import productsList from "../../../updated_products.json";
+import React, { Suspense, useEffect, useState } from "react";
+// import productsList from "../../../updated_products.json";
 import Header from "../../Components/Layout/Header";
 const ProductCard = React.lazy(() =>
   import("../../Components/Products/ProductCard")
 );
 import "./productlist.css";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
 
 const ProductsList = () => {
+  const [productList, setProductList] = useState([]);
+
+  const fetchProductList = async () => {
+    try {
+      const response = await axiosInstanceV1.get("/product");
+      if (response.status === 200) {
+        setProductList(response.data.productList);
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+  useEffect(() => {
+    fetchProductList();
+  }, []);
   return (
     <div>
       <Header />
@@ -26,7 +43,7 @@ const ProductsList = () => {
             </div>
           }
         >
-          {productsList?.map((product) => {
+          {productList?.map((product) => {
             return <ProductCard product={product} />;
           })}
         </Suspense>

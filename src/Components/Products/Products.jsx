@@ -1,12 +1,29 @@
-import React, { Suspense } from "react";
-import productsList from "../../../updated_products.json";
-import categoryList from "../../../updated_categories.json";
+import React, { Suspense, useEffect, useState } from "react";
+// import productsList from "../../../updated_products.json";
+// import categoryList from "../../../updated_categories.json";
 
 // import ProductCard from "./ProductCard";
 const ProductCard = React.lazy(() => import("./ProductCard"));
 
 import "./product.css";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
 const Products = () => {
+  const [productList, setProductList] = useState([]);
+
+  const fetchProductList = async () => {
+    try {
+      const response = await axiosInstanceV1.get("/product");
+      if (response.status === 200) {
+        setProductList(response.data.productList);
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+  useEffect(() => {
+    fetchProductList();
+  },[]);
   return (
     <div className="product-container">
       {/* <div className="category-list">
@@ -33,12 +50,12 @@ const Products = () => {
         <h1>Your Top Products here</h1>
       </div>
       <div className="product-list">
-        {productsList
+        {productList
           ?.sort(() => 0.5 - Math.random()) // randomly shuffle
           .slice(0, 5)
           ?.map((product) => {
             return (
-              <Suspense key={product.id} fallback={"Loading..."}>
+              <Suspense key={product._id} fallback={"Loading..."}>
                 <ProductCard product={product} />
               </Suspense>
             );
@@ -48,12 +65,12 @@ const Products = () => {
         <h1>Discover New Products</h1>
       </div>
       <div className="product-list">
-        {productsList
+        {productList
           ?.sort(() => 0.5 - Math.random()) // randomly shuffle
           .slice(0, 5)
           ?.map((product) => {
             return (
-              <Suspense key={product.id} fallback={"Loading..."}>
+              <Suspense key={product._id} fallback={"Loading..."}>
                 <ProductCard product={product} />
               </Suspense>
             );

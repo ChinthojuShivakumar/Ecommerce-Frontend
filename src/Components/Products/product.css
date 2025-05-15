@@ -79,3 +79,13 @@
   max-width: 100%;
   box-sizing: border-box;
 }
+
+.card-product-title {
+  display: -webkit-box; /* Use flexbox with limited lines */
+  -webkit-line-clamp: 1; /* Limit to 1 line */
+  -webkit-box-orient: vertical; /* Vertical orientation */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Show ... when text is clipped */
+  white-space: normal;
+  line-clamp: 1; /* Allow wrapping */
+}

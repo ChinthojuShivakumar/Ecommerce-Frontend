@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const handleRedirectDetailPage = (e, product) => {
     e.preventDefault();
-    navigate(`/product?q=${product.name}`);
+    navigate(`/product?q=${product.name}`, { state: product });
     return;
   };
   return (

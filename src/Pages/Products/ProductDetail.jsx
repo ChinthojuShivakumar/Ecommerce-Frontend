@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../Components/Layout/Header";
-import ProductList from "../../../updated_products.json";
-import { useLocation } from "react-router-dom";
+// import ProductList from "../../../updated_products.json";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./productlist.css";
 
 const ProductDetail = () => {
@@ -10,13 +10,16 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [imageView, setImageView] = useState(0);
   const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
-  console.log(imageView);
+  console.log(location);
+  const navigate = useNavigate()
 
   const addToCart = (e, product) => {
     e.preventDefault();
+    navigate("/cart")
   };
   const butNow = (e, product) => {
     e.preventDefault();
+     navigate("/cart")
   };
 
   const handlePrevious = (e) => {
@@ -33,14 +36,13 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    const findProduct = ProductList.find(
-      (product) => product.name === productName
-    );
+    const findProduct =
+      location.state?.name === productName ? location.state : null;
     // console.log(findProduct);
     setProduct(findProduct);
   }, []);
 
-  // console.log(p);
+  console.log(product);
 
   return (
     <div>
@@ -115,14 +117,16 @@ const ProductDetail = () => {
             <p>⭐{product?.rating}</p>
           </div>
 
-          <div className="offers">
-            <h1>Offers:</h1>
-            {product?.offers?.map((offer, i) => (
-              <li style={{ fontWeight: "normal" }} key={i}>
-                {offer}
-              </li>
-            ))}
-          </div>
+          {product?.offers?.length && (
+            <div className="offers">
+              <h1>Offers:</h1>
+              {product?.offers?.map((offer, i) => (
+                <li style={{ fontWeight: "normal" }} key={i}>
+                  {offer}
+                </li>
+              ))}
+            </div>
+          )}
           <div className="description">
             <h1>Description: </h1>
             <p style={{ fontWeight: "normal" }}>{product?.description}</p>

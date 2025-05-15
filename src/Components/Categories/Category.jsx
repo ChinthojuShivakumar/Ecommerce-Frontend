@@ -1,13 +1,30 @@
-import React from "react";
-import categoryList from "../../../updated_categories.json";
+import React, { useEffect, useState } from "react";
+// import categoryList from "../../../updated_categories.json";
 import "./Category.css";
 import { useNavigate } from "react-router-dom";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
 const Category = () => {
   const navigate = useNavigate();
+  const [categoryList, setCategoryList] = useState([]);
+
+  const fetchCategoryList = async () => {
+    try {
+      const response = await axiosInstanceV1.get("/category");
+      if (response.status === 200) {
+        setCategoryList(response.data.categoryList);
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
   const handleRedirectCategory = (e, category) => {
     e.preventDefault();
     navigate(`/category?q=${category}`);
-    return
+    return;
   };
   return (
     <div className="cat-container">
@@ -17,7 +34,7 @@ const Category = () => {
             <ul
               className="cat-item"
               key={i}
-              onClick={(e) => handleRedirectCategory(e, category.category)}
+              onClick={(e) => handleRedirectCategory(e, category.name)}
             >
               <img
                 className="cat-img"
