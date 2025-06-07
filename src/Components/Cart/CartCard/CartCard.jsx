@@ -1,36 +1,73 @@
-import React from "react";
-import "./cartcard.css";
+import React, { useState } from "react";
+import styles from "./cartcard.module.css";
 
 const CartCard = () => {
-  const product = {
-    id: "0",
-    name: "Wireless Headphones",
-    category: "Electronics",
-    description:
-      "Over-ear noise-cancelling headphones with 30 hours of battery life.",
-    price: 99.99,
-    stock: 20,
-    rating: 4.6,
-    image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
-  };
+  const products = [
+    {
+      id: 1,
+      name: "Wireless Headphones",
+      category: "Electronics",
+      description:
+        "Over-ear noise-cancelling headphones with 30 hours of battery life.",
+      price: 99.99,
+      stock: 20,
+      rating: 4.6,
+      image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
+    },
+    {
+      id: 2,
+      name: "Wireless Headphones",
+      category: "Electronics",
+      description:
+        "Over-ear noise-cancelling headphones with 30 hours of battery life.",
+      price: 99.99,
+      stock: 20,
+      rating: 4.6,
+      image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
+    },
+  ];
+
+  const [quantity, setQuantity] = useState(1);
   return (
-    <div className="card-container">
-      <div className="card-content">
-        <div className="card-image">
-          <img
-            src={product.image}
-            alt={product.name}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/errorimage.png";
-            }}
-          />
-        </div>
-        <div className="card-body">
-          <h1>{product.name}</h1>
-          <p>RS.{product.price}</p>
-        </div>
-      </div>
+    <div className={styles.cardContainer}>
+      {products.map((product, i) => {
+        return (
+          <div className={styles.cardContent}>
+            <div className={styles.cardImage}>
+              <img
+                src={product.image}
+                alt={product.name}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/errorimage.png";
+                }}
+              />
+            </div>
+            <div className={styles.cardBody}>
+              <h1>{product.name}</h1>
+              <p>RS.{product.price}</p>
+              <div className={styles.quantity}>
+                <button
+                  type="button"
+                  className={styles.decrease}
+                  onClick={() => setQuantity(quantity - 1)}
+                  disabled={quantity === 1}
+                >
+                  -
+                </button>
+                <p>{quantity}</p>
+                <button
+                  type="button"
+                  className={styles.increase}
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
