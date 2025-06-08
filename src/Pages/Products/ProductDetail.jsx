@@ -11,15 +11,18 @@ const ProductDetail = () => {
   const [imageView, setImageView] = useState(0);
   const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
   console.log(location);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const addToCart = (e, product) => {
     e.preventDefault();
-    navigate("/cart")
+    const fetchCartList = JSON.parse(localStorage.getItem("cartItems")) || [];
+    fetchCartList.push(product);
+    localStorage.setItem("cartItems", JSON.stringify(fetchCartList));
+    navigate("/cart");
   };
   const butNow = (e, product) => {
     e.preventDefault();
-     navigate("/cart")
+    navigate("/cart");
   };
 
   const handlePrevious = (e) => {

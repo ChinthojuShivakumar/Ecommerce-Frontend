@@ -1,8 +1,14 @@
 .cart-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-    padding: 0px 20px ;
-    align-items: start;
-  }
-  
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  padding: 0px 20px;
+  align-items: start;
+}
+
+.emptyCart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 10px);
+}

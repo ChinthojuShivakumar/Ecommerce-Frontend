@@ -1,41 +1,50 @@
 import React, { useState } from "react";
 import styles from "./cartcard.module.css";
 
-const CartCard = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      category: "Electronics",
-      description:
-        "Over-ear noise-cancelling headphones with 30 hours of battery life.",
-      price: 99.99,
-      stock: 20,
-      rating: 4.6,
-      image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
-    },
-    {
-      id: 2,
-      name: "Wireless Headphones",
-      category: "Electronics",
-      description:
-        "Over-ear noise-cancelling headphones with 30 hours of battery life.",
-      price: 99.99,
-      stock: 20,
-      rating: 4.6,
-      image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
-    },
-  ];
+const CartCard = ({ cartList, setCartList }) => {
+  // const products = [
+  //   {
+  //     id: 1,
+  //     name: "Wireless Headphones",
+  //     category: "Electronics",
+  //     description:
+  //       "Over-ear noise-cancelling headphones with 30 hours of battery life.",
+  //     price: 99.99,
+  //     stock: 20,
+  //     rating: 4.6,
+  //     image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Wireless Headphones",
+  //     category: "Electronics",
+  //     description:
+  //       "Over-ear noise-cancelling headphones with 30 hours of battery life.",
+  //     price: 99.99,
+  //     stock: 20,
+  //     rating: 4.6,
+  //     image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
+  //   },
+  // ];
+
+  const handleRemove = (productId) => {
+    const updatedProduct = cartList?.filter(
+      (product) => product._id !== productId._id
+    );
+    localStorage.removeItem("cartItems");
+    localStorage.setItem("cartItems", JSON.stringify(updatedProduct));
+    setCartList(updatedProduct)
+  };
 
   const [quantity, setQuantity] = useState(1);
   return (
     <div className={styles.cardContainer}>
-      {products.map((product, i) => {
+      {cartList?.map((product, i) => {
         return (
-          <div className={styles.cardContent}>
+          <div className={styles.cardContent} key={i}>
             <div className={styles.cardImage}>
               <img
-                src={product.image}
+                src={product.images[0]}
                 alt={product.name}
                 onError={(e) => {
                   e.target.onerror = null;
@@ -63,6 +72,10 @@ const CartCard = () => {
                 >
                   +
                 </button>
+              </div>
+              <div className={styles.action}>
+                <h5 onClick={() => handleRemove(product)}>Remove</h5>
+                <h5>Save For Later</h5>
               </div>
             </div>
           </div>

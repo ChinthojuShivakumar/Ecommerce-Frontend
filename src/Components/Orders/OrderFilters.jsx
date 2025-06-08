@@ -9,7 +9,7 @@ const OrderFilters = () => {
       </div>
       <div className={styles.checkboxSection}>
         <div className={styles.checkbox}>
-          <input type="checkbox" />
+          <input type="checkbox" name="year" id="year" />
           <label htmlFor="">2025</label>
         </div>
       </div>
