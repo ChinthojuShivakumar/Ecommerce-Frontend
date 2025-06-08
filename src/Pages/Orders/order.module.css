@@ -1,0 +1,32 @@
+.order {
+  display: flex;
+  margin-top: 10px;
+  padding: 0px 1.5rem;
+}
+
+.orderContainer {
+  width: 100%;
+}
+.inputContainer.px {
+  width: 70%;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  box-sizing: border-box;
+}
+
+.orderCard {
+  width: 100%;
+}
+
+.searchInput {
+  padding: 0.3rem 0rem;
+  font-weight: 600;
+  font-size: larger;
+  border-radius: 0.2rem;
+  width: 90%;
+}
+
+.searchInput:focus {
+  outline: 1px solid blue;
+  border: 2px solid blue;
+}

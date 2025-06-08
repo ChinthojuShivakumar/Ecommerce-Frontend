@@ -1,14 +1,20 @@
-import React from 'react'
-import "./orderfilter.css"
+import React from "react";
+import styles from "./orderfilter.module.css";
 
 const OrderFilters = () => {
   return (
-    <div>
-        <div>
-            <h1>Order Filters</h1>
+    <div className={styles.filterContainer}>
+      <div className={styles.title}>
+        <h1>Order Filters</h1>
+      </div>
+      <div className={styles.checkboxSection}>
+        <div className={styles.checkbox}>
+          <input type="checkbox" />
+          <label htmlFor="">2025</label>
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default OrderFilters
+export default OrderFilters;
