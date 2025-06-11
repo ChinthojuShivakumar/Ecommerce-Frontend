@@ -1,10 +1,21 @@
+.cardContainer {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+  margin: 10px 2rem;
+}
+.cartListWrapper {
+  overflow-y: auto;
+  max-height: 85vh; /* Controls scroll area height */
+  padding-right: 10px; /* For scrollbar spacing */
+}
 .cardContent {
   display: flex;
   width: 100%;
   gap: 20px;
   border: 2px solid white;
   padding: 0.3rem;
-  margin: 10px 10px;
+  margin: 10px 0px;
   border-radius: 0.2rem;
   box-shadow: 0px 0.11px 1px 0.1px;
   box-sizing: border-box;

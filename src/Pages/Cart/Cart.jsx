@@ -22,7 +22,7 @@ const Cart = () => {
       ) : (
         <div className="cart-container">
           <CartCard cartList={cartList} setCartList={setCartList} />
-          <PriceCard />
+          {/* <PriceCard /> */}
         </div>
       )}
     </div>
