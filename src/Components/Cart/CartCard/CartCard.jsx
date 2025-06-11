@@ -2,38 +2,13 @@ import React, { useState } from "react";
 import styles from "./cartcard.module.css";
 
 const CartCard = ({ cartList, setCartList }) => {
-  // const products = [
-  //   {
-  //     id: 1,
-  //     name: "Wireless Headphones",
-  //     category: "Electronics",
-  //     description:
-  //       "Over-ear noise-cancelling headphones with 30 hours of battery life.",
-  //     price: 99.99,
-  //     stock: 20,
-  //     rating: 4.6,
-  //     image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Wireless Headphones",
-  //     category: "Electronics",
-  //     description:
-  //       "Over-ear noise-cancelling headphones with 30 hours of battery life.",
-  //     price: 99.99,
-  //     stock: 20,
-  //     rating: 4.6,
-  //     image: "https://images.pexels.com/photos/373990/pexels-photo-373990.jpeg",
-  //   },
-  // ];
-
   const handleRemove = (productId) => {
     const updatedProduct = cartList?.filter(
       (product) => product._id !== productId._id
     );
     localStorage.removeItem("cartItems");
     localStorage.setItem("cartItems", JSON.stringify(updatedProduct));
-    setCartList(updatedProduct)
+    setCartList(updatedProduct);
   };
 
   const [quantity, setQuantity] = useState(1);
@@ -55,7 +30,7 @@ const CartCard = ({ cartList, setCartList }) => {
             <div className={styles.cardBody}>
               <h1>{product.name}</h1>
               <p>RS.{product.price}</p>
-              <div className={styles.quantity}>
+              <div className={styles.quantityContainer}>
                 <button
                   type="button"
                   className={styles.decrease}
@@ -64,7 +39,7 @@ const CartCard = ({ cartList, setCartList }) => {
                 >
                   -
                 </button>
-                <p>{quantity}</p>
+                <p className={styles.quantity}>{quantity}</p>
                 <button
                   type="button"
                   className={styles.increase}

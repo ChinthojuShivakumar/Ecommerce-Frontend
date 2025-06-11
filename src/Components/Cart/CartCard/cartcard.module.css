@@ -8,6 +8,7 @@
   border-radius: 0.2rem;
   box-shadow: 0px 0.11px 1px 0.1px;
   box-sizing: border-box;
+  color: black;
 }
 
 .cardImage img {
@@ -21,21 +22,26 @@
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+  color: black;
 }
 
 .cardBody > h1 {
   font-size: 1.5rem;
 }
 
-.quantity {
+.quantityContainer {
   width: 15%;
   height: 25%;
   display: flex;
-  border: 1px solid black;
+  border: 1px solid grey;
   border-radius: 0.2rem;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
+}
+
+.quantity {
+  color: black;
 }
 
 .decrease,
@@ -55,6 +61,7 @@
 
 .decrease:disabled {
   cursor: not-allowed;
+  background-color: grey;
 }
 
 .action {
