@@ -1,0 +1,56 @@
+.cardContent {
+  display: flex;
+  /* width: 100%; */
+  gap: 20px;
+  border: 2px solid white;
+  padding: 0.3rem;
+  margin: 10px 15px;
+  border-radius: 0.2rem;
+  box-shadow: 0px 0.11px 1px 0.1px;
+  justify-content: space-between;
+  font-weight: 400;
+}
+
+.productData {
+  display: flex;
+  gap: 0.8rem;
+}
+.cardImage img {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.2rem;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cardBody > h1 {
+  font-size: 1.2rem;
+}
+
+.orderStatusContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.orderStatus h1,
+p {
+  font-size: 1rem;
+  text-transform: capitalize;
+  line-height: 26px;
+  color: green;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 2px;
+}
+
+.orderStatus p:last-child {
+  color: blue;
+  cursor: pointer;
+}

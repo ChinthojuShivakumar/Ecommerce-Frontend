@@ -1,0 +1,29 @@
+.filterContainer {
+  width: 20%;
+  border: 1px solid white;
+  padding: 0.5rem;
+  box-shadow: 0.05px 0.2px 0.05rem 0.05px;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.title {
+  font-size: 0.8rem;
+}
+
+.checkboxSection {
+  margin-top: 20px;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
