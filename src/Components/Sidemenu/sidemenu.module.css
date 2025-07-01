@@ -1,0 +1,25 @@
+.container {
+  width: 100%;
+  background-color: aqua;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+}
+
+.listitem {
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.listitem:hover {
+  background-color: bisque;
+}
+
+.active {
+  background-color: bisque;
+  border-radius: 0.2rem;
+}

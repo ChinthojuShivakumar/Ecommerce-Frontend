@@ -6,6 +6,7 @@ import Order from "./Pages/Orders/Order";
 import AdminRoutes from "./Pages/Admin/Routes/Routes";
 import { ToastContainer } from "react-toastify";
 import ErrorBoundary from "./Utils/ErrorBoundary";
+import Account from "./Pages/Account/Account";
 const Home = React.lazy(() => import("./Pages/Home/Home"));
 const ProductsList = React.lazy(() => import("./Pages/Products/ProductsList"));
 const ProductDetail = React.lazy(() =>
@@ -144,6 +145,27 @@ function App() {
                 }
               >
                 <Order />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/my profile"
+            element={
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100vh",
+                    }}
+                  >
+                    Loading...
+                  </div>
+                }
+              >
+                <Account />
               </Suspense>
             }
           />
