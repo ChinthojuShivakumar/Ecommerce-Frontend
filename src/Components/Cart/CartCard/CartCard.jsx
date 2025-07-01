@@ -2,10 +2,38 @@ import React, { useEffect, useState } from "react";
 import styles from "./cartcard.module.css";
 import PriceCard from "../PriceCard/PriceCard";
 
-const CartCard = ({ cartList, setCartList }) => {
+const CartCard = ({
+  cartList,
+  setCartList,
+  saveLaterList,
+  setSaveLaterList,
+}) => {
   const handleRemove = (productId) => {
     const updatedProduct = cartList?.filter(
       (product) => product._id !== productId._id
+    );
+    localStorage.removeItem("cartItems");
+    localStorage.setItem("cartItems", JSON.stringify(updatedProduct));
+    setCartList(updatedProduct);
+    return;
+  };
+
+  const handleSaveLater = (product) => {
+    const fetchSaveLaterList =
+      JSON.parse(localStorage.getItem("saveLater")) || [];
+    const isProductExits = fetchSaveLaterList.find(
+      (productId) => productId._id === product._id
+    );
+    if (isProductExits) {
+      alert("Chosen Product is already in List...!!!");
+      navigate("/cart");
+      return;
+    }
+    fetchSaveLaterList.push(product);
+    localStorage.setItem("saveLater", JSON.stringify(fetchSaveLaterList));
+    // removing product from cart List
+    const updatedProduct = cartList?.filter(
+      (productId) => productId._id !== product._id
     );
     localStorage.removeItem("cartItems");
     localStorage.setItem("cartItems", JSON.stringify(updatedProduct));
@@ -17,6 +45,15 @@ const CartCard = ({ cartList, setCartList }) => {
   const [quantity, setQuantity] = useState(1);
 
   const priceFilters = () => {
+    if (!Array.isArray(cartList) || cartList.length === 0) {
+      setPrices({
+        discount: 0,
+        totalPrice: 0,
+        shippingAmount: 0,
+        finalAmount: 0,
+      });
+      return;
+    }
     let discount = 0;
     let totalPrice = 0;
     let shippingAmount = 100;
@@ -29,6 +66,13 @@ const CartCard = ({ cartList, setCartList }) => {
 
     setPrices({ discount, totalPrice, shippingAmount, finalAmount });
   };
+
+  // useEffect(() => {
+  //   useEffect(() => {
+  //     const cartLists = JSON.parse(localStorage.getItem("cartItems"));
+
+  //   }, []);
+  // }, []);
 
   useEffect(() => {
     priceFilters();
@@ -72,16 +116,20 @@ const CartCard = ({ cartList, setCartList }) => {
                 </div>
                 <div className={styles.action}>
                   <h5 onClick={() => handleRemove(product)}>Remove</h5>
-                  <h5>Save For Later</h5>
+                  <h5 onClick={() => handleSaveLater(product)}>
+                    Save For Later
+                  </h5>
                 </div>
               </div>
             </div>
           );
         })}
       </div>
-      <div>
-        <PriceCard price={prices} />
-      </div>
+      {cartList?.length > 0 && (
+        <div>
+          <PriceCard price={prices} />
+        </div>
+      )}
     </div>
   );
 };

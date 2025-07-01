@@ -12,15 +12,31 @@ const ProductDetail = () => {
   const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
   console.log(location);
   const navigate = useNavigate();
+  const [isCartProduct, setIsCartProduct] = useState({});
 
   const addToCart = (e, product) => {
     e.preventDefault();
     const fetchCartList = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const isProductExits = fetchCartList.find(
+      (productId) => productId._id === product._id
+    );
+    if (isProductExits) {
+      alert("Chosen Product is already in cart...!!!");
+      navigate("/cart");
+      return;
+    }
+    // if(fetchCart)
     fetchCartList.push(product);
     localStorage.setItem("cartItems", JSON.stringify(fetchCartList));
     navigate("/cart");
   };
-  const butNow = (e, product) => {
+
+  const goToCart = () => {
+    navigate("/cart");
+    return;
+  };
+
+  const buyNow = (e, product) => {
     e.preventDefault();
     navigate("/cart");
   };
@@ -45,7 +61,18 @@ const ProductDetail = () => {
     setProduct(findProduct);
   }, []);
 
-  console.log(product);
+  useEffect(() => {
+    const findProduct =
+      location.state?.name === productName ? location.state : null;
+    const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const isProductMatched = cartLists.find(
+      (productId) => productId.name === findProduct.name
+    );
+    // console.log(isProductMatched);
+
+    setIsCartProduct(isProductMatched);
+  }, []);
+  // console.log(isCartProduct);
 
   return (
     <div>
@@ -98,9 +125,11 @@ const ProductDetail = () => {
             <button
               className="cta-b1"
               type="button"
-              onClick={(e) => addToCart(e, product)}
+              onClick={(e) =>
+                isCartProduct ? goToCart(e, product) : addToCart(e, product)
+              }
             >
-              Add To Cart
+              {isCartProduct ? "Go to Cart" : "Add to Cart"}
             </button>
             <button
               className="cta-b2"
