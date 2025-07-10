@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./address.module.css";
 import Modal from "../../Modal/Modal";
 import { modalStyle } from "../../../Constants/Constant";
+import { errorMessage, successMessage } from "../../../Utils/Alert";
+import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 
 const Address = () => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const ADDRESS_TYPE = ["Home", "Work", "Others"];
   const initialInputs = {
-    userId: "",
+    userId: "1",
     name: "",
-    phoneNumber: "",
+    phoneNumber: null,
     houseNumber: "",
     village: "",
     state: "",
@@ -20,6 +22,8 @@ const Address = () => {
     addressType: "",
   };
   const [inputs, setInputs] = useState(initialInputs);
+
+  const [addressList, setAddressList] = useState([]);
   const handleOpenModal = (e) => {
     e.preventDefault();
     setOpen(true);
@@ -27,16 +31,21 @@ const Address = () => {
   const handleCloseModal = (e) => {
     e.preventDefault();
     setOpen(false);
+    clearInputs();
   };
 
   const handleChange = (e, type) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (type === "name") {
       setInputs({ ...inputs, name: e.target.value });
       return;
     }
     if (type === "phoneNumber") {
       setInputs({ ...inputs, phoneNumber: Number(e.target.value) });
+      return;
+    }
+    if (type === "pincode") {
+      setInputs({ ...inputs, pincode: Number(e.target.value) });
       return;
     }
     if (type === "houseNumber") {
@@ -65,17 +74,64 @@ const Address = () => {
     }
   };
 
+  const postAddress = async () => {
+    try {
+      const response = await axiosInstanceV1.post("/address/create", inputs);
+      if (response.status === 201) {
+        successMessage(response.data.message);
+        clearInputs();
+        return;
+      }
+    } catch (error) {
+      return errorMessage(error.message);
+    }
+  };
+
+  const fetchAddressList = async () => {
+    try {
+      const response = await axiosInstanceV1.get("/address");
+      if (response.status === 200) {
+        successMessage(response.data.message);
+        setAddressList(response.data.addressList);
+        return;
+      }
+    } catch (error) {
+      return errorMessage(error.message);
+    }
+  };
+
   const clearInputs = () => {
     setEditMode(false);
     setOpen(false);
     setInputs(initialInputs);
   };
+
+  useEffect(() => {
+    fetchAddressList();
+  }, []);
   return (
     <div>
       <h1>My Address</h1>
       <button type="button" onClick={handleOpenModal}>
         Add Address
       </button>
+      {addressList?.map((item) => {
+        return (
+          <div className={styles.card}>
+            <h1>
+              {item.name} {item.isDefault && <span>default</span>}
+            </h1>
+            <p>
+              {item.houseNumber}, {item.village}(V), {item.mandala}(M),{" "}
+              {item.district}(Dist.)
+            </p>
+            <p>
+              {item.state} -{item.pincode}
+            </p>
+            <p>Phone Number: {item.phoneNumber}</p>
+          </div>
+        );
+      })}
       <Modal open={open} style={modalStyle}>
         <div className={styles.container}>
           <div className={styles.model_header}>
@@ -97,10 +153,10 @@ const Address = () => {
               <label htmlFor="">Phone Number: </label>
               <input
                 type="number"
-                name="number"
-                id="number"
+                name="phoneNumber"
+                id="phoneNumber"
                 className={styles.input}
-                onChange={(e) => handleChange(e, "number")}
+                onChange={(e) => handleChange(e, "phoneNumber")}
                 value={inputs.phoneNumber}
               />
             </div>
@@ -160,6 +216,17 @@ const Address = () => {
               />
             </div>
             <div className={styles.item}>
+              <label htmlFor="">Pincode: </label>
+              <input
+                type="text"
+                name="pincode"
+                id="pincode"
+                className={styles.input}
+                onChange={(e) => handleChange(e, "pincode")}
+                value={inputs.pincode}
+              />
+            </div>
+            <div className={styles.item}>
               <label htmlFor="">Address Type: </label>
               <div className={styles.types}>
                 {ADDRESS_TYPE.map((item, i) => (
@@ -167,9 +234,9 @@ const Address = () => {
                     <input
                       type="radio"
                       id={i}
-                      value={inputs.addressType}
+                      value={item}
                       onChange={(e) => handleChange(e, "addressType")}
-                      // checked={item === inputs.addressType}
+                      checked={item === inputs.addressType}
                     />
                     <label htmlFor={item}>{item}</label>
                   </div>
@@ -178,7 +245,11 @@ const Address = () => {
             </div>
           </div>
           <div className={styles.modal_footer}>
-            <button type="button" className={styles.action}>
+            <button
+              type="button"
+              className={styles.action}
+              onClick={postAddress}
+            >
               Add
             </button>
             <button
