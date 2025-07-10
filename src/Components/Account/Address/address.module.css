@@ -97,3 +97,50 @@ span {
   color: white;
   font-weight: normal;
 }
+
+.headersection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.act {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 70px;
+  justify-content: center;
+  align-items: center;
+}
+
+.actButtons {
+  position: absolute;
+  background-color: whitesmoke;
+  right: 35px;
+  width: 100%;
+  top: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  padding-left: 10px;
+  border: 1px solid grey;
+  border-radius: 1px;
+}
+
+.edit,
+.delete {
+  cursor: pointer;
+}
+
+.edit:hover {
+  color: blue;
+}
+
+.delete:hover {
+  color: red;
+}
+
+.hide {
+    display: none;
+}

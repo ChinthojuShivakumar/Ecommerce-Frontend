@@ -4,20 +4,20 @@ import Modal from "../../Modal/Modal";
 import { modalStyle } from "../../../Constants/Constant";
 import { errorMessage, successMessage } from "../../../Utils/Alert";
 import { axiosInstanceV1 } from "../../../Utils/ApiServices";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const Address = () => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [actionF, setActionF] = useState(false);
   const ADDRESS_TYPE = ["Home", "Work", "Others"];
   const initialInputs = {
     userId: "1",
     name: "",
     phoneNumber: null,
     houseNumber: "",
-    village: "",
+    area: "",
     state: "",
-    district: "",
-    mandala: "",
     pincode: null,
     addressType: "",
   };
@@ -52,18 +52,11 @@ const Address = () => {
       setInputs({ ...inputs, houseNumber: e.target.value });
       return;
     }
-    if (type === "village") {
-      setInputs({ ...inputs, village: e.target.value });
+    if (type === "area") {
+      setInputs({ ...inputs, area: e.target.value });
       return;
     }
-    if (type === "mandala") {
-      setInputs({ ...inputs, mandala: e.target.value });
-      return;
-    }
-    if (type === "district") {
-      setInputs({ ...inputs, district: e.target.value });
-      return;
-    }
+
     if (type === "state") {
       setInputs({ ...inputs, state: e.target.value });
       return;
@@ -100,6 +93,19 @@ const Address = () => {
     }
   };
 
+  const deleteAddress = async (_id) => {
+    try {
+      const response = await axiosInstanceV1.delete(`/address/${_id}`);
+      if (response.status === 202) {
+        successMessage(response.data.message);
+        fetchAddressList()
+        return;
+      }
+    } catch (error) {
+      return errorMessage(error.message);
+    }
+  };
+
   const clearInputs = () => {
     setEditMode(false);
     setOpen(false);
@@ -118,12 +124,27 @@ const Address = () => {
       {addressList?.map((item) => {
         return (
           <div className={styles.card}>
-            <h1>
-              {item.name} {item.isDefault && <span>default</span>}
-            </h1>
+            <div className={styles.headersection}>
+              <h1>
+                {item.name} {item.isDefault && <span>default</span>}
+              </h1>
+              <p style={{ cursor: "pointer" }} className={styles.act}>
+                <BsThreeDotsVertical onClick={() => setActionF(!actionF)} />
+                <div
+                  className={`${styles.actButtons} ${!actionF && styles.hide}`}
+                >
+                  <p className={styles.edit}>Edit</p>
+                  <p
+                    className={styles.delete}
+                    onClick={() => deleteAddress(item._id)}
+                  >
+                    Delete
+                  </p>
+                </div>
+              </p>
+            </div>
             <p>
-              {item.houseNumber}, {item.village}(V), {item.mandala}(M),{" "}
-              {item.district}(Dist.)
+              {item.houseNumber}, {item.area}
             </p>
             <p>
               {item.state} -{item.pincode}
@@ -147,6 +168,7 @@ const Address = () => {
                 className={styles.input}
                 onChange={(e) => handleChange(e, "name")}
                 value={inputs.name}
+                autoComplete="off"
               />
             </div>
             <div className={styles.item}>
@@ -158,6 +180,7 @@ const Address = () => {
                 className={styles.input}
                 onChange={(e) => handleChange(e, "phoneNumber")}
                 value={inputs.phoneNumber}
+                autoComplete="off"
               />
             </div>
             <div className={styles.item}>
@@ -169,41 +192,22 @@ const Address = () => {
                 className={styles.input}
                 onChange={(e) => handleChange(e, "houseNumber")}
                 value={inputs.houseNumber}
+                autoComplete="off"
               />
             </div>
             <div className={styles.item}>
-              <label htmlFor="">Village: </label>
+              <label htmlFor="">Area / Apartment / Road: </label>
               <input
                 type="text"
-                name="village"
-                id="village"
+                name="area"
+                id="area"
                 className={styles.input}
-                onChange={(e) => handleChange(e, "village")}
-                value={inputs.village}
+                onChange={(e) => handleChange(e, "area")}
+                value={inputs.area}
+                autoComplete="off"
               />
             </div>
-            <div className={styles.item}>
-              <label htmlFor="">Mandala: </label>
-              <input
-                type="text"
-                name="mandala"
-                id="mandala"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "mandala")}
-                value={inputs.mandala}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">District: </label>
-              <input
-                type="text"
-                name="district"
-                id="district"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "district")}
-                value={inputs.district}
-              />
-            </div>
+
             <div className={styles.item}>
               <label htmlFor="">State: </label>
               <input
@@ -213,6 +217,7 @@ const Address = () => {
                 className={styles.input}
                 onChange={(e) => handleChange(e, "state")}
                 value={inputs.state}
+                autoComplete="off"
               />
             </div>
             <div className={styles.item}>
@@ -224,6 +229,7 @@ const Address = () => {
                 className={styles.input}
                 onChange={(e) => handleChange(e, "pincode")}
                 value={inputs.pincode}
+                autoComplete="off"
               />
             </div>
             <div className={styles.item}>
