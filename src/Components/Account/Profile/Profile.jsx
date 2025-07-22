@@ -1,196 +1,224 @@
-import { useState } from "react";
-import Modal from "../../Modal/Modal";
+import { useEffect, useState } from "react";
 import styles from "./profile.module.css";
-import { modalStyle } from "../../../Constants/Constant";
+import { fetchUserData, modalStyle } from "../../../Constants/Constant";
+import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 
 const Profile = () => {
-  const [open, setOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const ADDRESS_TYPE = ["Home", "Work", "Others"];
+  const [pF, setPF] = useState(true);
+  const [mF, setMF] = useState(true);
+  const [eF, setEF] = useState(true);
+  const ADDRESS_TYPE = ["Male", "Female", "Others"];
   const initialInputs = {
-    userId: "",
+    _id: "",
     name: "",
-    phoneNumber: "",
-    houseNumber: "",
-    village: "",
-    state: "",
-    district: "",
-    mandala: "",
-    pincode: null,
-    addressType: "",
+    phoneNumber: null,
+    email: "",
   };
+
   const [inputs, setInputs] = useState(initialInputs);
-  const handleOpenModal = (e) => {
-    e.preventDefault();
-    setOpen(true);
-  };
-  const handleCloseModal = (e) => {
-    e.preventDefault();
-    setOpen(false);
-  };
 
   const handleChange = (e, type) => {
     e.preventDefault();
-    if (type === "name") {
+    if (type === "firstName") {
       setInputs({ ...inputs, name: e.target.value });
+      return;
+    }
+    if (type === "lastName") {
+      setInputs({ ...inputs, name: ` ${e.target.value}` });
       return;
     }
     if (type === "phoneNumber") {
       setInputs({ ...inputs, phoneNumber: Number(e.target.value) });
       return;
     }
-    if (type === "houseNumber") {
+    if (type === "email") {
       setInputs({ ...inputs, houseNumber: e.target.value });
       return;
     }
-    if (type === "village") {
+    if (type === "gender") {
       setInputs({ ...inputs, village: e.target.value });
-      return;
-    }
-    if (type === "mandala") {
-      setInputs({ ...inputs, mandala: e.target.value });
-      return;
-    }
-    if (type === "district") {
-      setInputs({ ...inputs, district: e.target.value });
-      return;
-    }
-    if (type === "state") {
-      setInputs({ ...inputs, state: e.target.value });
-      return;
-    }
-    if (type === "addressType") {
-      setInputs({ ...inputs, addressType: e.target.value });
       return;
     }
   };
 
+  const updateUser = async (_id) => {
+    try {
+      const response = await axiosInstanceV1.put(`/user/${inputs._id}`, inputs);
+      if (response.status === 202) {
+        alert(response.data.message);
+      }
+      return;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const handleDeactivateAccount = async (_id) => {
+    try {
+      if (window.confirm("Are you sure want to deactivate account ?")) {
+        const response = await axiosInstanceV1.post(
+          `/user/deactivate/${inputs._id}`,
+          {
+            status: "Inactive",
+          }
+        );
+        if (response.status === 202) {
+          alert(response.data.message);
+        }
+      }
+      return;
+    } catch (error) {
+      return error;
+    }
+  };
+  const handleDeleteAccount = async (_id) => {
+    try {
+      if (
+        window.confirm(
+          "Are you sure want to delete account ? Your All account access data will be lost Once deleted..!"
+        )
+      ) {
+        const response = await axiosInstanceV1.delete(`/user/${_id}`);
+        if (response.status === 200) {
+          alert(response.data.message);
+        }
+      }
+      return;
+    } catch (error) {
+      return error;
+    }
+  };
+
   const clearInputs = () => {
-    setEditMode(false);
-    setOpen(false);
     setInputs(initialInputs);
   };
+
+  useEffect(() => {
+    setInputs(fetchUserData());
+  }, []);
+
+  console.log(inputs);
+
   return (
     <div>
-      <h1>my profile</h1>
-      <button type="button" onClick={handleOpenModal}>
-        Add Address
-      </button>
-      <Modal open={open} style={modalStyle}>
-        <div className={styles.container}>
-          <div className={styles.model_header}>
-            <h1> Add Address </h1>
+      <h1>My Profile</h1>
+
+      <h2 style={{ marginTop: "10px" }}>
+        Personal Information:{" "}
+        <span className={styles.edit} onClick={() => setPF(!pF)}>
+          Edit
+        </span>{" "}
+      </h2>
+
+      <div className={styles.container}>
+        <div className={styles.modal_body}>
+          <div className={styles.item}>
+            <label htmlFor="">First Name: </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              className={styles.input}
+              onChange={(e) => handleChange(e, "firstName")}
+              value={inputs.name}
+              disabled={pF}
+            />
           </div>
-          <div className={styles.modal_body}>
-            <div className={styles.item}>
-              <label htmlFor="">Name: </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "name")}
-                value={inputs.name}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">Phone Number: </label>
-              <input
-                type="number"
-                name="number"
-                id="number"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "number")}
-                value={inputs.phoneNumber}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">House / Flat No: </label>
-              <input
-                type="text"
-                name="houseNumber"
-                id="houseNumber"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "houseNumber")}
-                value={inputs.houseNumber}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">Village: </label>
-              <input
-                type="text"
-                name="village"
-                id="village"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "village")}
-                value={inputs.village}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">Mandala: </label>
-              <input
-                type="text"
-                name="mandala"
-                id="mandala"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "mandala")}
-                value={inputs.mandala}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">District: </label>
-              <input
-                type="text"
-                name="district"
-                id="district"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "district")}
-                value={inputs.district}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">State: </label>
-              <input
-                type="text"
-                name="state"
-                id="state"
-                className={styles.input}
-                onChange={(e) => handleChange(e, "state")}
-                value={inputs.state}
-              />
-            </div>
-            <div className={styles.item}>
-              <label htmlFor="">Address Type: </label>
-              <div className={styles.types}>
-                {ADDRESS_TYPE.map((item, i) => (
-                  <div className={styles.addressItem} key={i}>
-                    <input
-                      type="radio"
-                      id={i}
-                      value={inputs.addressType}
-                      onChange={(e) => handleChange(e, "addressType")}
-                      // checked={item === inputs.addressType}
-                    />
-                    <label htmlFor={item}>{item}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className={styles.item}>
+            <label htmlFor="">Last Name: </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              className={styles.input}
+              onChange={(e) => handleChange(e, "lastName")}
+              value={inputs.name}
+              disabled={pF}
+            />
           </div>
-          <div className={styles.modal_footer}>
-            <button type="button" className={styles.action}>
-              Add
-            </button>
-            <button
-              type="button"
-              className={styles.close}
-              onClick={handleCloseModal}
-            >
-              Cancel
-            </button>
+
+          <div className={styles.item}>
+            <label htmlFor="">Gender: </label>
+            <div className={styles.types}>
+              {ADDRESS_TYPE.map((item, i) => (
+                <div className={styles.addressItem} key={i}>
+                  <input
+                    type="radio"
+                    id={i}
+                    value={inputs.addressType}
+                    onChange={(e) => handleChange(e, "gender")}
+                    // checked={item === inputs.addressType}
+                    disabled={pF}
+                  />
+                  <label htmlFor={item}>{item}</label>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </Modal>
+        <h2 style={{ marginTop: "10px" }}>
+          Email{" "}
+          <span className={styles.edit} onClick={() => setEF(!eF)}>
+            Edit
+          </span>{" "}
+        </h2>
+        <div className={styles.item}>
+          {/* <label htmlFor="">Email: </label> */}
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className={styles.input}
+            onChange={(e) => handleChange(e, "email")}
+            value={inputs.email}
+            disabled={eF}
+            style={{ marginTop: "10px" }}
+          />
+        </div>
+        <h2 style={{ marginTop: "10px" }}>
+          Mobile Number{" "}
+          <span className={styles.edit} onClick={() => setMF(!mF)}>
+            Edit
+          </span>{" "}
+        </h2>
+        <div className={styles.item}>
+          {/* <label htmlFor="">Phone Number: </label> */}
+          <input
+            type="number"
+            name="number"
+            id="number"
+            className={styles.input}
+            onChange={(e) => handleChange(e, "phoneNumber")}
+            value={inputs.phoneNumber}
+            disabled={mF}
+            style={{ marginTop: "10px" }}
+          />
+        </div>
+        <div className={styles.modal_footer}>
+          <button
+            type="button"
+            className={styles.action}
+            disabled={mF && pF && eF}
+            onClick={() => updateUser(inputs._id)}
+          >
+            Save
+          </button>
+        </div>
+      </div>
+      <div className={styles.footer}>
+        <p
+          style={{ color: "blue", cursor: "pointer" }}
+          onClick={() => handleDeactivateAccount(inputs._id)}
+        >
+          Deactivate Account
+        </p>
+        <p
+          style={{ color: "red", cursor: "pointer" }}
+          onClick={() => handleDeleteAccount(inputs._id)}
+        >
+          Delete Account
+        </p>
+      </div>
     </div>
   );
 };

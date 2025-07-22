@@ -1,3 +1,15 @@
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+.add {
+  background-color: cornflowerblue;
+  color: white;
+  letter-spacing: 1px;
+}
 .container {
   font-size: 1.02rem;
 }
@@ -30,7 +42,8 @@
 }
 
 .action,
-.close {
+.close,
+.add {
   width: 100px;
   padding: 8px;
   border: none;
@@ -72,7 +85,7 @@ input[type="radio"] {
 
 .card {
   width: 100%;
-  background-color: var(--light);
+  background-color: rgb(199, 199, 240);
   padding: 10px;
   box-sizing: border-box;
   margin-top: 10px;
@@ -87,7 +100,7 @@ input[type="radio"] {
   color: black;
 }
 
-span {
+.span {
   font-style: italic;
   font-size: 1rem;
   background-color: orange;
@@ -142,5 +155,5 @@ span {
 }
 
 .hide {
-    display: none;
+  display: none;
 }

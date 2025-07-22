@@ -98,7 +98,7 @@ const Address = () => {
       const response = await axiosInstanceV1.delete(`/address/${_id}`);
       if (response.status === 202) {
         successMessage(response.data.message);
-        fetchAddressList()
+        fetchAddressList();
         return;
       }
     } catch (error) {
@@ -117,17 +117,25 @@ const Address = () => {
   }, []);
   return (
     <div>
-      <h1>My Address</h1>
-      <button type="button" onClick={handleOpenModal}>
-        Add Address
-      </button>
+      <div className={styles.header}>
+        <h1>My Address</h1>
+        <button type="button" className={styles.add} onClick={handleOpenModal}>
+          Add Address
+        </button>
+      </div>
       {addressList?.map((item) => {
         return (
           <div className={styles.card}>
             <div className={styles.headersection}>
-              <h1>
-                {item.name} {item.isDefault && <span>default</span>}
-              </h1>
+              <h2>
+                {item.name}
+                {item.addressType === "Home"
+                  ? `'s ${item.addressType}`
+                  : item.addressType === "Work"
+                  ? ` ${item.addressType}place`
+                  : item.addressType}{" "}
+                {item.isDefault && <span className={styles.span}>default</span>}
+              </h2>
               <p style={{ cursor: "pointer" }} className={styles.act}>
                 <BsThreeDotsVertical onClick={() => setActionF(!actionF)} />
                 <div

@@ -12,4 +12,10 @@
 
 .itemtwo {
   width: 85%;
+  background-color: var(--extra-light);
+  padding: 10px;
+}
+
+.section {
+  padding: 0px 1.1rem;
 }

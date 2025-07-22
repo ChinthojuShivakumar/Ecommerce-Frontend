@@ -14,3 +14,8 @@ export const modalStyle = {
   position: "relative",
   animation: "fadeInScale 0.3s ease",
 };
+
+export const fetchUserData = () => {
+  const user = JSON.parse(localStorage.getItem("userData")) || null;
+  return user;
+};
