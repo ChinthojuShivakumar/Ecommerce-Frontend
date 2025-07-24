@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./cartcard.module.css";
 import PriceCard from "../PriceCard/PriceCard";
 import { axiosInstanceV1 } from "../../../Utils/ApiServices";
-import { successMessage } from "../../../Utils/Alert";
-import { fetchUserData } from "../../../Constants/Constant";
+import { errorMessage, successMessage } from "../../../Utils/Alert";
+import { fetchUserData, modalStyle } from "../../../Constants/Constant";
+import Modal from "../../Modal/Modal";
+import { GiCash, GiWallet } from "react-icons/gi";
+import { FaAmazonPay } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const CartCard = ({
   cartList,
@@ -13,17 +17,15 @@ const CartCard = ({
   fetchCartList,
   priceDrop,
 }) => {
-  // console.log(cartList);
-
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate()
+  const PAYMENT_MODES = [
+    { mode: "card", icon: <GiWallet size={26} /> },
+    { mode: "upi", icon: <FaAmazonPay size={26} /> },
+    { mode: "cod", icon: <GiCash size={26} /> },
+  ];
+  const [paymentMode, setPaymentMode] = useState("");
   const handleRemove = async (productId) => {
-    // const updatedProduct = cartList?.filter(
-    //   (product) => product._id !== productId._id
-    // );
-    // localStorage.removeItem("cartItems");
-    // localStorage.setItem("cartItems", JSON.stringify(updatedProduct));
-    // setCartList(updatedProduct);
-    // return;
-
     try {
       const response = await axiosInstanceV1.delete(`/cart/${productId._id}`);
       if (response.status === 202) {
@@ -60,42 +62,7 @@ const CartCard = ({
     setCartList(updatedProduct);
   };
 
-  const [prices, setPrices] = useState(null);
-
-  // const [quantity, setQuantity] = useState(1);
-
-  const priceFilters = () => {
-    if (!Array.isArray(cartList) || cartList.length === 0) {
-      setPrices({
-        discount: 0,
-        totalPrice: 0,
-        shippingAmount: 0,
-        finalAmount: 0,
-      });
-      return;
-    }
-    let discount = 0;
-    let totalPrice = 0;
-    const shippingAmount = 50;
-    for (let item of cartList) {
-      const price = item.productId.price || 0;
-      const quant = item.quantity || 1;
-      const discountPercent = item.productId.discount || 0;
-      const itemTotal = price * quant;
-      const itemDiscount = itemTotal * (discountPercent / 100);
-      totalPrice += itemTotal;
-      discount += itemDiscount;
-    }
-    const finalAmount = (totalPrice - discount + shippingAmount).toFixed(2);
-    setPrices({ discount, totalPrice, shippingAmount, finalAmount });
-  };
-
   const handleIncreaseQuantity = async (quantity, productId, cartId) => {
-    // setQuantity(quantity + 1);
-
-    // console.log(quantity +=1);
-    
-
     try {
       const payload = {
         _id: cartId,
@@ -110,12 +77,10 @@ const CartCard = ({
     }
   };
   const handleDecreaseQuantity = async (quantity, productId, cartId) => {
-    // console.log(quantity);
-    
     try {
       const payload = {
         _id: cartId,
-        quantity: quantity ,
+        quantity: quantity,
       };
       const response = await axiosInstanceV1.put("/cart/update", payload);
       if (response.status == 202) {
@@ -124,35 +89,66 @@ const CartCard = ({
     } catch (error) {
       return error;
     }
-    setQuantity(quantity - 1);
+    // setQuantity(quantity - 1);
   };
-
-  const handleBuyProduct = async () => {
+  const payNow = async () => {
     try {
-      const payload = [];
+      if (!paymentMode) {
+        errorMessage("Please select payment mode..!");
+        return;
+      }
+      const payload = {};
+      const orderId = `Order_${Date.now()}`;
 
-      cartList.map((cartItem) => {
-        return payload.push({
-          productId: cartItem._id,
-          userId: userId,
-          orderId: `Order_${Date.now()}`,
-          quantity: quantity,
-          totalPrice: prices.finalAmount,
-          paymentMode: "upi",
+      let originalPriceTotal = 0;
+      if (userId) payload.userId = userId;
+      if (orderId) payload.orderId = orderId;
+      if (priceDrop.finalPrice) payload.finalPrice = priceDrop.finalPrice;
+      if (priceDrop?.finalPrice)
+        payload.finalPrice = parseFloat(priceDrop.finalPrice);
+      if (priceDrop?.shippingPrice)
+        payload.shippingPrice = parseFloat(priceDrop.shippingPrice);
+      if (priceDrop?.discountPercent)
+        payload.discountPercent = parseFloat(priceDrop.discountPercent);
+      if (priceDrop?.discountAmount)
+        payload.discountAmount = parseFloat(priceDrop.discountAmount);
+
+      if (cartList.length > 0)
+        payload.products = cartList.map((item) => {
+          const originalPrice = parseFloat(item.productId.originalPrice);
+          const quantity = item.quantity;
+
+          originalPriceTotal += originalPrice * quantity;
+          return {
+            product: item.productId._id,
+            quantity: item.quantity,
+            originalPrice: parseFloat(item.productId.originalPrice),
+            discountPrice: parseFloat(item.productId.discountedPrice),
+            discountPercent: parseFloat(item.productId.discountPercent),
+          };
         });
-      });
 
-      // console.log(payload);
+      if (originalPriceTotal) payload.totalPrice = originalPriceTotal;
+      if (paymentMode) payload.paymentMode = paymentMode;
 
       const response = await axiosInstanceV1.post("/booking", payload);
-      if (response.status) {
-        navigate(response?.data?.paymentLink);
+      if (response.status === 201) {
+        if (paymentMode !== "cod") {
+          window.location.href = response?.data?.paymentLink;
+        } else {
+         
+          setOpen(false)
+          setTimeout(() => navigate("/orders"), 100)
+        }
         successMessage(response.data.message);
         return;
       }
     } catch (error) {
       return error;
     }
+  };
+  const handleBuyProduct = async () => {
+    setOpen(true);
   };
 
   useEffect(() => {
@@ -163,15 +159,13 @@ const CartCard = ({
     getUser();
   }, [cartList]);
 
-  useEffect(() => {
-    priceFilters();
-  }, []);
+  // useEffect(() => {
+  //   priceFilters();
+  // }, []);
   return (
     <div className={styles.cardContainer}>
       <div className={styles.cartListWrapper}>
         {cartList?.map((product, i) => {
-      
-          
           return (
             <div className={styles.cardContent} key={i}>
               <div className={styles.cardImage}>
@@ -245,6 +239,43 @@ const CartCard = ({
           <PriceCard price={priceDrop} handleBuyProduct={handleBuyProduct} />
         </div>
       )}
+      <Modal style={modalStyle} open={open}>
+        <div className={styles.header}>
+          <h2>Please Select The Payment Mode to create booking</h2>
+          <div className={styles.body}>
+            {PAYMENT_MODES.map((mode, i) => {
+              return (
+                <div className={styles.subbody} key={i}>
+                  <input
+                    type="radio"
+                    name="mode"
+                    id="mode"
+                    value={mode.mode}
+                    checked={paymentMode === mode.mode}
+                    className={styles.mode}
+                    onChange={(e) => setPaymentMode(e.target.value)}
+                  />
+                  <label htmlFor={mode} className={styles.modeName}>
+                    <span className={styles.icon}>{mode.icon}</span> {mode.mode}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <div className={styles.footer}>
+            <button type="button" className={styles.payNow} onClick={payNow}>
+              Pay Now
+            </button>
+            <button
+              type="button"
+              className={styles.cancel}
+              onClick={() => setOpen(false)}
+            >
+              Cancel Payment
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
