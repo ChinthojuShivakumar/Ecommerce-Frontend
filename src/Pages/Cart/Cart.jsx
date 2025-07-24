@@ -2,13 +2,36 @@ import React, { useEffect, useState } from "react";
 import "./cart.css";
 import Header from "../../Components/Layout/Header";
 import CartCard from "../../Components/Cart/CartCard/CartCard";
-import PriceCard from "../../Components/Cart/PriceCard/PriceCard";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
 
 const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const [saveLaterList, setSaveLaterList] = useState([]);
+  const [priceDrop, setPriceDrop] = useState({});
+  const userLoggedIn = true;
+
+  const fetchCartList = async () => {
+    try {
+      const payload = {
+        userId: "68188ae553193aa6389b8812",
+      };
+      const response = await axiosInstanceV1.get(
+        `/cart/list?userId=${payload.userId}`
+      );
+      if (response.status === 200) {
+        setCartList(response.data.cartList);
+        setPriceDrop(response.data.priceDrop);
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
 
   useEffect(() => {
+    if (userLoggedIn) {
+      fetchCartList();
+    }
     const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
     const saveLaterList = JSON.parse(localStorage.getItem("saveLater")) || [];
     setCartList(cartLists);
@@ -24,7 +47,12 @@ const Cart = () => {
         </div>
       ) : (
         <div className="cart-container">
-          <CartCard cartList={cartList} setCartList={setCartList} />
+          <CartCard
+            cartList={cartList}
+            setCartList={setCartList}
+            fetchCartList={fetchCartList}
+            priceDrop={priceDrop}
+          />
           {/* <PriceCard /> */}
         </div>
       )}

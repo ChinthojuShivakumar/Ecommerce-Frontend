@@ -3,6 +3,8 @@ import Header from "../../Components/Layout/Header";
 // import ProductList from "../../../updated_products.json";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./productlist.css";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
+import { successMessage } from "../../Utils/Alert";
 
 const ProductDetail = () => {
   const location = useLocation();
@@ -10,25 +12,35 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [imageView, setImageView] = useState(0);
   const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
-  console.log(location);
+  const userLoggedIn = true;
   const navigate = useNavigate();
-  const [isCartProduct, setIsCartProduct] = useState({});
+  const [isCartProduct, setIsCartProduct] = useState(false);
+  const [cartList, setCartList] = useState([]);
 
-  const addToCart = (e, product) => {
+  const addToCart = async (e, product) => {
     e.preventDefault();
-    const fetchCartList = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const isProductExits = fetchCartList.find(
-      (productId) => productId._id === product._id
-    );
-    if (isProductExits) {
-      alert("Chosen Product is already in cart...!!!");
-      navigate("/cart");
-      return;
+
+    if (!userLoggedIn) {
+      const fetchCartList = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const isProductExits = fetchCartList.find(
+        (productId) => productId._id === product._id
+      );
+
+      const isProductExitsInDb = cartList.find(
+        (productId) => productId._id === product._id
+      );
+      if (isProductExitsInDb && isProductExits) {
+        alert("Chosen Product is already in cart...!!!");
+        navigate("/cart");
+        return;
+      }
+      // if(fetchCart)
+      fetchCartList.push(product);
+      localStorage.setItem("cartItems", JSON.stringify(fetchCartList));
     }
-    // if(fetchCart)
-    fetchCartList.push(product);
-    localStorage.setItem("cartItems", JSON.stringify(fetchCartList));
-    navigate("/cart");
+
+    await createCart(product._id);
+    // navigate("/cart");
   };
 
   const goToCart = () => {
@@ -54,6 +66,72 @@ const ProductDetail = () => {
     }
   };
 
+  const createCart = async (productId) => {
+    try {
+      const payload = {
+        userId: "68188ae553193aa6389b8812",
+        productId: productId,
+      };
+      const response = await axiosInstanceV1.post("/cart/create", payload);
+      if (response.status === 201) {
+        successMessage(response.data.message);
+        fetchCartList();
+        navigate("/cart");
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const fetchCartList = async () => {
+    try {
+      const payload = {
+        userId: "68188ae553193aa6389b8812",
+      };
+      const response = await axiosInstanceV1.get(
+        `/cart/list?userId=${payload.userId}`
+      );
+      if (response.status === 200) {
+        setCartList(response.data.cartList);
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+  // console.log(cartList);
+  useEffect(() => {
+    // const findProduct =
+    //   location.state?.name === productName ? location.state : null;
+    // const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
+    // const isProductMatched = cartLists.find(
+    //   (productId) => productId.name === findProduct.name
+    // );
+
+    if (!productName && !cartList.length) {
+      setIsCartProduct(false);
+      return;
+    }
+    const isMatchedProduct = cartList.find((items) => {
+      const match = items.productId.name === productName;
+      return match;
+    });
+
+    if (isMatchedProduct) {
+      setIsCartProduct(true);
+    } else {
+      setIsCartProduct(false);
+    }
+  }, [cartList]);
+
+  console.log(isCartProduct);
+
+  useEffect(() => {
+    fetchCartList();
+  }, []);
+
   useEffect(() => {
     const findProduct =
       location.state?.name === productName ? location.state : null;
@@ -61,17 +139,6 @@ const ProductDetail = () => {
     setProduct(findProduct);
   }, []);
 
-  useEffect(() => {
-    const findProduct =
-      location.state?.name === productName ? location.state : null;
-    const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const isProductMatched = cartLists.find(
-      (productId) => productId.name === findProduct.name
-    );
-    // console.log(isProductMatched);
-
-    setIsCartProduct(isProductMatched);
-  }, []);
   // console.log(isCartProduct);
 
   return (

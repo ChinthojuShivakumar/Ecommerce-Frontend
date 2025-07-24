@@ -101,8 +101,8 @@ const Bookings = () => {
                     <tr key={i}  className={style.tablerow}>
                       {/* <td className={style.td}>{i}</td> */}
                       {/* <td className={style.td}>{product.product?._id}</td> */}
-                      <td className={style.td}>{product.product?.name}</td>
-                      <td className={style.td}>{product?.user.name}</td>
+                      <td className={style.td}>{product.productId?.name}</td>
+                      <td className={style.td}>{product?.userId.name}</td>
                       <td className={style.td}>{product?.quantity}</td>
                       <td className={style.td}>Rs.{product?.totalPrice}</td>
                       <td className={style.td}>
