@@ -2,10 +2,19 @@
   display: flex;
   margin-top: 10px;
   padding: 0px 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .orderContainer {
-  width: 100%;
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.filters {
+  width: 20%;
+  box-sizing: border-box;
+  margin-top: 10px;
 }
 .inputContainer.px {
   width: 70%;
@@ -16,6 +25,7 @@
 
 .orderCard {
   width: 100%;
+  cursor: pointer;
 }
 
 .searchInput {

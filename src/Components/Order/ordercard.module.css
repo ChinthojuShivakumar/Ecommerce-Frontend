@@ -15,6 +15,14 @@
   display: flex;
   gap: 0.8rem;
 }
+
+.container {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 .cardImage img {
   width: 120px;
   height: 120px;
@@ -51,6 +59,22 @@ p {
 }
 
 .orderStatus p:last-child {
-  color: blue;
+  color: var(--secondary-color);
   cursor: pointer;
+  font-weight: 600;
+}
+
+.price {
+  font-size: 1.2rem;
+  display: flex;
+  gap: 10px;
+  color: gray;
+}
+
+.price > strong {
+  color: green;
+}
+
+.price > b {
+  color: black;
 }

@@ -186,3 +186,70 @@ video {
 .description > h1 {
   font-size: 1.2rem;
 }
+
+
+.header,
+.footer,
+.body {
+  margin: 10px 0px;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+}
+
+.subbody {
+  display: flex;
+
+  gap: 1rem;
+  justify-content: start;
+  align-items: center;
+}
+
+.modeName {
+  text-transform: uppercase;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.payNow,
+.cancel {
+  width: 150px;
+  height: 32px;
+  border: none;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.22rem;
+  cursor: pointer;
+  /* font-family: Roboto sans-serif; */
+}
+
+
+
+.payNow {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.icon {
+  color: var(--secondary-color);
+}
+
+input[type="radio"]:checked {
+  accent-color: var(--secondary-color); /* Tailwind's emerald-500 */
+}

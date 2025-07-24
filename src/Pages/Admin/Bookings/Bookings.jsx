@@ -30,7 +30,7 @@ const Bookings = () => {
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
   const [bookingList, setBookingList] = useState([]);
-  const [status, setStatus] = useState(""); 
+  const [status, setStatus] = useState("");
 
   const fetchBookingList = async (status = "") => {
     const qP = new URLSearchParams();
@@ -96,29 +96,30 @@ const Bookings = () => {
                 </tr>
               </thead>
               <tbody className={style.body}>
-                {bookingList.map((product, i) => {
-                  return (
-                    <tr key={i}  className={style.tablerow}>
-                      {/* <td className={style.td}>{i}</td> */}
-                      {/* <td className={style.td}>{product.product?._id}</td> */}
-                      <td className={style.td}>{product.product?.name}</td>
-                      <td className={style.td}>{product?.user.name}</td>
-                      <td className={style.td}>{product?.quantity}</td>
-                      <td className={style.td}>Rs.{product?.totalPrice}</td>
+                {bookingList.map((booking, i) =>
+                  booking.products.map((item, j) => (
+                    <tr
+                      key={`${booking._id}-${item._id}`}
+                      className={style.tablerow}
+                    >
+                      <td className={style.td}>{item.product?.name}</td>
+                      <td className={style.td}>{booking?.userId?.name}</td>
+                      <td className={style.td}>{item?.quantity}</td>
+                      <td className={style.td}>Rs.{booking?.totalPrice}</td>
                       <td className={style.td}>
-                        {product?.createdAt?.split("T")[0]}
+                        {booking?.createdAt?.split("T")[0]}
                       </td>
                       <td
-                        className={` ${style.td} ${
-                          style[product?.status?.toLowerCase()]
+                        className={`${style.td} ${
+                          style[item?.status?.toLowerCase()] || ""
                         }`}
                       >
-                        {product?.status.charAt(0).toUpperCase() +
-                          product?.status.slice(1).toLowerCase()}
+                        {item?.status?.charAt(0).toUpperCase() +
+                          item?.status?.slice(1).toLowerCase()}
                       </td>
                     </tr>
-                  );
-                })}
+                  ))
+                )}
               </tbody>
             </table>
             <Pagination

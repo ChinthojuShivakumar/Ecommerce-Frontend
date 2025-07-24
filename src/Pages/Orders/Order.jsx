@@ -4,7 +4,6 @@ import Header from "../../Components/Layout/Header";
 import styles from "./order.module.css";
 import OrderCard from "../../Components/Order/OrderCard";
 import OrderFilters from "../../Components/Orders/OrderFilters";
-import { FiSearch } from "react-icons/fi";
 import Search from "../../Components/Search/Search";
 
 const Order = () => {
@@ -12,7 +11,9 @@ const Order = () => {
     <div>
       <Header />
       <div className={styles.order}>
-        <OrderFilters />
+        <div className={styles.filters}>
+          <OrderFilters />
+        </div>
         <div className={styles.orderContainer}>
           {/* <div className={`${styles.inputContainer} ${styles.px}`}>
             <input

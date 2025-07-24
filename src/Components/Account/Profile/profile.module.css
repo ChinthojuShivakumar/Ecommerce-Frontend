@@ -1,0 +1,99 @@
+.container {
+  font-size: 1.02rem;
+  font-family: "Roboto", sans-serif;
+}
+
+.model_header {
+  margin-bottom: 10px;
+}
+
+.modal_body {
+  box-sizing: border-box;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modal_footer {
+  margin-top: 20px;
+  display: flex;
+  gap: 1.2rem;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+}
+
+.action,
+.close {
+  width: 100px;
+  padding: 8px;
+  border: none;
+  font-weight: normal;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.action {
+  background-color: cadetblue;
+  color: white;
+}
+
+.action:disabled {
+  cursor: not-allowed;
+  background-color: gray;
+}
+
+.input {
+  padding: 10px;
+  width: 300px;
+  border-radius: 0.2rem;
+  border: 1px solid black;
+  font-size: 1rem;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.types {
+  display: flex;
+  gap: 2px;
+}
+
+.addressItem {
+  display: flex;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 20%;
+  margin-top: 5px;
+}
+
+input[type="radio"] {
+  color: blue;
+}
+
+.footer {
+  font-size: 0.6rem;
+  font-weight: 500;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: "Roboto", sans-serif;
+}
+
+.edit {
+  color: blue;
+  background-color: white;
+  font-style: normal;
+  font-weight: 400;
+  cursor: pointer;
+}

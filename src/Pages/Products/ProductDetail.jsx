@@ -3,6 +3,12 @@ import Header from "../../Components/Layout/Header";
 // import ProductList from "../../../updated_products.json";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./productlist.css";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
+import { successMessage } from "../../Utils/Alert";
+import Modal from "../../Components/Modal/Modal";
+import { modalStyle } from "../../Constants/Constant";
+import { GiCash, GiWallet } from "react-icons/gi";
+import { FaAmazonPay } from "react-icons/fa";
 
 const ProductDetail = () => {
   const location = useLocation();
@@ -10,25 +16,43 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [imageView, setImageView] = useState(0);
   const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
-  console.log(location);
+  const userLoggedIn = true;
   const navigate = useNavigate();
-  const [isCartProduct, setIsCartProduct] = useState({});
+  const [isCartProduct, setIsCartProduct] = useState(false);
+  const [cartList, setCartList] = useState([]);
 
-  const addToCart = (e, product) => {
+  const [open, setOpen] = useState(false);
+  const PAYMENT_MODES = [
+    { mode: "card", icon: <GiWallet size={26} /> },
+    { mode: "upi", icon: <FaAmazonPay size={26} /> },
+    { mode: "cod", icon: <GiCash size={26} /> },
+  ];
+  const [paymentMode, setPaymentMode] = useState("");
+
+  const addToCart = async (e, product) => {
     e.preventDefault();
-    const fetchCartList = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const isProductExits = fetchCartList.find(
-      (productId) => productId._id === product._id
-    );
-    if (isProductExits) {
-      alert("Chosen Product is already in cart...!!!");
-      navigate("/cart");
-      return;
+
+    if (!userLoggedIn) {
+      const fetchCartList = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const isProductExits = fetchCartList.find(
+        (productId) => productId._id === product._id
+      );
+
+      const isProductExitsInDb = cartList.find(
+        (productId) => productId._id === product._id
+      );
+      if (isProductExitsInDb && isProductExits) {
+        alert("Chosen Product is already in cart...!!!");
+        navigate("/cart");
+        return;
+      }
+      // if(fetchCart)
+      fetchCartList.push(product);
+      localStorage.setItem("cartItems", JSON.stringify(fetchCartList));
     }
-    // if(fetchCart)
-    fetchCartList.push(product);
-    localStorage.setItem("cartItems", JSON.stringify(fetchCartList));
-    navigate("/cart");
+
+    await createCart(product._id);
+    // navigate("/cart");
   };
 
   const goToCart = () => {
@@ -38,7 +62,7 @@ const ProductDetail = () => {
 
   const buyNow = (e, product) => {
     e.preventDefault();
-    navigate("/cart");
+    setOpen(true);
   };
 
   const handlePrevious = (e) => {
@@ -54,25 +78,129 @@ const ProductDetail = () => {
     }
   };
 
+  const createCart = async (productId) => {
+    try {
+      const payload = {
+        userId: "68188ae553193aa6389b8812",
+        productId: productId,
+      };
+      const response = await axiosInstanceV1.post("/cart/create", payload);
+      if (response.status === 201) {
+        successMessage(response.data.message);
+        fetchCartList();
+        navigate("/cart");
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const fetchCartList = async () => {
+    try {
+      const payload = {
+        userId: "68188ae553193aa6389b8812",
+      };
+      const response = await axiosInstanceV1.get(
+        `/cart/list?userId=${payload.userId}`
+      );
+      if (response.status === 200) {
+        setCartList(response.data.cartList);
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+
+
+  useEffect(() => {
+    // const findProduct =
+    //   location.state?.name === productName ? location.state : null;
+    // const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
+    // const isProductMatched = cartLists.find(
+    //   (productId) => productId.name === findProduct.name
+    // );
+
+    if (!productName && !cartList.length) {
+      setIsCartProduct(false);
+      return;
+    }
+    const isMatchedProduct = cartList.find((items) => {
+      const match = items.productId.name === productName;
+      return match;
+    });
+
+    if (isMatchedProduct) {
+      setIsCartProduct(true);
+    } else {
+      setIsCartProduct(false);
+    }
+  }, [cartList]);
+
+  useEffect(() => {
+    fetchCartList();
+  }, []);
+
   useEffect(() => {
     const findProduct =
       location.state?.name === productName ? location.state : null;
-    // console.log(findProduct);
+
     setProduct(findProduct);
   }, []);
 
-  useEffect(() => {
-    const findProduct =
-      location.state?.name === productName ? location.state : null;
-    const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const isProductMatched = cartLists.find(
-      (productId) => productId.name === findProduct.name
-    );
-    // console.log(isProductMatched);
+  const payNow = async () => {
+    try {
+      if (!paymentMode) {
+        errorMessage("Please select payment mode..!");
+        return;
+      }
 
-    setIsCartProduct(isProductMatched);
-  }, []);
-  // console.log(isCartProduct);
+      const payload = {};
+      const orderId = `Order_${Date.now()}`;
+      let userId = "68188ae553193aa6389b8812";
+      const quantity = 1;
+      const shippingPrice = 50;
+
+      const discountPrice =
+        product.price - (product.price * product.discount) / 100;
+      const discountAmount = (product.price - discountPrice) * quantity;
+      const finalPrice = discountPrice * quantity + shippingPrice;
+
+      if (userId) payload.userId = userId;
+      if (orderId) payload.orderId = orderId;
+
+      if (shippingPrice) payload.shippingPrice = shippingPrice;
+
+      if (discountAmount) payload.discountAmount = discountAmount;
+      if (finalPrice) payload.finalPrice = finalPrice;
+      if (paymentMode) payload.paymentMode = paymentMode;
+      if (product.discount) payload.discountPercent = product.discount;
+      payload.products = [
+        {
+          product: product._id,
+          quantity: quantity,
+          originalPrice: product.price,
+          discountPrice: discountPrice,
+          discountPercent: product.discount,
+        },
+      ];
+
+      const response = await axiosInstanceV1.post("/booking", payload);
+      if (response.status === 201) {
+        if (paymentMode !== "cod") {
+          window.location.href = response?.data?.paymentLink;
+        } else {
+          setOpen(false);
+          setTimeout(() => navigate("/orders"), 100);
+        }
+        successMessage(response.data.message);
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  };
 
   return (
     <div>
@@ -191,6 +319,43 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      <Modal style={modalStyle} open={open}>
+        <div className="header">
+          <h2>Please Select The Payment Mode to create booking</h2>
+          <div className="body">
+            {PAYMENT_MODES.map((mode, i) => {
+              return (
+                <div className="subbody" key={i}>
+                  <input
+                    type="radio"
+                    name="mode"
+                    id="mode"
+                    value={mode.mode}
+                    checked={paymentMode === mode.mode}
+                    className="mode"
+                    onChange={(e) => setPaymentMode(e.target.value)}
+                  />
+                  <label htmlFor={mode} className="modeName">
+                    <span className="icon">{mode.icon}</span> {mode.mode}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <div className="footer">
+            <button type="button" className="payNow" onClick={payNow}>
+              Pay Now
+            </button>
+            <button
+              type="button"
+              className="cancel"
+              onClick={() => setOpen(false)}
+            >
+              Cancel Payment
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

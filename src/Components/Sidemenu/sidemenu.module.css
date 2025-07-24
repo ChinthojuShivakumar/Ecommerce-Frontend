@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  background-color: rgb(110, 110, 223);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: 2px;
+}
+
+.listitem {
+  padding: 10px 10px;
+  cursor: pointer;
+  border-radius: 0.2rem;
+}
+
+.listitem:hover {
+  background-color: rgb(78, 78, 195);
+}
+
+.active {
+  background-color: rgb(78, 78, 195);
+  border-radius: 0.2rem;
+}

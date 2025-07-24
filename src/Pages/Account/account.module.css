@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 15px;
+}
+
+.itemone {
+  width: 15%;
+}
+
+.itemtwo {
+  width: 85%;
+  background-color: var(--extra-light);
+  padding: 10px;
+}
+
+.section {
+  padding: 0px 1.1rem;
+}

@@ -45,7 +45,7 @@
 }
 
 .buy {
-  background-color: blue;
+  background-color: var(--secondary-color);
   border: none;
   padding: 0.6rem;
   border-radius: 0.2rem;
