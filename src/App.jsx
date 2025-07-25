@@ -18,19 +18,8 @@ const ProductByCategory = React.lazy(() =>
 const Cart = React.lazy(() => import("./Pages/Cart/Cart"));
 
 function App() {
-  const user = {
-  _id: "68188ae553193aa6389b8812",
-  name: "Alice Johnson",
-  phoneNumber: 9876543210,
-  password: "alice@123",
-  email: "alice.johnson@example.com",
-  role: "USER",
-  deletedAt: null,
-  isDeleted: false,
-  status: "Active"
-};
-  // Store in localStorage
-  localStorage.setItem("userData", JSON.stringify(user));
+ 
+  
   return (
     <BrowserRouter>
       <ErrorBoundary>
