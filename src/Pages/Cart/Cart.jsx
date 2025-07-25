@@ -3,6 +3,8 @@ import "./cart.css";
 import Header from "../../Components/Layout/Header";
 import CartCard from "../../Components/Cart/CartCard/CartCard";
 import { axiosInstanceV1 } from "../../Utils/ApiServices";
+import { userId } from "../../Constants/Constant";
+import EmptyRecords from "../../Components/EmptyRecords/EmptyRecords";
 
 const Cart = () => {
   const [cartList, setCartList] = useState([]);
@@ -13,7 +15,7 @@ const Cart = () => {
   const fetchCartList = async () => {
     try {
       const payload = {
-        userId: "68188ae553193aa6389b8812",
+        userId: userId,
       };
       const response = await axiosInstanceV1.get(
         `/cart/list?userId=${payload.userId}`
@@ -42,9 +44,7 @@ const Cart = () => {
       <Header />
 
       {cartList.length === 0 ? (
-        <div className="emptyCart">
-          <h1>No Cart Items Found</h1>
-        </div>
+        <EmptyRecords Page={"Cart"} />
       ) : (
         <div className="cart-container">
           <CartCard
@@ -56,7 +56,7 @@ const Cart = () => {
           {/* <PriceCard /> */}
         </div>
       )}
-      {saveLaterList.length === 0 ? (
+      {/* {saveLaterList.length === 0 ? (
         <div className="emptyCart">
           <h1>No Cart Items Found</h1>
         </div>
@@ -66,9 +66,9 @@ const Cart = () => {
             saveLaterList={saveLaterList}
             setSaveLaterList={setSaveLaterList}
           />
-          {/* <PriceCard /> */}
+       
         </div>
-      )}
+      )} */}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import AdminRoutes from "./Pages/Admin/Routes/Routes";
 import { ToastContainer } from "react-toastify";
 import ErrorBoundary from "./Utils/ErrorBoundary";
 import Account from "./Pages/Account/Account";
+import OrderDetailPage from "./Pages/Orders/OrderDetailPage";
 const Home = React.lazy(() => import("./Pages/Home/Home"));
 const ProductsList = React.lazy(() => import("./Pages/Products/ProductsList"));
 const ProductDetail = React.lazy(() =>
@@ -18,8 +19,6 @@ const ProductByCategory = React.lazy(() =>
 const Cart = React.lazy(() => import("./Pages/Cart/Cart"));
 
 function App() {
- 
-  
   return (
     <BrowserRouter>
       <ErrorBoundary>
@@ -147,6 +146,27 @@ function App() {
                 }
               >
                 <Order />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/order"
+            element={
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100vh",
+                    }}
+                  >
+                    Loading...
+                  </div>
+                }
+              >
+                <OrderDetailPage />
               </Suspense>
             }
           />

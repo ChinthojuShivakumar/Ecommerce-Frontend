@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./address.module.css";
 import Modal from "../../Modal/Modal";
-import { modalStyle } from "../../../Constants/Constant";
+import { modalStyle, userId } from "../../../Constants/Constant";
 import { errorMessage, successMessage } from "../../../Utils/Alert";
 import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -81,8 +81,10 @@ const Address = () => {
   };
 
   const fetchAddressList = async () => {
+    const qP = new URLSearchParams();
+    userId && qP.append("userId", userId);
     try {
-      const response = await axiosInstanceV1.get("/address");
+      const response = await axiosInstanceV1.get(`/address?${qP.toString()}`);
       if (response.status === 200) {
         successMessage(response.data.message);
         setAddressList(response.data.addressList);
@@ -125,7 +127,7 @@ const Address = () => {
       </div>
       {addressList?.map((item) => {
         return (
-          <div className={styles.card}>
+          <div className={styles.card} key={item._id}>
             <div className={styles.headersection}>
               <h2>
                 {item.name}
@@ -136,7 +138,7 @@ const Address = () => {
                   : item.addressType}{" "}
                 {item.isDefault && <span className={styles.span}>default</span>}
               </h2>
-              <p style={{ cursor: "pointer" }} className={styles.act}>
+              <div style={{ cursor: "pointer" }} className={styles.act}>
                 <BsThreeDotsVertical onClick={() => setActionF(!actionF)} />
                 <div
                   className={`${styles.actButtons} ${!actionF && styles.hide}`}
@@ -149,7 +151,7 @@ const Address = () => {
                     Delete
                   </p>
                 </div>
-              </p>
+              </div>
             </div>
             <p>
               {item.houseNumber}, {item.area}

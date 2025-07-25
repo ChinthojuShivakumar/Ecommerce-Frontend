@@ -18,7 +18,7 @@ const CartCard = ({
   priceDrop,
 }) => {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const PAYMENT_MODES = [
     { mode: "card", icon: <GiWallet size={26} /> },
     { mode: "upi", icon: <FaAmazonPay size={26} /> },
@@ -97,7 +97,7 @@ const CartCard = ({
         errorMessage("Please select payment mode..!");
         return;
       }
-      const payload = {};
+      const payload = { addressId: "686f812ae38f061714755531" };
       const orderId = `Order_${Date.now()}`;
 
       let originalPriceTotal = 0;
@@ -136,9 +136,8 @@ const CartCard = ({
         if (paymentMode !== "cod") {
           window.location.href = response?.data?.paymentLink;
         } else {
-         
-          setOpen(false)
-          setTimeout(() => navigate("/orders"), 100)
+          setOpen(false);
+          setTimeout(() => navigate("/orders"), 100);
         }
         successMessage(response.data.message);
         return;

@@ -11,7 +11,7 @@ const Profile = () => {
   const initialInputs = {
     _id: "",
     name: "",
-    phoneNumber: null,
+    phoneNumber: "",
     email: "",
   };
 
@@ -97,7 +97,7 @@ const Profile = () => {
     setInputs(fetchUserData());
   }, []);
 
-  console.log(inputs);
+ 
 
   return (
     <div>
@@ -120,7 +120,7 @@ const Profile = () => {
               id="name"
               className={styles.input}
               onChange={(e) => handleChange(e, "firstName")}
-              value={inputs.name}
+              value={inputs?.name}
               disabled={pF}
             />
           </div>
@@ -132,7 +132,7 @@ const Profile = () => {
               id="name"
               className={styles.input}
               onChange={(e) => handleChange(e, "lastName")}
-              value={inputs.name}
+              value={inputs?.name}
               disabled={pF}
             />
           </div>
@@ -145,7 +145,7 @@ const Profile = () => {
                   <input
                     type="radio"
                     id={i}
-                    value={inputs.addressType}
+                    value={inputs?.addressType}
                     onChange={(e) => handleChange(e, "gender")}
                     // checked={item === inputs.addressType}
                     disabled={pF}
@@ -170,7 +170,7 @@ const Profile = () => {
             id="email"
             className={styles.input}
             onChange={(e) => handleChange(e, "email")}
-            value={inputs.email}
+            value={inputs?.email}
             disabled={eF}
             style={{ marginTop: "10px" }}
           />
@@ -189,7 +189,7 @@ const Profile = () => {
             id="number"
             className={styles.input}
             onChange={(e) => handleChange(e, "phoneNumber")}
-            value={inputs.phoneNumber}
+            value={inputs?.phoneNumber}
             disabled={mF}
             style={{ marginTop: "10px" }}
           />

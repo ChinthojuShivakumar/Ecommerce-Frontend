@@ -241,7 +241,7 @@ axiosInstanceV1.interceptors.response.use(
       if (status === 401) {
         localStorage.removeItem("token-newPanel");
         localStorage.clear();
-        window.location.href = "/";
+        // window.location.href = "/";
       }
       // else if (status === 403) {
       //   window.location.href = "/no-permission";

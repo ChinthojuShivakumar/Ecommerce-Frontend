@@ -2,20 +2,29 @@ import React, { useEffect, useState } from "react";
 import styles from "./ordercard.module.css";
 import { IoMdStar } from "react-icons/io";
 import { axiosInstanceV1 } from "../../Utils/ApiServices";
-import { errorMessage, successMessage } from "../../Utils/Alert";
+import { successMessage } from "../../Utils/Alert";
+import { userId } from "../../Constants/Constant";
+import EmptyRecords from "../EmptyRecords/EmptyRecords";
+import { useNavigate } from "react-router-dom";
 
 const OrderCard = () => {
   const [bookingList, setBookingList] = useState([]);
-
+  const navigate = useNavigate();
   const [links, setLinks] = useState("");
+  console.log(bookingList);
 
   useEffect(() => {
     fetchBookingList();
   }, []);
 
   const fetchBookingList = async () => {
+    const payload = {
+      userId: userId,
+    };
     try {
-      const response = await axiosInstanceV1.get("/booking");
+      const response = await axiosInstanceV1.get(
+        `/booking?userId=${payload.userId}`
+      );
       if (response.status === 200) {
         successMessage(response.data.message);
         setBookingList(response.data.bookingList);
@@ -62,62 +71,71 @@ const OrderCard = () => {
     links && verifyPayment(links);
   }, [links]);
 
+  const handleNavigateDetailPage = (booking, productId) => {
+    const qP = new URLSearchParams();
+    qP.append("linkId", booking.orderId);
+    qP.append("userId", booking.userId._id);
+    qP.append("orderId", productId);
+    navigate(`/order?${qP.toString()}`, { state: booking });
+    return;
+  };
+
   return (
     <div className={styles.cardContainer}>
-      {bookingList?.map((item) => {
-        return (
-          <div className={styles.cardContent} key={item._id}>
-            {item?.products?.map((it) => {
-              return (
-                <div className={styles.container} key={it?._id}>
-                  <div className={styles.productData} key={it?._id}>
-                    <div className={styles.cardImage}>
-                      <img
-                        src={it?.product?.images[0]}
-                        alt={it?.product?.name}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = "/errorimage.png";
-                        }}
-                      />
-                    </div>
-                    <div className={styles.cardBody}>
-                      <h1 style={{ textTransform: "capitalize" }}>
-                        {it?.product.name}
-                      </h1>
-                      <p className={styles.price}>
-                        {" "}
-                        RS.<strike>{it?.originalPrice}</strike>{" "}
-                        <b>{it?.discountPrice}</b>
-                        <strong>{it.discountPercent}% off</strong>
-                      </p>
-                    </div>
-                  </div>
-                  <div className={styles.orderStatusContainer}>
-                    <div className={styles.orderStatus}>
-                      <h1>Delivered On Mar 8</h1>
-                      <p
-                        style={
-                          new Date(it?.product?.deliveredAt)?.getTime() <=
-                          Date.now()
-                            ? { color: "green" }
-                            : { color: "black" }
-                        }
-                      >
-                        your item was delivered
-                      </p>
-                      <p>
-                        <IoMdStar size={20} />
-                        Ratings & Reviews
-                      </p>
-                    </div>
-                  </div>
+      {!bookingList.length && <EmptyRecords Page={"Booking"} />}
+      {bookingList?.map((item) =>
+        item?.products?.map((it) => (
+          <div className={styles.cardContent} key={it?._id}>
+            <div
+              className={styles.container}
+              onClick={() => handleNavigateDetailPage(item, it?._id)}
+            >
+              <div className={styles.productData}>
+                <div className={styles.cardImage}>
+                  <img
+                    src={it?.product?.images[0]}
+                    alt={it?.product?.name}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/errorimage.png";
+                    }}
+                  />
                 </div>
-              );
-            })}
+                <div className={styles.cardBody}>
+                  <h1 style={{ textTransform: "capitalize" }}>
+                    {it?.product?.name}
+                  </h1>
+                  <p className={styles.price}>
+                    RS.<strike>{it?.originalPrice}</strike>{" "}
+                    <b>{it?.discountPrice}</b>{" "}
+                    <strong>{it?.discountPercent}% off</strong>
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.orderStatusContainer}>
+                <div className={styles.orderStatus}>
+                  <h1>Delivered On Mar 8</h1>
+                  <p
+                    style={
+                      new Date(it?.product?.deliveredAt)?.getTime() <=
+                      Date.now()
+                        ? { color: "green" }
+                        : { color: "black" }
+                    }
+                  >
+                    your item was delivered
+                  </p>
+                  <p>
+                    <IoMdStar size={20} />
+                    Ratings & Reviews
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        );
-      })}
+        ))
+      )}
     </div>
   );
 };

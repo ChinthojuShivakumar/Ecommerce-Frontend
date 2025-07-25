@@ -6,7 +6,7 @@ import "./productlist.css";
 import { axiosInstanceV1 } from "../../Utils/ApiServices";
 import { successMessage } from "../../Utils/Alert";
 import Modal from "../../Components/Modal/Modal";
-import { modalStyle } from "../../Constants/Constant";
+import { modalStyle, userId } from "../../Constants/Constant";
 import { GiCash, GiWallet } from "react-icons/gi";
 import { FaAmazonPay } from "react-icons/fa";
 
@@ -81,7 +81,7 @@ const ProductDetail = () => {
   const createCart = async (productId) => {
     try {
       const payload = {
-        userId: "68188ae553193aa6389b8812",
+        userId: userId,
         productId: productId,
       };
       const response = await axiosInstanceV1.post("/cart/create", payload);
@@ -99,7 +99,7 @@ const ProductDetail = () => {
   const fetchCartList = async () => {
     try {
       const payload = {
-        userId: "68188ae553193aa6389b8812",
+        userId: userId,
       };
       const response = await axiosInstanceV1.get(
         `/cart/list?userId=${payload.userId}`
@@ -112,7 +112,6 @@ const ProductDetail = () => {
       return error;
     }
   };
-
 
   useEffect(() => {
     // const findProduct =
@@ -158,7 +157,7 @@ const ProductDetail = () => {
 
       const payload = {};
       const orderId = `Order_${Date.now()}`;
-      let userId = "68188ae553193aa6389b8812";
+      let userId = userId;
       const quantity = 1;
       const shippingPrice = 50;
 

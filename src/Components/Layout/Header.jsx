@@ -10,8 +10,9 @@ import { errorMessage, successMessage } from "../../Utils/Alert";
 
 const Header = () => {
   const token = JSON.parse(localStorage.getItem("token"));
+  const user = JSON.parse(localStorage.getItem("userData"));
   const navItems = [
-    "Admin",
+    user?.role?.toLowerCase() === "admin" && "Admin",
     "Home",
     "Products",
     "Orders",
@@ -37,10 +38,8 @@ const Header = () => {
     name: "",
     gender: "",
   };
-
   const [signInInputs, setSignInInputs] = useState(initialSignInInputs);
   const [signUpInputs, setSignUpInputs] = useState(initialSignUpInputs);
-
   const handleHamburger = (e) => {
     e.preventDefault();
     setIsMenuOpen(!isMenuOpen);
@@ -59,10 +58,10 @@ const Header = () => {
     }
 
     if (item === "sign out") {
-      setSUOpen(true);
+      localStorage.clear();
+      window.location.reload();
       return;
     }
-
     navigate(`/${item.toLowerCase()}`);
   };
 
@@ -123,6 +122,12 @@ const Header = () => {
         successMessage(response.data.message);
         localStorage.setItem("token", JSON.stringify(response.data.token));
         localStorage.setItem("userData", JSON.stringify(response.data.user));
+        const user = response.data.user;
+        if (user.role.toLowerCase() !== "user") {
+          return navigate("/admin");
+        } else {
+          navigate("/");
+        }
         clearInputs();
         return;
       }
