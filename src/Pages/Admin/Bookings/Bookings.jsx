@@ -2,18 +2,12 @@ import React, { useEffect, useState } from "react";
 import style from "./booking.module.css";
 import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
-import BookingList from "../../../../booking.json";
 import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { LIMIT } from "../../../Constants/Constant";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
 const Bookings = () => {
-  const productStatus = {
-    pending: "pending",
-    confirmed: "confirmed",
-    delivered: "delivered",
-    shipping: "shipping",
-  };
+ 
   const TABLE_KEYS = [
     "Product Name",
     "User",
@@ -21,6 +15,7 @@ const Bookings = () => {
     "Total Price",
     "Booking Date",
     "Status",
+    "Action",
   ];
   const [totalPages, setTotalPages] = useState(null);
   const [limit, setLimit] = useState(10);
@@ -50,6 +45,14 @@ const Bookings = () => {
     }
   };
 
+  const handleEditBooking = (bookingId, productId, booking) => {
+    const qP = new URLSearchParams();
+    qP.append("bookingId", bookingId);
+    qP.append("productId", productId);
+    qP.append("linkId", booking.orderId);
+    navigate(`/admin/booking?${qP.toString()}`, { state: booking });
+  };
+
   useEffect(() => {
     fetchBookingList(status);
     setSearchParams({ page });
@@ -66,7 +69,7 @@ const Bookings = () => {
             <select
               name="status"
               id="status"
-              value={status}
+              // value={status}
               onChange={(e) => setStatus(e.target.value)}
             >
               <option value="">Status</option>
@@ -116,6 +119,15 @@ const Bookings = () => {
                       >
                         {item?.status?.charAt(0).toUpperCase() +
                           item?.status?.slice(1).toLowerCase()}
+                      </td>
+                      <td
+                        className={style.td}
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          handleEditBooking(booking._id, item._id, booking)
+                        }
+                      >
+                        Edit
                       </td>
                     </tr>
                   ))

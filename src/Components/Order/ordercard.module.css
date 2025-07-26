@@ -78,3 +78,20 @@ p {
 .price > b {
   color: black;
 }
+
+.td.pending {
+  color: orangered;
+  font-weight: 600;
+}
+.td.confirmed {
+  color: rgb(3, 69, 3);
+  font-weight: 600;
+}
+.td.shipped {
+  color: rgb(122, 5, 122);
+  font-weight: 600;
+}
+.td.delivered {
+  color: green;
+  font-weight: 600;
+}

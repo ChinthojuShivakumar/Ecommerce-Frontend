@@ -71,7 +71,7 @@ const Header = () => {
       window.location.reload();
       return;
     }
-    navigate(`/${item.toLowerCase()}`);
+    if (token) navigate(`/${item.toLowerCase()}`);
   };
 
   const handleCloseModal = () => {
