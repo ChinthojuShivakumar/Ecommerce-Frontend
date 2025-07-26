@@ -48,18 +48,19 @@
   padding: 8px;
   border: none;
   font-weight: normal;
-  border-radius: 0.3rem;
+  border-radius: 0.2rem;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .action {
-  background-color: green;
+  background-color: var(--secondary-color);
   color: white;
 }
 
 .close {
-  background-color: red;
-  color: white;
+  /* background-color: red; */
+  color: black;
 }
 
 .input {
@@ -103,7 +104,7 @@ input[type="radio"] {
 .span {
   font-style: italic;
   font-size: 1rem;
-  background-color: orange;
+  background-color: var(--secondary-color);
   padding: 3px;
   width: 20%;
   border-radius: 10%;
@@ -128,30 +129,47 @@ input[type="radio"] {
 
 .actButtons {
   position: absolute;
-  background-color: whitesmoke;
-  right: 35px;
-  width: 100%;
-  top: 3px;
+  background-color: var(--extra-light);
+  right: 40px;
+  width: 110px;
+  height: inherit;
+  top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: start;
-  padding-left: 10px;
-  border: 1px solid grey;
+  align-items: center;
+  gap: 5;
+  border: 1px solid var(--extra-light);
   border-radius: 1px;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .edit,
-.delete {
+.delete,
+.default {
   cursor: pointer;
+  text-transform: lowercase;
+  width: inherit;
+  box-sizing: border-box;
+  /* padding: 2px 10px; */
+  padding-left: 10px;
 }
 
 .edit:hover {
-  color: blue;
+  color: white;
+  background-color: var(--secondary-color);
 }
 
 .delete:hover {
-  color: red;
+  color: white;
+  background-color: var(--secondary-color);
+}
+
+.default:hover {
+  color: white;
+  background-color: var(--secondary-color);
 }
 
 .hide {

@@ -19,3 +19,5 @@ export const fetchUserData = () => {
   const user = JSON.parse(localStorage.getItem("userData")) || null;
   return user;
 };
+
+export const userId = JSON.parse(localStorage.getItem("userData"))?._id;

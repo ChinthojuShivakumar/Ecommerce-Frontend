@@ -5,25 +5,41 @@ import { IoMdClose } from "react-icons/io";
 import { LOGO_WIDTH, SCREEN_WIDTH } from "../../Constants/Constant";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
+import { errorMessage, successMessage } from "../../Utils/Alert";
 
 const Header = () => {
+  const token = JSON.parse(localStorage.getItem("token"));
+  const user = JSON.parse(localStorage.getItem("userData"));
   const navItems = [
-    "Admin",
+    user?.role?.toLowerCase() === "admin" && "Admin",
     "Home",
     "Products",
     "Orders",
     "Cart",
     "My Profile",
-    "sign in",
-    "sign out",
+    !token ? "sign in" : "sign out",
   ];
+  const GENDER = ["male", "female", "others"];
   const [isSmallScreen, setIsSmallScreen] = useState(SCREEN_WIDTH);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [suOpen, setSUOpen] = useState(false);
   const location = useLocation();
-
+  const initialSignInInputs = {
+    email: "",
+    password: "",
+  };
+  const initialSignUpInputs = {
+    email: "",
+    password: "",
+    phoneNumber: "",
+    name: "",
+    gender: "",
+  };
+  const [signInInputs, setSignInInputs] = useState(initialSignInInputs);
+  const [signUpInputs, setSignUpInputs] = useState(initialSignUpInputs);
   const handleHamburger = (e) => {
     e.preventDefault();
     setIsMenuOpen(!isMenuOpen);
@@ -31,6 +47,13 @@ const Header = () => {
 
   const handleNavigate = (e, item) => {
     e.preventDefault();
+    // if (item !== "sign in" && !user) {
+
+    //   localStorage.clear();
+    //   window.location.reload();
+    //   navigate("/");
+    //   return;
+    // }
     if (item === "Home") {
       navigate("/");
       return;
@@ -42,10 +65,10 @@ const Header = () => {
     }
 
     if (item === "sign out") {
-      setSUOpen(true);
+      localStorage.clear();
+      window.location.reload();
       return;
     }
-
     navigate(`/${item.toLowerCase()}`);
   };
 
@@ -53,8 +76,80 @@ const Header = () => {
     setOpen(false);
   };
 
-  // console.log(location.pathname.split("/"));
-  // console.log(location.pathname.split("/").filter((admin) => admin === "admin"));
+  const handleChangeSignIn = (e, type) => {
+    e.preventDefault();
+
+    if (type === "email") {
+      setSignInInputs({ ...signInInputs, email: e.target.value });
+      return;
+    }
+    if (type === "password") {
+      setSignInInputs({ ...signInInputs, password: e.target.value });
+      return;
+    }
+  };
+  const handleChangeSignUp = (e, type) => {
+    e.preventDefault();
+
+    if (type === "email") {
+      setSignUpInputs({ ...signUpInputs, email: e.target.value });
+      return;
+    }
+    if (type === "password") {
+      setSignUpInputs({ ...signUpInputs, password: e.target.value });
+      return;
+    }
+    if (type === "phoneNumber") {
+      setSignUpInputs({ ...signUpInputs, phoneNumber: e.target.value });
+      return;
+    }
+    if (type === "fullName") {
+      setSignUpInputs({ ...signUpInputs, name: e.target.value });
+      return;
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const response = await axiosInstanceV1.post("/signup", signUpInputs);
+      if (response.status === 201) {
+        successMessage(response.data.message);
+        clearInputs();
+        return;
+      }
+    } catch (error) {
+      errorMessage(error.response.data.message);
+      return error;
+    }
+  };
+  const handleSignIn = async () => {
+    try {
+      const response = await axiosInstanceV1.post("/signin", signInInputs);
+      if (response.status === 200) {
+        successMessage(response.data.message);
+        localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("userData", JSON.stringify(response.data.user));
+        const user = response.data.user;
+        if (user.role.toLowerCase() !== "user") {
+          return navigate("/admin");
+        } else {
+          navigate("/");
+        }
+        clearInputs();
+        return;
+      }
+    } catch (error) {
+      errorMessage(error.response.data.message);
+      return error;
+    }
+  };
+
+  const clearInputs = () => {
+    setSignInInputs(initialSignInInputs);
+    setSignUpInputs(initialSignUpInputs);
+    setOpen(false);
+    setSUOpen(false);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -128,7 +223,15 @@ const Header = () => {
         <div className="m-container">
           <div className="input-container">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" className="email" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="email"
+              onChange={(e) => handleChangeSignIn(e, "email")}
+              value={signInInputs.email}
+              autoComplete="off"
+            />
           </div>
           <div className="input-container">
             <label htmlFor="password">Password</label>
@@ -137,8 +240,25 @@ const Header = () => {
               id="password"
               name="password"
               className="password"
+              onChange={(e) => handleChangeSignIn(e, "password")}
+              value={signInInputs.password}
+              autoComplete="off"
             />
           </div>
+        </div>
+        <div className="">
+          <p className="signupevent">
+            Don't have an account?{" "}
+            <span
+              className="event"
+              onClick={() => {
+                setSUOpen(true);
+                setOpen(false);
+              }}
+            >
+              Sign Up
+            </span>
+          </p>
         </div>
         <div className="buttons">
           <button
@@ -147,9 +267,9 @@ const Header = () => {
             type="button"
             className="close"
           >
-            Close Modal
+            Close
           </button>
-          <button type="button" className="submit">
+          <button type="button" className="submit" onClick={handleSignIn}>
             Submit
           </button>
         </div>
@@ -175,6 +295,9 @@ const Header = () => {
               id="fullName"
               name="fullName"
               className="fullName"
+              onChange={(e) => handleChangeSignUp(e, "fullName")}
+              value={signUpInputs.name}
+              autoComplete="off"
             />
           </div>
           <div className="input-container">
@@ -184,11 +307,22 @@ const Header = () => {
               id="phoneNumber"
               name="phoneNumber"
               className="phoneNumber"
+              onChange={(e) => handleChangeSignUp(e, "phoneNumber")}
+              value={signUpInputs.phoneNumber}
+              autoComplete="off"
             />
           </div>
           <div className="input-container">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" className="email" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="email"
+              onChange={(e) => handleChangeSignUp(e, "email")}
+              value={signUpInputs.email}
+              autoComplete="off"
+            />
           </div>
           <div className="input-container">
             <label htmlFor="password">Password</label>
@@ -197,8 +331,47 @@ const Header = () => {
               id="password"
               name="password"
               className="password"
+              onChange={(e) => handleChangeSignUp(e, "password")}
+              value={signUpInputs.password}
+              autoComplete="off"
             />
           </div>
+        </div>
+        <div className="item">
+          <label htmlFor="">Gender: </label>
+          <div className="types">
+            {GENDER.map((item, i) => (
+              <div className="addressItem" key={i}>
+                <input
+                  type="radio"
+                  id={i}
+                  value={item}
+                  onChange={(e) =>
+                    setSignUpInputs({ ...signUpInputs, gender: e.target.value })
+                  }
+                  checked={item === signUpInputs.gender}
+                  // disabled={pF}
+                />
+                <label style={{ textTransform: "capitalize" }} htmlFor={item}>
+                  {item}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="" style={{ margin: "10px 0px" }}>
+          <p className="signupevent">
+            Already have an account?{" "}
+            <span
+              className="event"
+              onClick={() => {
+                setSUOpen(false);
+                setOpen(true);
+              }}
+            >
+              Sign in
+            </span>
+          </p>
         </div>
         <div className="buttons">
           <button
@@ -207,9 +380,9 @@ const Header = () => {
             type="button"
             className="close"
           >
-            Close Modal
+            Close
           </button>
-          <button type="button" className="submit">
+          <button type="button" className="submit" onClick={handleSignUp}>
             Submit
           </button>
         </div>
