@@ -6,6 +6,7 @@ import { BiHome } from "react-icons/bi";
 import { LuLocate } from "react-icons/lu";
 import { PiPhone } from "react-icons/pi";
 import { FaStar } from "react-icons/fa6";
+import Stepper from "../../Components/Stepper/Stepper";
 
 const OrderDetailPage = () => {
   const location = useLocation();
@@ -17,12 +18,33 @@ const OrderDetailPage = () => {
   const [stars, setStars] = useState(-1);
   const [comment, setComment] = useState("");
 
+  const steps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
+  const [currentStep, setCurrentStep] = useState(1);
+  // let currentStep = 1;
+
   useState(() => {
     const findProduct = state.products.find(
       (product) => product._id === qP.get("orderId")
     );
     setProduct(findProduct);
     console.log(findProduct);
+
+    let step = 1;
+    if (findProduct.shippedAt) {
+      step = 2;
+    }
+    if (findProduct.deliveredAt) {
+      step = 4;
+    }
+    const createdAt = new Date(stars.createdAt);
+    const sevenDaysLater = new Date(createdAt);
+    sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
+
+    if (new Date(state.createdAt) > sevenDaysLater) {
+      step = 3;
+    }
+
+    setCurrentStep(step);
   }, [state]);
 
   const handleClickProduct = (booking, productId) => {
@@ -67,6 +89,7 @@ const OrderDetailPage = () => {
                 />
               </div>
             </div>
+            <Stepper steps={steps} currentStep={currentStep} />
             <div className={styles.ratingContainer}>
               {Array.from({ length: 5 }).map((_, i) => {
                 return (
@@ -97,60 +120,71 @@ const OrderDetailPage = () => {
               ></textarea>
             )}
           </div>
-          <div>
-            <div style={{ margin: "10px 0px" }}>
-              <h2>Other Products on this order</h2>
-            </div>
+          {state.products.length > 1 && (
             <div>
-              {state.products
-                .filter((product) => product._id !== qP.get("orderId"))
-                .map((item) => {
-                  return (
-                    <div
-                      className={styles.productCard}
-                      onClick={() => handleClickProduct(state, item._id)}
-                      key={item._id}
-                    >
-                      <div className={styles.cardText}>
-                        <h2
-                          style={{ textTransform: "capitalize", width: "70%" }}
-                        >
-                          {item.product.name}
-                        </h2>
-                        <div
-                          style={{
-                            color: "black",
-                            display: "flex",
-                            justifyContent: "start",
-                            alignItems: "center",
-                          }}
-                        >
+              <div style={{ margin: "10px 0px" }}>
+                <h2>Other Products on this order</h2>
+              </div>
+              <div>
+                {state.products
+                  .filter((product) => product._id !== qP.get("orderId"))
+                  .map((item) => {
+                    return (
+                      <div
+                        className={styles.productCard}
+                        onClick={() => handleClickProduct(state, item._id)}
+                        key={item._id}
+                      >
+                        <div className={styles.cardText}>
+                          <h2
+                            style={{
+                              textTransform: "capitalize",
+                              width: "70%",
+                            }}
+                          >
+                            {item.product.name}
+                          </h2>
                           <div
                             style={{
-                              width: "5px",
-                              height: "5px",
-                              border: `2px solid ${
-                                item.status === "cancelled" ? "red" : "green"
-                              }`,
-                              borderRadius: "100%",
-                              backgroundColor:
-                                item.status === "cancelled" ? "red" : "green",
+                              color: "black",
+                              display: "flex",
+                              justifyContent: "start",
+                              alignItems: "center",
                             }}
-                          ></div>
-                          &nbsp;{" "}
-                          {item.status.charAt(0).toUpperCase() +
-                            item.status.slice(1).toLowerCase()}
+                          >
+                            <div
+                              style={{
+                                width: "5px",
+                                height: "5px",
+                                border: `2px solid ${
+                                  item.status === "cancelled" ? "red" : "green"
+                                }`,
+                                borderRadius: "100%",
+                                backgroundColor:
+                                  item.status === "cancelled" ? "red" : "green",
+                              }}
+                            ></div>
+                            &nbsp;{" "}
+                            {item.status.charAt(0).toUpperCase() +
+                              item.status.slice(1).toLowerCase()}
+                          </div>
+                          {/* <p>RS.{item.originalPrice}</p> */}
                         </div>
-                        {/* <p>RS.{item.originalPrice}</p> */}
+                        <div className={styles.cardImage}>
+                          <img src={item?.product?.images[0]} />
+                        </div>
                       </div>
-                      <div className={styles.cardImage}>
-                        <img src={item?.product?.images[0]} />
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
             </div>
-          </div>
+          )}
+          {product.shippedAt && (
+            <div className={styles.footer}>
+              <p className={styles.cancel}>Cancel Booking</p>
+              <p className={styles.return}>Return Product</p>
+            </div>
+          )}
         </div>
         <div>
           <div>

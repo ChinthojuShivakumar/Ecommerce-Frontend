@@ -1,0 +1,73 @@
+.stepperContainer {
+  display: flex;
+  gap: 8rem;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0px;
+}
+
+.step {
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  color: black;
+}
+
+.stepperWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: inherit;
+}
+
+.activeIndex,
+.completed {
+  background-color: var(--secondary-color);
+  color: white;
+  border: 2px solid var(--secondary-color);
+}
+
+.activeStep {
+  color: white;
+}
+
+.active {
+  background-color: var(--secondary-color);
+  color: white;
+  border: 2px solid var(--secondary-color);
+}
+.inactive {
+  background-color: #ccc;
+  color: #333;
+  border: none;
+}
+.line {
+  height: 4px;
+  width: 140px;
+  background-color: #ccc;
+  margin: 0 10px;
+  z-index: 1;
+  position: absolute;
+  /* left: 5.5rem; */
+  top: 1.1rem;
+  transform: translateX(100%);
+  /* width: max-content; */
+}
+
+.lineActive {
+  background-color: var(--secondary-color);
+}
+
+.labelActive {
+  font-weight: bold;
+  color: black;
+}
