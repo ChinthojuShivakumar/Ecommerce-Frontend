@@ -115,7 +115,20 @@ const OrderCard = () => {
 
               <div className={styles.orderStatusContainer}>
                 <div className={styles.orderStatus}>
-                  <h1>Delivered On Mar 8</h1>
+                  <h1
+                    className={`${styles.td} ${
+                      styles[it?.status?.toLowerCase()] || ""
+                    }`}
+                  >
+                    {it.status.charAt(0).toUpperCase() +
+                      it.status.slice(1).toLowerCase()}{" "}
+                    On{" "}
+                    {it.status === "DELIVERED"
+                      ? it.deliveredAt.split("T")[0]
+                      : it.status === "SHIPPED"
+                      ? it.shippedAt.split("T")[0]
+                      : it.status === "RETURNED" && it.returnedAt.split("T")[0]}
+                  </h1>
                   <p
                     style={
                       new Date(it?.product?.deliveredAt)?.getTime() <=
@@ -124,7 +137,7 @@ const OrderCard = () => {
                         : { color: "black" }
                     }
                   >
-                    your item was delivered
+                    your item was {it?.status.toLowerCase()}
                   </p>
                   <p>
                     <IoMdStar size={20} />

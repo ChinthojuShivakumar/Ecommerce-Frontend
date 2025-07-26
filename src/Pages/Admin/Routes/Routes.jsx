@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import NotFound from "../../NotFound/NotFound";
 import UserList from "../Users/UserList";
 import Action from "../Products/Action";
+import BookingDetail from "../Bookings/BookingDetail";
 // import Category from "../Category/Category";
 // import Bookings from "../Bookings/Bookings";
 // import Products from "../Products/Products";
@@ -137,6 +138,27 @@ const AdminRoutes = () => {
             }
           >
             <Bookings />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/booking"
+        element={
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100vh",
+                }}
+              >
+                Loading...
+              </div>
+            }
+          >
+            <BookingDetail />
           </Suspense>
         }
       />

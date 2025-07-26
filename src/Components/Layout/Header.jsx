@@ -66,10 +66,12 @@ const Header = () => {
 
     if (item === "sign out") {
       localStorage.clear();
+
+      navigate("/");
       window.location.reload();
       return;
     }
-    navigate(`/${item.toLowerCase()}`);
+    if (token) navigate(`/${item.toLowerCase()}`);
   };
 
   const handleCloseModal = () => {
@@ -131,7 +133,9 @@ const Header = () => {
         localStorage.setItem("userData", JSON.stringify(response.data.user));
         const user = response.data.user;
         if (user.role.toLowerCase() !== "user") {
-          return navigate("/admin");
+          navigate("/admin");
+          window.location.reload();
+          return;
         } else {
           navigate("/");
         }

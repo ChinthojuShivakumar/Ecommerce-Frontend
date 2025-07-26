@@ -1,0 +1,26 @@
+.statusContainer {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 10px;
+}
+.header {
+  margin: 10px 0;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.childone {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+    padding-left: 10px;
+}
+
+.priceContainer {
+    margin-top: 10px;
+}
