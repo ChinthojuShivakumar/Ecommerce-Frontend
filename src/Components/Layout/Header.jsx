@@ -47,6 +47,13 @@ const Header = () => {
 
   const handleNavigate = (e, item) => {
     e.preventDefault();
+    // if (item !== "sign in" && !user) {
+
+    //   localStorage.clear();
+    //   window.location.reload();
+    //   navigate("/");
+    //   return;
+    // }
     if (item === "Home") {
       navigate("/");
       return;

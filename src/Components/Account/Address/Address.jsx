@@ -5,14 +5,16 @@ import { modalStyle, userId } from "../../../Constants/Constant";
 import { errorMessage, successMessage } from "../../../Utils/Alert";
 import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { BsThreeDotsVertical } from "react-icons/bs";
+// import { userId } from "../../../Constants/Constant";
 
 const Address = () => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [actionF, setActionF] = useState(false);
+  const [actionId, setActionId] = useState("");
   const ADDRESS_TYPE = ["Home", "Work", "Others"];
   const initialInputs = {
-    userId: "1",
+    userId: userId,
     name: "",
     phoneNumber: null,
     houseNumber: "",
@@ -73,6 +75,7 @@ const Address = () => {
       if (response.status === 201) {
         successMessage(response.data.message);
         clearInputs();
+        fetchAddressList();
         return;
       }
     } catch (error) {
@@ -101,6 +104,26 @@ const Address = () => {
       if (response.status === 202) {
         successMessage(response.data.message);
         fetchAddressList();
+        return;
+      }
+    } catch (error) {
+      return errorMessage(error.message);
+    }
+  };
+
+  const handleDefault = async (_id) => {
+    try {
+      const payload = {
+        _id: _id,
+        userId: userId,
+        isDefault: true,
+      };
+      const response = await axiosInstanceV1.patch(`/address/${_id}`, payload);
+      if (response.status === 202) {
+        successMessage(response.data.message);
+        fetchAddressList();
+        setActionF(false);
+        setActionId("");
         return;
       }
     } catch (error) {
@@ -139,9 +162,16 @@ const Address = () => {
                 {item.isDefault && <span className={styles.span}>default</span>}
               </h2>
               <div style={{ cursor: "pointer" }} className={styles.act}>
-                <BsThreeDotsVertical onClick={() => setActionF(!actionF)} />
+                <BsThreeDotsVertical
+                  onClick={() => {
+                    setActionF(!actionF);
+                    setActionId(actionId === item._id ? null : item._id);
+                  }}
+                />
                 <div
-                  className={`${styles.actButtons} ${!actionF && styles.hide}`}
+                  className={`${styles.actButtons} ${
+                    actionId !== item._id && styles.hide
+                  }`}
                 >
                   <p className={styles.edit}>Edit</p>
                   <p
@@ -149,6 +179,12 @@ const Address = () => {
                     onClick={() => deleteAddress(item._id)}
                   >
                     Delete
+                  </p>
+                  <p
+                    className={styles.default}
+                    onClick={() => handleDefault(item._id)}
+                  >
+                    set as default
                   </p>
                 </div>
               </div>

@@ -97,7 +97,7 @@ const Profile = () => {
     setInputs(fetchUserData());
   }, []);
 
- 
+  // console.log(inputs);
 
   return (
     <div>
@@ -145,9 +145,11 @@ const Profile = () => {
                   <input
                     type="radio"
                     id={i}
-                    value={inputs?.addressType}
-                    onChange={(e) => handleChange(e, "gender")}
-                    // checked={item === inputs.addressType}
+                    value={item}
+                    onChange={(e) =>
+                      setInputs({ ...inputs, gender: e.target.value })
+                    }
+                    checked={item === inputs?.gender}
                     disabled={pF}
                   />
                   <label htmlFor={item}>{item}</label>
