@@ -7,6 +7,9 @@ import { LuLocate } from "react-icons/lu";
 import { PiPhone } from "react-icons/pi";
 import { FaStar } from "react-icons/fa6";
 import Stepper from "../../Components/Stepper/Stepper";
+import { errorMessage, successMessage } from "../../Utils/Alert";
+import { axiosInstanceV1 } from "../../Utils/ApiServices";
+import { userId } from "../../Constants/Constant";
 
 const OrderDetailPage = () => {
   const location = useLocation();
@@ -57,6 +60,26 @@ const OrderDetailPage = () => {
     return;
   };
 
+  const postReview = async (productId, orderId) => {
+    try {
+      const payload = {
+        rating: Number(stars + 1),
+        comment: comment,
+        productId: productId,
+        orderId: orderId,
+        userId,
+      };
+      const response = await axiosInstanceV1.post("/review/create", payload);
+      if (response.status == 201) {
+        successMessage(response.data.message);
+        return;
+      }
+    } catch (error) {
+      errorMessage(error.response.data.message);
+      return error;
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -97,7 +120,8 @@ const OrderDetailPage = () => {
                     size={38}
                     key={i}
                     cursor={"pointer"}
-                    onClick={() => setStars(i)}
+                    onClick={() => setStars(stars === i ? -1 : i)}
+                    values={stars}
                     style={{
                       color: i <= stars ? "green" : "rgb(206, 198, 198)",
                     }}
@@ -106,18 +130,28 @@ const OrderDetailPage = () => {
               })}
             </div>
             {stars >= 0 && (
-              <textarea
-                style={{
-                  width: "100%",
-                  margin: "15px 0px",
-                  padding: "5px",
-                  fontSize: "1rem",
-                }}
-                placeholder="Write comment on rating"
-                cols={10}
-                rows={5}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
+              <div className={styles.comment}>
+                <textarea
+                  style={{
+                    width: "100%",
+                    margin: "15px 0px",
+                    padding: "5px",
+                    fontSize: "1rem",
+                  }}
+                  placeholder="Write comment on rating"
+                  cols={10}
+                  rows={5}
+                  onChange={(e) => setComment(e.target.value)}
+                  value={comment}
+                ></textarea>
+                <button
+                  type="button"
+                  className={styles.submit}
+                  onClick={() => postReview(product.product._id, state._id)}
+                >
+                  Submit
+                </button>
+              </div>
             )}
           </div>
           {state.products.length > 1 && (

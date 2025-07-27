@@ -140,8 +140,8 @@
   gap: 100px;
   color: gray;
   border-top: 1px solid rgb(206, 198, 198);
-  margin-top: 10px;
-  padding-top: 10px;
+  margin: 10px 0px;
+  padding: 10px 0px;
   justify-content: center;
   align-items: center;
 }
@@ -170,4 +170,21 @@
 
 .cancel {
   border-right: 1px solid gray;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.submit {
+  width: 120px;
+  height: 35px;
+  background-color: var(--secondary-color);
+  border: none;
+  color: white;
+  border-radius: 3px;
+  align-self: flex-end;
 }

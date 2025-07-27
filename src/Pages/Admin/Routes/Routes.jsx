@@ -4,6 +4,7 @@ import NotFound from "../../NotFound/NotFound";
 import UserList from "../Users/UserList";
 import Action from "../Products/Action";
 import BookingDetail from "../Bookings/BookingDetail";
+import Reviews from "../Reviews/Reviews";
 // import Category from "../Category/Category";
 // import Bookings from "../Bookings/Bookings";
 // import Products from "../Products/Products";
@@ -159,6 +160,27 @@ const AdminRoutes = () => {
             }
           >
             <BookingDetail />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/reviews"
+        element={
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100vh",
+                }}
+              >
+                Loading...
+              </div>
+            }
+          >
+            <Reviews />
           </Suspense>
         }
       />

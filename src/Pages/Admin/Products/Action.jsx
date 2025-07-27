@@ -26,6 +26,11 @@ const Action = () => {
   const [hightLights, setHighLights] = useState("");
   const [sK, setSK] = useState("");
   const [sV, setSV] = useState("");
+  // console.log(inputs);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChange = (e, type) => {
     e.preventDefault();
@@ -130,9 +135,9 @@ const Action = () => {
   const removeSpecification = (e, key) => {
     e.preventDefault();
 
-   const updatedSpecs = { ...inputs.specifications };
-  delete updatedSpecs[key];
-  setInputs({ ...inputs, specifications: updatedSpecs });
+    const updatedSpecs = { ...inputs.specifications };
+    delete updatedSpecs[key];
+    setInputs({ ...inputs, specifications: updatedSpecs });
   };
 
   const [categoryList, setCategoryList] = useState([]);
@@ -218,7 +223,7 @@ const Action = () => {
     } catch (error) {
       setLoading(false);
       console.log(error);
-      
+
       return error;
     }
   };
@@ -230,7 +235,7 @@ const Action = () => {
       setIsEditing(true);
       setInputs({
         ...inputs,
-        category: location.state.category,
+        category: location.state.category?._id,
         description: location.state.description,
         images: location.state.images,
         imagePreviews: location.state.images,
@@ -239,7 +244,7 @@ const Action = () => {
         rating: location.state.rating,
         stock: location.state.stock,
         highlights: location.state.highlights,
-        specifications: location.state.specifications
+        specifications: location.state.specifications,
       });
     }
   }, [location.state]);
