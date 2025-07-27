@@ -33,7 +33,11 @@ const Filters = ({
                   name={item.name}
                   id={item.name}
                   value={selectedCategory}
-                  onChange={() => setSelectedCategory(item._id)}
+                  onChange={() =>
+                    setSelectedCategory(
+                      selectedCategory === item._id ? "" : item._id
+                    )
+                  }
                   checked={selectedCategory === item._id}
                 />
                 <label htmlFor={item}>{item.name}</label>
@@ -60,7 +64,14 @@ const Filters = ({
                     name={item.label}
                     id={item.label}
                     value={selectedPrice}
-                    onChange={() => setSelectedPrice(`${item.min}-${item.max}`)}
+                    onChange={() =>
+                      setSelectedPrice(
+                        selectedPrice === `${item.min}-${item.max}`
+                          ? ""
+                          : `${item.min}-${item.max}`
+                      )
+                    }
+                    checked={selectedPrice === `${item.min}-${item.max}`}
                   />
                   <label htmlFor={item}>{item.label}</label>
                 </div>
