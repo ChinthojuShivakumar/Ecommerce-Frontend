@@ -7,17 +7,20 @@ const ProductCard = React.lazy(() =>
 import "./productlist.css";
 import { axiosInstanceV1 } from "../../Utils/ApiServices";
 import Filters from "../../Components/Products/Filters/Filters";
+import { useNavigate } from "react-router-dom";
+import EmptyRecords from "../../Components/EmptyRecords/EmptyRecords";
 
 const ProductsList = () => {
   const [productList, setProductList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const navigate = useNavigate();
+  const qP = new URLSearchParams();
 
   const fetchProductList = async () => {
-    const qP = new URLSearchParams();
-    selectedCategory && qP.append("category", selectedCategory);
-    selectedPrice && qP.append("price", selectedPrice);
+    selectedCategory && qP.get("category", selectedCategory);
+    selectedPrice && qP.get("price", selectedPrice);
     try {
       const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
       if (response.status === 200) {
@@ -43,8 +46,15 @@ const ProductsList = () => {
   }, []);
 
   useEffect(() => {
+    selectedCategory && qP.append("category", selectedCategory);
+    selectedPrice && qP.append("price", selectedPrice);
+    navigate(`/products?${qP.toString()}`);
     fetchProductList();
   }, [selectedCategory, selectedPrice]);
+
+  // useEffect(() => {
+
+  // }, []);
   return (
     <div>
       <Header />
@@ -60,6 +70,7 @@ const ProductsList = () => {
           />
         </div>
         <div className="product-body product-list list">
+          {!productList.length && <EmptyRecords Page={"Products"} />}
           <Suspense
             fallback={
               <div

@@ -15,7 +15,7 @@ const ProductDetail = () => {
   const productName = decodeURIComponent(location.search.split("=")[1]);
   const [product, setProduct] = useState(null);
   const [imageView, setImageView] = useState(0);
-  const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
+  const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
   const userLoggedIn = true;
   const navigate = useNavigate();
   const [isCartProduct, setIsCartProduct] = useState(false);
