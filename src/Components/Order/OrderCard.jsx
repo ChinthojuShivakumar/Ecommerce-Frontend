@@ -7,27 +7,41 @@ import { userId } from "../../Constants/Constant";
 import EmptyRecords from "../EmptyRecords/EmptyRecords";
 import { useNavigate } from "react-router-dom";
 
-const OrderCard = () => {
+const OrderCard = ({ status, year, setAvailableYear }) => {
   const [bookingList, setBookingList] = useState([]);
+
   const navigate = useNavigate();
   const [links, setLinks] = useState("");
-  console.log(bookingList);
+  const qP = new URLSearchParams();
 
   useEffect(() => {
     fetchBookingList();
-  }, []);
+  }, [status, year]);
 
   const fetchBookingList = async () => {
-    const payload = {
-      userId: userId,
-    };
+    status &&
+      qP.append("status", status === "ON THE WAY" ? "CONFIRMED" : status);
+    year && qP.append("year", year);
+    userId && qP.append("userId", userId);
     try {
-      const response = await axiosInstanceV1.get(
-        `/booking?userId=${payload.userId}`
-      );
+      const response = await axiosInstanceV1.get(`/booking?${qP.toString()}`);
       if (response.status === 200) {
+        const extractYears = response.data.bookingList.map((year) =>
+          new Date(year.createdAt).getFullYear()
+        );
+        const minYear = Math.min(...extractYears);
+        const currentYear = new Date().getFullYear();
+        const allYears = [];
+        for (let y = minYear; y <= currentYear; y++) {
+          allYears.push(y.toString());
+        }
+        // console.log(extractYears, "ExtractedYears");
+        // console.log(minYear, "minYear");
+        // console.log(allYears, "all years");
+
         successMessage(response.data.message);
         setBookingList(response.data.bookingList);
+        setAvailableYear(allYears);
       }
     } catch (error) {
       return error;
