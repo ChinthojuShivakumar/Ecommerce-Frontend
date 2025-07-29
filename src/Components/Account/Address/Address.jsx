@@ -156,9 +156,8 @@ const Address = () => {
                 {item.name}
                 {item.addressType === "Home"
                   ? `'s ${item.addressType}`
-                  : item.addressType === "Work"
-                  ? ` ${item.addressType}place`
-                  : item.addressType}{" "}
+                  : item.addressType === "Work" &&
+                    ` ${item.addressType}place`}{" "}
                 {item.isDefault && <span className={styles.span}>default</span>}
               </h2>
               <div style={{ cursor: "pointer" }} className={styles.act}>

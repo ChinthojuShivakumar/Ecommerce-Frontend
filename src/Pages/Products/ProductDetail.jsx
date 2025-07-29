@@ -4,11 +4,23 @@ import Header from "../../Components/Layout/Header";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./productlist.css";
 import { axiosInstanceV1 } from "../../Utils/ApiServices";
-import { successMessage } from "../../Utils/Alert";
+import { errorMessage, successMessage } from "../../Utils/Alert";
 import Modal from "../../Components/Modal/Modal";
 import { modalStyle, userId } from "../../Constants/Constant";
 import { GiCash, GiWallet } from "react-icons/gi";
 import { FaAmazonPay, FaStar } from "react-icons/fa";
+import { FaLocationPin } from "react-icons/fa6";
+import { HiLocationMarker } from "react-icons/hi";
+import { CgClose } from "react-icons/cg";
+
+const style = {
+  maxWidth: "800px",
+  // height: "300px",
+  width: "90%",
+  borderRadius: "2px",
+  position: "relative",
+  animation: "fadeInScale 0.3s ease",
+};
 
 const ProductDetail = () => {
   const location = useLocation();
@@ -20,8 +32,12 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const [isCartProduct, setIsCartProduct] = useState(false);
   const [cartList, setCartList] = useState([]);
-
+  const [defaultAddress, setDefaultAddress] = useState(null);
   const [open, setOpen] = useState(false);
+  const [addressList, setAddressList] = useState([]);
+  const [uAF, setUAF] = useState(false);
+  const [search, setSearch] = useState("");
+
   const PAYMENT_MODES = [
     { mode: "card", icon: <GiWallet size={26} /> },
     { mode: "upi", icon: <FaAmazonPay size={26} /> },
@@ -113,6 +129,41 @@ const ProductDetail = () => {
     }
   };
 
+  const fetchAddressList = async () => {
+    const qP = new URLSearchParams();
+    userId && qP.append("userId", userId);
+    try {
+      const response = await axiosInstanceV1.get(`/address?${qP.toString()}`);
+      if (response.status === 200) {
+        // successMessage(response.data.message);
+        setAddressList(response.data.addressList);
+        return;
+      }
+    } catch (error) {
+      return errorMessage(error.message);
+    }
+  };
+
+  const changeDefaultAddress = async (_id) => {
+    try {
+      const payload = {
+        userId,
+        _id: _id,
+        isDefault: true,
+      };
+      const response = await axiosInstanceV1.patch(`/address/${_id}`, payload);
+      if (response.status == 202) {
+        // successMessage(response.data.message);
+        setUAF(false);
+        fetchDefaultAddress();
+        fetchAddressList();
+      }
+    } catch (error) {
+      errorMessage(error.response?.data.message || error.message);
+      return error;
+    }
+  };
+
   useEffect(() => {
     // const findProduct =
     //   location.state?.name === productName ? location.state : null;
@@ -155,9 +206,11 @@ const ProductDetail = () => {
         return;
       }
 
+      // console.log("clicked");
+
       const payload = {};
       const orderId = `Order_${Date.now()}`;
-      let userId = userId;
+      // let userId = userId;
       const quantity = 1;
       const shippingPrice = 50;
 
@@ -186,6 +239,7 @@ const ProductDetail = () => {
       ];
 
       const response = await axiosInstanceV1.post("/booking", payload);
+
       if (response.status === 201) {
         if (paymentMode !== "cod") {
           window.location.href = response?.data?.paymentLink;
@@ -197,11 +251,36 @@ const ProductDetail = () => {
         return;
       }
     } catch (error) {
+      console.log(error);
+
+      errorMessage(error.response?.data.message || error.message);
       return error;
     }
   };
 
-  console.log(product);
+  // console.log(product);
+
+  const fetchDefaultAddress = async () => {
+    try {
+      const response = await axiosInstanceV1.get(`/address/default/${userId}`);
+      if (response.status === 200) {
+        setDefaultAddress(response.data.defaultAddress);
+      }
+    } catch (error) {
+      errorMessage(error.response?.data.message || error.message);
+      return error;
+    }
+  };
+
+  const handleChangeAddress = (e) => {
+    e.preventDefault();
+    setUAF(true);
+  };
+
+  useEffect(() => {
+    fetchDefaultAddress();
+    fetchAddressList();
+  }, []);
 
   return (
     <div>
@@ -270,7 +349,7 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className="pd-body">
-          <h1>{product?.name}</h1>
+          <h1 style={{ textTransform: "capitalize" }}>{product?.name}</h1>
           <div className="pd-price">
             <p className="price-text">
               <strike> RS.{product?.price}</strike>{" "}
@@ -300,10 +379,65 @@ const ProductDetail = () => {
               ))}
             </div>
           )}
-          <div className="description">
-            <h1>Description: </h1>
-            <p style={{ fontWeight: "normal" }}>{product?.description}</p>
+          <div className="offers-section">
+            <h3 style={{ padding: "10px 0px" }}>Available offers</h3>
+
+            <ul
+              style={{
+                listStyle: "none",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <li>
+                <strong style={{ color: "green" }}>Bank Offer: </strong>
+                5% cashback on Flipkart Axis Bank Credit Card up to ₹4,000 per
+                statement quarter
+                <a href="#">T&amp;C</a>
+              </li>
+              <li>
+                <strong style={{ color: "green" }}>Bank Offer: </strong>
+                5% cashback on Axis Bank Flipkart Debit Card up to ₹750
+                <a href="#">T&amp;C</a>
+              </li>
+              <li>
+                <strong style={{ color: "green" }}>Bank Offer: </strong>
+                10% off up to ₹1500 on Axis Bank Credit Card EMI Txn. Min Txn
+                Value ₹7500
+                <a href="#">T&amp;C</a>
+              </li>
+              <li>
+                <strong style={{ color: "green" }}>Special Price: </strong>
+                Get extra 53% off (price inclusive of cashback/coupon)
+                <a href="#">T&amp;C</a>
+              </li>
+            </ul>
           </div>
+
+          <div className="address-container">
+            <div>
+              <h1>Address: </h1>
+            </div>
+            <div className="address-body">
+              <HiLocationMarker size={20} color="rgb(110, 110, 223)" />
+              <input
+                type="text"
+                name="addressId"
+                id="addressId"
+                value={` ${defaultAddress?.name} - ${defaultAddress?.houseNumber}, ${defaultAddress?.area},  ${defaultAddress?.state} - ${defaultAddress?.pincode}`}
+                className="address"
+              />
+              <button
+                type="button"
+                className="change"
+                onClick={handleChangeAddress}
+              >
+                Change
+              </button>
+            </div>
+          </div>
+
           <div className="highlights">
             <h1>Highlights: </h1>
             {product?.highlights?.map((spec, i) => (
@@ -330,8 +464,15 @@ const ProductDetail = () => {
                 </div>
               ))}
           </div>
+          <div className="description">
+            <h1>Description: </h1>
+            <p style={{ fontWeight: "normal", color: "black" }}>
+              {product?.description}
+            </p>
+          </div>
         </div>
       </div>
+
       {product?.reviewList?.length > 0 && (
         <div className="review-container">
           <div className="review-header">
@@ -340,7 +481,7 @@ const ProductDetail = () => {
           <div className="review-body">
             {product?.reviewList?.map((review) => {
               return (
-                <div className="review-card">
+                <div className="review-card" key={review._id}>
                   <h3
                     style={{
                       color: "rgb(110, 110, 223)",
@@ -401,6 +542,70 @@ const ProductDetail = () => {
             >
               Cancel Payment
             </button>
+          </div>
+        </div>
+      </Modal>
+      <Modal style={style} open={uAF}>
+        <div>
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            <CgClose
+              size={24}
+              cursor={"pointer"}
+              onClick={() => setUAF(false)}
+            />
+          </div>
+          <div>
+            <input
+              type="search"
+              name="search"
+              id="search"
+              className="search"
+              placeholder="Search address"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div className="address-list">
+            {addressList
+              ?.filter((it) =>
+                it.name.toLowerCase().includes(search.toLowerCase())
+              )
+              ?.map((item) => {
+                return (
+                  <div
+                    className={"card"}
+                    key={item._id}
+                    style={
+                      item?.isDefault
+                        ? {
+                            backgroundColor: "rgb(199, 199, 240)",
+                            border: "1px solid rgb(199, 199, 240)",
+                          }
+                        : {}
+                    }
+                    onClick={() => changeDefaultAddress(item._id)}
+                  >
+                    <div className={"headersection"}>
+                      <h2>
+                        {item.name}
+                        {item.addressType === "Home"
+                          ? `'s ${item.addressType}`
+                          : item.addressType === "Work" &&
+                            ` ${item.addressType}place`}{" "}
+                        {item.isDefault && (
+                          <span className={"span"}>default</span>
+                        )}
+                      </h2>
+                    </div>
+                    <p>
+                      {item.houseNumber}, {item.area}
+                    </p>
+                    <p>
+                      {item.state} -{item.pincode}
+                    </p>
+                    <p>Phone Number: {item.phoneNumber}</p>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </Modal>
