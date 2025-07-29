@@ -8,7 +8,7 @@ import { successMessage } from "../../Utils/Alert";
 import Modal from "../../Components/Modal/Modal";
 import { modalStyle, userId } from "../../Constants/Constant";
 import { GiCash, GiWallet } from "react-icons/gi";
-import { FaAmazonPay } from "react-icons/fa";
+import { FaAmazonPay, FaStar } from "react-icons/fa";
 
 const ProductDetail = () => {
   const location = useLocation();
@@ -280,11 +280,13 @@ const ProductDetail = () => {
                   product?.price - (product?.price * product?.discount) / 100
                 )}
               </strong>{" "}
-              <span className="discount">{product.discount}% off </span>
+              <span className="discount">{product?.discount}% off </span>
             </p>
           </div>
           <div className="rating-review">
-            <p className="rating">{product?.rating}⭐</p>
+            <p className="rating">
+              {product?.rating} <FaStar size={15} />
+            </p>
             <span>({product?.totalReviews} Reviews & Ratings)</span>
           </div>
 
@@ -343,10 +345,17 @@ const ProductDetail = () => {
                     style={{
                       color: "rgb(110, 110, 223)",
                       textTransform: "capitalize",
+                      display: "flex",
+                      gap: "10px",
+                      justifyContent: "start",
+                      alignItems: "center",
                     }}
                   >
                     {review.userId.name} -{" "}
-                    <span className="review-star">{review.rating}⭐</span>
+                    <span className="rating">
+                      {review.rating}
+                      <FaStar size={15} />
+                    </span>
                   </h3>
                   <p style={{ color: "black" }}>{review.comment}</p>
                   <p style={{ color: "gray" }}>
