@@ -272,10 +272,20 @@ const ProductDetail = () => {
         <div className="pd-body">
           <h1>{product?.name}</h1>
           <div className="pd-price">
-            <p>
-              RS.{product?.price} <span>({product?.totalReviews} reviews)</span>
+            <p className="price-text">
+              <strike> RS.{product?.price}</strike>{" "}
+              <strong>
+                {/* ₹ */}Rs.
+                {Math.round(
+                  product?.price - (product?.price * product?.discount) / 100
+                )}
+              </strong>{" "}
+              <span className="discount">{product.discount}% off </span>
             </p>
-            <p>⭐{product?.rating}</p>
+          </div>
+          <div className="rating-review">
+            <p className="rating">{product?.rating}⭐</p>
+            <span>({product?.totalReviews} Reviews & Ratings)</span>
           </div>
 
           {product?.offers?.length && (

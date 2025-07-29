@@ -124,14 +124,15 @@ video {
   align-items: center;
   margin-top: 1rem;
   position: relative;
+  font-size: 1.2rem;
 }
 
 .pd-price > p > span {
   color: rgb(167, 165, 165);
-  font-size: 1rem;
-  position: absolute;
+  /* font-size: 1rem; */
+  /* position: absolute;
   top: 0.3rem;
-  right: 2.7rem;
+  right: 2.7rem; */
 }
 
 .pd-price > p:first-child {
@@ -146,6 +147,35 @@ video {
 .pd-price + p {
   margin-top: 30px;
   font-weight: normal;
+}
+
+.price-text {
+  display: flex;
+  gap: 10px;
+  color: rgb(167, 165, 165);
+}
+
+.discount {
+  color: var(--secondary-color) !important;
+}
+
+.rating-review {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+  color: gray;
+}
+
+.rating {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 3px;
+  border-radius: 10px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cta {
