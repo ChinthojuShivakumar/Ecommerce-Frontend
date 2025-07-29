@@ -53,6 +53,7 @@
   width: 100%;
   display: flex;
   gap: 10px;
+  padding: 0px 20px;
 }
 .pd-left {
   box-sizing: border-box;
@@ -241,12 +242,14 @@ video {
 }
 
 .cta-b1 {
-  background-color: orange;
-  border: orange;
+  background-color: var(--extra-light);
+  border: var(--extra-light);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
 }
 .cta-b2 {
-  background-color: orangered;
-  border: orangered;
+  background-color: var(--secondary-color);
+  border: var(--secondary-color);
 }
 
 .offers,
@@ -327,6 +330,15 @@ video {
 
 input[type="radio"]:checked {
   accent-color: var(--secondary-color); /* Tailwind's emerald-500 */
+}
+.search-container {
+  padding: 10px 30px;
+}
+.searchInput {
+  padding: 10px;
+  width: 90%;
+  outline-color: var(--secondary-color);
+  font-size: 1rem;
 }
 
 .review-card {

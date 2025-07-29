@@ -39,7 +39,7 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
         // console.log(minYear, "minYear");
         // console.log(allYears, "all years");
 
-        successMessage(response.data.message);
+        // successMessage(response.data.message);
         setBookingList(response.data.bookingList);
         setAvailableYear(allYears);
       }
@@ -141,7 +141,9 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
                       ? it.deliveredAt.split("T")[0]
                       : it.status === "SHIPPED"
                       ? it.shippedAt.split("T")[0]
-                      : it.status === "RETURNED" && it.returnedAt.split("T")[0]}
+                      : it.status === "RETURNED"
+                      ? it.returnedAt.split("T")[0]
+                      : item.createdAt?.split("T")[0]}
                   </h1>
                   <p
                     style={

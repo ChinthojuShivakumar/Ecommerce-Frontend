@@ -15,21 +15,10 @@ const ProductsList = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const qP = new URLSearchParams();
 
-  const fetchProductList = async () => {
-    selectedCategory && qP.get("category", selectedCategory);
-    selectedPrice && qP.get("price", selectedPrice);
-    try {
-      const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
-      if (response.status === 200) {
-        setProductList(response.data.productList);
-      }
-    } catch (error) {
-      return error;
-    }
-  };
   const fetchCategoryList = async () => {
     try {
       const response = await axiosInstanceV1.get("/category");
@@ -45,16 +34,43 @@ const ProductsList = () => {
     fetchCategoryList();
   }, []);
 
+  const fetchProductList = async ({
+    selectedCategory,
+    selectedPrice,
+    search,
+  }) => {
+    const qP = new URLSearchParams();
+
+    if (selectedCategory) qP.set("category", selectedCategory);
+    if (selectedPrice) qP.set("price", selectedPrice);
+    if (search) qP.set("keyword", search);
+
+    try {
+      const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
+      if (response.status === 200) {
+        setProductList(response.data.productList);
+      }
+    } catch (error) {
+      console.error("Fetch failed", error);
+    }
+  };
+
   useEffect(() => {
-    selectedCategory && qP.append("category", selectedCategory);
-    selectedPrice && qP.append("price", selectedPrice);
-    navigate(`/products?${qP.toString()}`);
-    fetchProductList();
-  }, [selectedCategory, selectedPrice]);
+    const qP = new URLSearchParams();
 
-  // useEffect(() => {
+    if (selectedCategory) qP.set("category", selectedCategory);
+    if (selectedPrice) qP.set("price", selectedPrice);
+    if (search) qP.set("keyword", search);
 
-  // }, []);
+    navigate(`/products?${qP.toString()}`, { replace: true });
+
+    const debounce = setTimeout(() => {
+      fetchProductList({ selectedCategory, selectedPrice, search });
+    }, 2000);
+
+    return () => clearTimeout(debounce); // cleanup for debounce
+  }, [selectedCategory, selectedPrice, search]);
+
   return (
     <div>
       <Header />
@@ -69,26 +85,39 @@ const ProductsList = () => {
             setSelectedPrice={setSelectedPrice}
           />
         </div>
-        <div className="product-body product-list list">
-          {!productList.length && <EmptyRecords Page={"Products"} />}
-          <Suspense
-            fallback={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100vh",
-                }}
-              >
-                Loading...
-              </div>
-            }
-          >
-            {productList?.map((product) => {
-              return <ProductCard product={product} key={product._id} />;
-            })}
-          </Suspense>
+        <div>
+          <div className="search-container">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              className="searchInput"
+              placeholder="Search Products"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+            />
+          </div>
+          <div className="product-body product-list list">
+            {!productList.length && <EmptyRecords Page={"Products"} />}
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                  }}
+                >
+                  Loading...
+                </div>
+              }
+            >
+              {productList?.map((product) => {
+                return <ProductCard product={product} key={product._id} />;
+              })}
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>

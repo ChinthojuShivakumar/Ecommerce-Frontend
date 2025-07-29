@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../../Components/Layout/Header";
 // import ProductList from "../../../updated_products.json";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import { FaAmazonPay, FaStar } from "react-icons/fa";
 import { FaLocationPin } from "react-icons/fa6";
 import { HiLocationMarker } from "react-icons/hi";
 import { CgClose } from "react-icons/cg";
+import EmptyRecords from "../../Components/EmptyRecords/EmptyRecords";
 
 const style = {
   maxWidth: "800px",
@@ -24,6 +25,7 @@ const style = {
 
 const ProductDetail = () => {
   const location = useLocation();
+  // const ref = useRef();
   const productName = decodeURIComponent(location.search.split("=")[1]);
   const [product, setProduct] = useState(null);
   const [imageView, setImageView] = useState(0);
@@ -228,6 +230,7 @@ const ProductDetail = () => {
       if (finalPrice) payload.finalPrice = finalPrice;
       if (paymentMode) payload.paymentMode = paymentMode;
       if (product.discount) payload.discountPercent = product.discount;
+      if (defaultAddress) payload.addressId = defaultAddress._id;
       payload.products = [
         {
           product: product._id,
@@ -286,7 +289,7 @@ const ProductDetail = () => {
     <div>
       <Header />
       {/* <div>Page is Under Construction</div> */}
-      <div>{product === null && <p>Product Not Found</p>}</div>
+      <div>{product === null && <EmptyRecords Page={"Product"} />}</div>
       <div className="pd-container">
         <div className="pd-left">
           <div className="pd-image-container">
@@ -366,7 +369,9 @@ const ProductDetail = () => {
             <p className="rating">
               {product?.rating} <FaStar size={15} />
             </p>
-            <span>({product?.totalReviews} Reviews & Ratings)</span>
+            <p style={{ cursor: "pointer" }} onClick={"#reviews"}>
+              ({product?.totalReviews} Reviews & Ratings)
+            </p>
           </div>
 
           {product?.offers?.length && (
@@ -427,6 +432,7 @@ const ProductDetail = () => {
                 id="addressId"
                 value={` ${defaultAddress?.name} - ${defaultAddress?.houseNumber}, ${defaultAddress?.area},  ${defaultAddress?.state} - ${defaultAddress?.pincode}`}
                 className="address"
+                readOnly
               />
               <button
                 type="button"
@@ -474,7 +480,7 @@ const ProductDetail = () => {
       </div>
 
       {product?.reviewList?.length > 0 && (
-        <div className="review-container">
+        <div className="review-container" id="reviews">
           <div className="review-header">
             <h2>Product Review: </h2>
           </div>

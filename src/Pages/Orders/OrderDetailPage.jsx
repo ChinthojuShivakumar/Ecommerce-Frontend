@@ -293,7 +293,7 @@ const OrderDetailPage = () => {
                   }
                 >
                   &nbsp;{" "}
-                  {state.paymentMode !== "COD"
+                  {state.paymentMode.toUpperCase() == "COD"
                     ? "Cash On Delivery"
                     : state.paymentMode}
                 </b>
