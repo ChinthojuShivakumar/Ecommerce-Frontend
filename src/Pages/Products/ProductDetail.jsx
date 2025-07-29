@@ -201,6 +201,8 @@ const ProductDetail = () => {
     }
   };
 
+  console.log(product);
+
   return (
     <div>
       <Header />
@@ -318,6 +320,34 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      {product?.reviewList?.length > 0 && (
+        <div className="review-container">
+          <div className="review-header">
+            <h2>Product Review: </h2>
+          </div>
+          <div className="review-body">
+            {product?.reviewList?.map((review) => {
+              return (
+                <div className="review-card">
+                  <h3
+                    style={{
+                      color: "rgb(110, 110, 223)",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {review.userId.name} -{" "}
+                    <span className="review-star">{review.rating}⭐</span>
+                  </h3>
+                  <p style={{ color: "black" }}>{review.comment}</p>
+                  <p style={{ color: "gray" }}>
+                    reviewed on: {review?.createdAt?.split("T")[0]}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
       <Modal style={modalStyle} open={open}>
         <div className="header">
           <h2>Please Select The Payment Mode to create booking</h2>

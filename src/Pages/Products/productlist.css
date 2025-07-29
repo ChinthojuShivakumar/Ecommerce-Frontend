@@ -257,3 +257,37 @@ video {
 input[type="radio"]:checked {
   accent-color: var(--secondary-color); /* Tailwind's emerald-500 */
 }
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-bottom: 2px solid white;
+  padding: 10px 3px;
+}
+
+.review-container {
+  padding: 10px 10px;
+}
+
+.review-body {
+  /* border: 1px solid gray; */
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-radius: 3px;
+  background-color: var(--extra-light);
+}
+
+.review-star {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 2px;
+  width: 3%;
+  /* max-width: 20%; */
+  border-radius: 10px;
+  display: inline-block;
+  text-align: center;
+  /* padding-top: 2px; */
+}

@@ -46,7 +46,7 @@ const OrderFilters = ({ status, setStatus, year, setYear, availableYears }) => {
         <div className={styles.header}>
           <h3>Order Time Filters</h3>
         </div>
-        <div className={styles.checkbox}>
+        <div className={styles.body}>
           {availableYears?.map((y) => {
             return (
               <div className={styles.childone}>
