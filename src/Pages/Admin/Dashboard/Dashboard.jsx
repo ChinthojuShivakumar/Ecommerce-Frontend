@@ -25,14 +25,26 @@ const Dashboard = () => {
   const [bookingsByMonth, setBookingsByMonth] = useState([]);
   const [bookingsByYear, setBookingsByYear] = useState([]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const COLORS = [
-    "#8884d8",
-    "#82ca9d",
-    "#ffc658",
-    "#ff8042",
-    "#00C49F",
-    "#FF4444",
-    "#B07DFF",
+    "#3B82F6", // Blue (Confirmed + Pending)
+    "#F59E0B", // Amber (Shipped)
+    "#10B981", // Green (Delivered)
+    "#F97316", // Orange (Out for Delivery)
+    "#8B5CF6", // Violet (Returned)
+    "#EF4444", // Red (Failed)
+    "#6B7280", // Gray (Cancelled)
+  ];
+
+  const COLOR = [
+    "#0EA5E9", // Sky Blue - Total Categories
+    "#14B8A6", // Teal - Total Users
+    "#A855F7", // Purple - Total Products
+    "#FACC15", // Yellow - Total Bookings
+    "#F43F5E", // Rose - Total Revenue
   ];
 
   const statusCount = bookings?.reduce((acc, booking) => {
@@ -48,9 +60,20 @@ const Dashboard = () => {
     0
   );
 
-  const bookingStatusChartData = Object.entries(statusCount).map(
+  const mergedStatusCount = {
+    CONFIRMED: (statusCount["CONFIRMED"] || 0) + (statusCount["PENDING"] || 0),
+    SHIPPED: statusCount["SHIPPED"] || 0,
+    DELIVERED: statusCount["DELIVERED"] || 0,
+    "OUT FOR DELIVERY": statusCount["OUT FOR DELIVERY"] || 0,
+    RETURNED: statusCount["RETURNED"] || 0,
+    FAILED: statusCount["FAILED"] || 0,
+    CANCELLED: statusCount["CANCELLED"] || 0, // newly added
+  };
+
+  const bookingStatusChartData = Object.entries(mergedStatusCount).map(
     ([status, count]) => ({ status, count })
   );
+
   const latestBookings = [...bookings]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 5);
@@ -102,26 +125,27 @@ const Dashboard = () => {
     return bookingsByMonth;
   };
 
-  const getBookingsByYear = (bookings) => {
-    const yearlyData = {};
+  const getBookingsByYear = (bookingList) => {
+    const currentYear = new Date().getFullYear();
+    const yearsRange = Array.from({ length: 5 }, (_, i) => currentYear - i);
 
-    bookings.forEach((booking) => {
-      const year = new Date(booking.createdAt).getFullYear();
+    const stats = {};
 
-      if (!yearlyData[year]) {
-        yearlyData[year] = 0;
+    for (const booking of bookingList) {
+      const bookingYear = new Date(booking.createdAt).getFullYear();
+
+      if (yearsRange.includes(bookingYear)) {
+        stats[bookingYear] = (stats[bookingYear] || 0) + 1;
       }
+    }
 
-      yearlyData[year]++;
-    });
-
-    // Convert to array for chart
-    const bookingsByYear = Object.keys(yearlyData).map((year) => ({
-      year,
-      count: yearlyData[year],
-    }));
-
-    return bookingsByYear;
+    // Convert to array and sort by year ascending
+    return yearsRange
+      .map((year) => ({
+        year: year.toString(),
+        count: stats[year] || 0,
+      }))
+      .sort((a, b) => a.year - b.year);
   };
 
   useEffect(() => {
@@ -148,23 +172,33 @@ const Dashboard = () => {
       name: "Total Revenue",
       count: totalRevenue.toFixed(2),
     },
-    {
-      name: "Cancelled Bookings",
-      count: statusCount["CANCELLED"] || 0,
-    },
+  ];
+
+  const PRODUCT_STATUS = [
     {
       name: "Confirmed Bookings",
-      count: statusCount["CONFIRMED"] || 0,
+      count: (statusCount["CONFIRMED"] || 0) + (statusCount["PENDING"] || 0),
+    },
+    {
+      name: "Shipped Bookings",
+      count: statusCount["SHIPPED"] || 0,
     },
     {
       name: "Delivered Bookings",
       count: statusCount["DELIVERED"] || 0,
     },
     {
+      name: "Cancelled Bookings",
+      count: statusCount["CANCELLED"] || 0,
+    },
+    {
       name: "Returned Bookings",
       count: statusCount["RETURNED"] || 0,
     },
   ];
+
+  const getStatusColor = (index) => COLORS[index % COLORS.length];
+  const getBoxColor = (index) => COLOR[index % COLOR.length];
 
   return (
     <div>
@@ -177,7 +211,7 @@ const Dashboard = () => {
           <div className={styles.card}>
             {COUNT_LIST.map((field, i) => {
               return (
-                <ul key={i}>
+                <ul key={i} style={{ backgroundColor: getBoxColor(i) }}>
                   <div className={styles.cardlist}>
                     <li>{field.name}</li>
                     <li>{field.count}</li>
@@ -185,6 +219,53 @@ const Dashboard = () => {
                 </ul>
               );
             })}
+          </div>
+          <div style={{ padding: "10px 0px" }}>
+            <h2>Products Status : </h2>
+          </div>
+          <div className={styles.card}>
+            {PRODUCT_STATUS.map((field, i) => {
+              return (
+                <ul key={i} style={{ backgroundColor: getStatusColor(i) }}>
+                  <div className={styles.cardlist}>
+                    <li>{field.name}</li>
+                    <li>{field.count}</li>
+                  </div>
+                </ul>
+              );
+            })}
+          </div>
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>Latest Bookings</h2>
+            <table className={styles.table}>
+              <thead className={styles.thead}>
+                <tr>
+                  <th className={styles.th}>Order ID</th>
+                  <th className={styles.th}>User</th>
+                  <th className={styles.th}>Total Products</th>
+                  <th className={styles.th}>Final Price</th>
+                  <th className={styles.th}>Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                {latestBookings.map((b, i) => (
+                  <tr key={i} className={styles.tr}>
+                    <td className={styles.td}>{b.orderId}</td>
+                    <td className={styles.td}>{b.userId?.name || "User"}</td>
+                    <td className={styles.td}>
+                      {b.products.reduce((sum, p) => sum + p.quantity, 0)}
+                    </td>
+                    <td className={styles.td}>₹{b.finalPrice}</td>
+                    <td className={styles.td}>
+                      {new Date(b.createdAt).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ padding: "10px 0px" }}>
+            <h2>Products Chart: </h2>
           </div>
           <div className={styles.charts}>
             <div className={styles.chart}>
@@ -198,7 +279,7 @@ const Dashboard = () => {
               </ResponsiveContainer>
             </div>
             <div className={styles.chart}>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={400}>
                 <PieChart>
                   <Pie
                     data={bookingStatusChartData}
@@ -217,7 +298,7 @@ const Dashboard = () => {
               </ResponsiveContainer>
             </div>
             <div className={styles.chart}>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={bookingsByYear}>
                   <XAxis dataKey="year" />
                   <YAxis />
@@ -228,35 +309,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Latest Bookings</h2>
-        <table className={styles.table}>
-          <thead className={styles.thead}>
-            <tr>
-              <th className={styles.th}>Order ID</th>
-              <th className={styles.th}>User</th>
-              <th className={styles.th}>Total Products</th>
-              <th className={styles.th}>Final Price</th>
-              <th className={styles.th}>Created</th>
-            </tr>
-          </thead>
-          <tbody>
-            {latestBookings.map((b, i) => (
-              <tr key={i} className={styles.tr}>
-                <td className={styles.td}>{b.orderId}</td>
-                <td className={styles.td}>{b.userId?.name || "User"}</td>
-                <td className={styles.td}>
-                  {b.products.reduce((sum, p) => sum + p.quantity, 0)}
-                </td>
-                <td className={styles.td}>₹{b.finalPrice}</td>
-                <td className={styles.td}>
-                  {new Date(b.createdAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );

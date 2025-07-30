@@ -373,7 +373,9 @@ const ProductDetail = () => {
               ({product?.totalReviews} Reviews & Ratings)
             </p>
           </div>
-
+          {product?.stock < 10 && (
+            <p style={{ color: "red" }}>Hurry Up Only {product?.stock} left</p>
+          )}
           {product?.offers?.length && (
             <div className="offers">
               <h1>Offers:</h1>

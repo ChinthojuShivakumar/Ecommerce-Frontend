@@ -152,3 +152,20 @@
   width: max-content;
   padding: 0.6rem;
 }
+
+.option:focus {
+  background-color: #2196f3;
+}
+
+.header {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.search {
+  width: 30%;
+  padding: 10px;
+  outline-color: #2196f3;
+  font-size: 1rem;
+}

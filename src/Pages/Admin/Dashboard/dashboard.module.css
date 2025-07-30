@@ -37,8 +37,8 @@
   flex-direction: column;
   gap: 0.8rem;
   padding: 0.8rem 0rem;
-  background-color: cornflowerblue;
-  border: 1px solid cornflowerblue;
+  /* background-color: cornflowerblue;
+  border: 1px solid cornflowerblue; */
   color: white;
 }
 
@@ -60,6 +60,7 @@
 
 .charts {
   width: 100%;
+  height: fit-content;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -81,8 +82,8 @@
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  margin-left: 15%;
-  margin-top: 50px;
+  /* margin-left: 15%; */
+  /* margin-top: 15rem; */
   margin-bottom: 50px;
 }
 

@@ -27,13 +27,18 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(pageFromUrl);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const [productList, setProductList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
 
   const fetchProductList = async () => {
     const qP = new URLSearchParams();
     qP.append("limit", LIMIT);
     qP.append("page", page);
+    selectedCategory && qP.append("category", selectedCategory);
+    keyword && qP.append("keyword", keyword);
     try {
       const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
       if (response.status === 200) {
@@ -41,6 +46,19 @@ const Products = () => {
         setTotalPages(response.data.totalPages);
         setLimit(response.data.limit);
         setTotalProducts(response.data.totalCategories);
+      }
+    } catch (error) {
+      return error;
+    }
+  };
+  const fetchCategoryList = async () => {
+    const qP = new URLSearchParams();
+    qP.append("limit", LIMIT);
+    qP.append("page", page);
+    try {
+      const response = await axiosInstanceV1.get(`/category?${qP.toString()}`);
+      if (response.status === 200) {
+        setCategoryList(response.data.categoryList);
       }
     } catch (error) {
       return error;
@@ -73,9 +91,19 @@ const Products = () => {
   };
 
   useEffect(() => {
+    if (keyword) {
+      const debounce = setTimeout(() => {
+        fetchProductList();
+      }, 1000);
+      return () => clearTimeout(debounce);
+    }
     fetchProductList();
     setSearchParams({ page });
-  }, [page]);
+  }, [page, selectedCategory, keyword]);
+
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
   return (
     <div>
       <Header />
@@ -92,6 +120,32 @@ const Products = () => {
               Add Product
             </button>
           </div>
+          <section className={style.header}>
+            <select
+              name="category"
+              id="category"
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              value={selectedCategory}
+            >
+              <option value="">Category</option>
+              {categoryList?.map((item) => {
+                return (
+                  <option value={item._id} key={item._id} className="option">
+                    {item.name}
+                  </option>
+                );
+              })}
+            </select>
+            <input
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search Product"
+              className={style.search}
+              onChange={(e) => setKeyword(e.target.value)}
+              value={keyword}
+            />
+          </section>
           <div className={style.tableContainer}>
             <div className={style.listCount}>
               <h3>Total Products List</h3>
@@ -122,8 +176,10 @@ const Products = () => {
                       <td className={style.td}>{product.stock}</td>
                       <td className={style.td}>{product.totalReviews}</td>
                       <td className={style.td}>
-                        {product.highlights?.map((highlight) => (
-                          <li className={style.highlight}>{highlight}</li>
+                        {product.highlights?.map((highlight, i) => (
+                          <li className={style.highlight} key={i}>
+                            {highlight}
+                          </li>
                         ))}
                       </td>
                       <td className={style.td}>
