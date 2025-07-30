@@ -6,8 +6,8 @@ import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { LIMIT } from "../../../Constants/Constant";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
+import { MdEdit } from "react-icons/md";
 const Bookings = () => {
- 
   const TABLE_KEYS = [
     "Product Name",
     "User",
@@ -121,13 +121,16 @@ const Bookings = () => {
                           item?.status?.slice(1).toLowerCase()}
                       </td>
                       <td
-                        className={style.td}
+                        className={`${style.td} `}
                         style={{ cursor: "pointer" }}
                         onClick={() =>
                           handleEditBooking(booking._id, item._id, booking)
                         }
                       >
-                        Edit
+                        <p className={style.edit}>
+                          {" "}
+                          <MdEdit size={28} />
+                        </p>
                       </td>
                     </tr>
                   ))

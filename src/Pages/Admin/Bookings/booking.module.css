@@ -88,3 +88,26 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.edit {
+  border: none;
+  width: 3rem;
+  height: 30px;
+  /* padding: 1rem; */
+
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.edit {
+  background-color: #2196f3;
+  border-radius: 0.2rem;
+}
+.edit:hover {
+  background-color: white;
+  border: 2px solid #2196f3;
+  color: #2196f3;
+}

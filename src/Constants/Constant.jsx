@@ -21,3 +21,18 @@ export const fetchUserData = () => {
 };
 
 export const userId = JSON.parse(localStorage.getItem("userData"))?._id;
+
+export const MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];

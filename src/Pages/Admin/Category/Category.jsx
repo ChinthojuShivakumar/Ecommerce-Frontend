@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import { LIMIT } from "../../../Constants/Constant";
 import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const Category = () => {
   const [open, setOpen] = useState(false);
@@ -266,13 +267,13 @@ const Category = () => {
                             className={style.edit}
                             onClick={(e) => handleEdit(e, product._id)}
                           >
-                            Edit
+                            <MdEdit size={28} />
                           </button>
                           <button
                             className={style.delete}
                             onClick={() => deleteCategory(product._id)}
                           >
-                            Delete
+                            <MdDelete size={28} />
                           </button>
                         </div>
                       </td>

@@ -89,7 +89,7 @@ const Address = () => {
     try {
       const response = await axiosInstanceV1.get(`/address?${qP.toString()}`);
       if (response.status === 200) {
-        successMessage(response.data.message);
+        // successMessage(response.data.message);
         setAddressList(response.data.addressList);
         return;
       }
