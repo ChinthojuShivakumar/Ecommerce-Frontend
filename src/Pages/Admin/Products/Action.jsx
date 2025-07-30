@@ -4,6 +4,7 @@ import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 const Action = () => {
   const location = useLocation();
@@ -382,8 +383,7 @@ const Action = () => {
                   value={hightLights}
                 />
                 <button className={styles.plus} onClick={addHighlight}>
-                  {" "}
-                  Add{" "}
+                  <FaPlus size={24} />
                 </button>
               </div>
               <div>
@@ -396,8 +396,7 @@ const Action = () => {
                           className={styles.remove}
                           onClick={(e) => removeHighlights(e, i)}
                         >
-                          {" "}
-                          Remove{" "}
+                          <FaMinus size={28} />
                         </button>
                       </ul>
                     </div>
@@ -440,7 +439,7 @@ const Action = () => {
                   className={`${styles.plus} ${styles.addkey}`}
                   onClick={addSpecification}
                 >
-                  Add
+                  <FaPlus size={24} />
                 </button>
               </div>
               {/* <div className={styles.speccontainer}>
@@ -509,7 +508,7 @@ const Action = () => {
                           className={styles.remove}
                           onClick={(e) => removeSpecification(e, key)}
                         >
-                          Remove
+                          <FaMinus size={28} />
                         </button>
                       </ul>
                     </div>

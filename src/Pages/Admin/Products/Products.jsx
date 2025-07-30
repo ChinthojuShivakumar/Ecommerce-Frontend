@@ -7,6 +7,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
 import { LIMIT } from "../../../Constants/Constant";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const Products = () => {
   const TABLE_KEYS = [
@@ -156,13 +157,13 @@ const Products = () => {
                             className={style.edit}
                             onClick={(e) => handleEdit(e, product)}
                           >
-                            Edit
+                            <MdEdit size={28} />
                           </button>
                           <button
                             className={style.delete}
                             onClick={() => deleteProduct(product._id)}
                           >
-                            Delete
+                            <MdDelete size={28} />
                           </button>
                         </div>
                       </td>
