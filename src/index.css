@@ -22,3 +22,27 @@
 /* p {
   color: black !important;
 } */
+
+
+/* @media screen and (max-width: 640px) {
+  .category-product-list {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .category-product-list {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .category-product-list {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  .category-product-list {
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+  }
+} */

@@ -154,8 +154,6 @@
   /* font-family: Roboto sans-serif; */
 }
 
-
-
 .payNow {
   background-color: var(--secondary-color);
   color: white;
@@ -168,3 +166,91 @@
 input[type="radio"]:checked {
   accent-color: var(--secondary-color); /* Tailwind's emerald-500 */
 }
+
+@media screen and (max-width: 640px) {
+  .cardContainer {
+    grid-template-columns: repeat(1, 1fr);
+    margin: 5px 1rem;
+  }
+  .cartListWrapper {
+    padding: 0px;
+  }
+  .quantityContainer {
+    width: 70%;
+  }
+  .increase,
+  .decrease {
+    width: 100%;
+  }
+  .quantity {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .cardContainer {
+    grid-template-columns: repeat(1, 1fr);
+    margin: 5px 1rem;
+  }
+  .cartListWrapper {
+    padding: 0px;
+  }
+  .quantityContainer {
+    width: 70%;
+  }
+  .increase,
+  .decrease {
+    width: 100%;
+  }
+  .quantity {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .cardContainer {
+    grid-template-columns: repeat(1, 1fr);
+    margin: 5px 1rem;
+  }
+  .cartListWrapper {
+    padding: 0px;
+  }
+  .quantityContainer {
+    width: 70%;
+  }
+  .increase,
+  .decrease {
+    width: 100%;
+  }
+  .quantity {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+  .cardContainer {
+    margin: 10px 2rem;
+  }
+}
+
+/* @media screen and (min-width: 1440px) {
+  .cardContainer {
+    margin: 10px 2rem;
+  }
+} */

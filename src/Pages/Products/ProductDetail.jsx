@@ -440,6 +440,7 @@ const ProductDetail = () => {
                 type="button"
                 className="change"
                 onClick={handleChangeAddress}
+                
               >
                 Change
               </button>
