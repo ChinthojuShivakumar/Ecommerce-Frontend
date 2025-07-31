@@ -173,6 +173,8 @@ const ProductDetail = () => {
     try {
       const qP = new URLSearchParams();
       qP.append("name", productName);
+      console.log(productName, "API CALL");
+      
       const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
       if (response.status == 200) {
         setProduct(response.data.Product);
@@ -183,6 +185,10 @@ const ProductDetail = () => {
       return error;
     }
   };
+
+  console.log("productName: ",productName);
+  console.log("location", location)
+  
 
   useEffect(() => {
     if (!productName && !cartList.length) {
