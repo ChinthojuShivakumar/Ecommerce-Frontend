@@ -29,7 +29,7 @@ const Products = ({ productList }) => {
       {productList && (
         <div>
           <div>
-            <h2>Discover New Category Products</h2>
+            <h2>Discover Products</h2>
           </div>
           <div className="product-list">
             {productList
