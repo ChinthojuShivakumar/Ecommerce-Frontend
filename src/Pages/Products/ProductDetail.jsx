@@ -194,7 +194,7 @@ const ProductDetail = () => {
   }, [cartList]);
 
   useEffect(() => {
-    fetchCartList();
+    userId && fetchCartList();
   }, []);
 
   useEffect(() => {
