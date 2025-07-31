@@ -9,8 +9,6 @@ const OrderFilters = ({ status, setStatus, year, setYear, availableYears }) => {
     "Returned",
   ];
 
-
-
   return (
     <div className={styles.filterContainer}>
       <div className={styles.title}>

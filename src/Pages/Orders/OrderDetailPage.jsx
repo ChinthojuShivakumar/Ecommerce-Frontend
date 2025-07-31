@@ -95,7 +95,7 @@ const OrderDetailPage = () => {
                   </h2>
                   <p className={styles.price}>
                     RS.<strike>{product?.originalPrice}</strike>{" "}
-                    <b>{product?.discountPrice}</b>
+                    <b>{product?.discountPrice?.toFixed(2)}</b>
                     <strong>{product.discountPercent}% off</strong>
                   </p>
                   <p style={{ color: "black" }}>Quantity: {product.quantity}</p>
@@ -266,7 +266,7 @@ const OrderDetailPage = () => {
               <div className={styles.priceText}>
                 <p>Discount:</p>
                 <p>
-                  <b>&#8377;{state.discountAmount}</b>
+                  <b>&#8377;{state.discountAmount.toFixed(2)}</b>
                 </p>
               </div>
               <div className={styles.priceText}>
@@ -278,7 +278,7 @@ const OrderDetailPage = () => {
               <div className={styles.priceText}>
                 <p>Final Price:</p>
                 <p>
-                  <b>&#8377;{state.finalPrice}</b>
+                  <b>&#8377;{state.finalPrice.toFixed(2)}</b>
                 </p>
               </div>
             </div>

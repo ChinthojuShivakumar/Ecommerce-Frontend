@@ -51,6 +51,13 @@
   .orderContainer {
     width: 100%;
   }
+
+  .searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px;
+  }
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
