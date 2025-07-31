@@ -284,8 +284,8 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    fetchDefaultAddress();
-    fetchAddressList();
+    userId && fetchDefaultAddress();
+    userId && fetchAddressList();
   }, []);
 
   return (

@@ -14,12 +14,9 @@ const Cart = () => {
 
   const fetchCartList = async () => {
     try {
-      const payload = {
-        userId: userId,
-      };
-      const response = await axiosInstanceV1.get(
-        `/cart/list?userId=${payload.userId}`
-      );
+      const qP = new URLSearchParams();
+      userId && qP.append("userId", userId);
+      const response = await axiosInstanceV1.get(`/cart/list?${qP.toString()}`);
       if (response.status === 200) {
         setCartList(response.data.cartList);
         setPriceDrop(response.data.priceDrop);
@@ -31,9 +28,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    if (userLoggedIn) {
-      fetchCartList();
-    }
+    userId && fetchCartList();
     const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
     const saveLaterList = JSON.parse(localStorage.getItem("saveLater")) || [];
     setCartList(cartLists);
