@@ -171,11 +171,11 @@ const ProductDetail = () => {
 
   const fetchSingleProduct = async () => {
     try {
-      const qP = new URLSearchParams();
-      qP.append("name", productName);
-      console.log(productName, "API CALL");
-      
-      const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
+      // console.log(productName, "API CALL");
+
+      const response = await axiosInstanceV1.get(
+        `/product?${searchParams.toString()}`
+      );
       if (response.status == 200) {
         setProduct(response.data.Product);
         return;
@@ -185,10 +185,6 @@ const ProductDetail = () => {
       return error;
     }
   };
-
-  console.log("productName: ",productName);
-  console.log("location", location)
-  
 
   useEffect(() => {
     if (!productName && !cartList.length) {
@@ -211,17 +207,16 @@ const ProductDetail = () => {
     userId && fetchCartList();
   }, []);
 
- useEffect(() => {
-  const findProduct =
-    location.state?.name === productName ? location.state : null;
+  useEffect(() => {
+    const findProduct =
+      location.state?.name === productName ? location.state : null;
 
-  if (findProduct) {
-    setProduct(findProduct);
-  } else {
-    fetchSingleProduct(); // fallback if state doesn't match or is missing
-  }
-}, [location.state, productName]);
-
+    if (findProduct) {
+      setProduct(findProduct);
+    } else {
+      fetchSingleProduct(); // fallback if state doesn't match or is missing
+    }
+  }, [location.state, productName]);
 
   const payNow = async () => {
     try {
