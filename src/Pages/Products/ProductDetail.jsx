@@ -169,14 +169,22 @@ const ProductDetail = () => {
     }
   };
 
-  useEffect(() => {
-    // const findProduct =
-    //   location.state?.name === productName ? location.state : null;
-    // const cartLists = JSON.parse(localStorage.getItem("cartItems")) || [];
-    // const isProductMatched = cartLists.find(
-    //   (productId) => productId.name === findProduct.name
-    // );
+  const fetchSingleProduct = async () => {
+    try {
+      const qP = new URLSearchParams();
+      qP.append("name", productName);
+      const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
+      if (response.status == 200) {
+        setProduct(response.data.Product);
+        return;
+      }
+    } catch (error) {
+      errorMessage(error.response?.data.message || error.message);
+      return error;
+    }
+  };
 
+  useEffect(() => {
     if (!productName && !cartList.length) {
       setIsCartProduct(false);
       return;
@@ -201,7 +209,8 @@ const ProductDetail = () => {
     const findProduct =
       location.state?.name === productName ? location.state : null;
 
-    setProduct(findProduct);
+    findProduct && setProduct(findProduct);
+    if (!findProduct) fetchSingleProduct();
   }, []);
 
   const payNow = async () => {

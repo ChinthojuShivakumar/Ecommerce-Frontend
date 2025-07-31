@@ -15,7 +15,7 @@ const Home = () => {
 
   const fetchProductList = async () => {
     try {
-      const response = await axiosInstanceV1.get("/product");
+      const response = await axiosInstanceV1.get("/products");
       if (response.status === 200) {
         setProductList(response.data.productList);
       }

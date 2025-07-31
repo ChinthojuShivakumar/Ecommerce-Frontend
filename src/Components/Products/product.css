@@ -44,6 +44,19 @@
   /* color: red; */
   font-weight: bold;
 }
+.rating {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 3px;
+  border-radius: 10px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+
 
 /* product card styling ends */
 
@@ -88,4 +101,7 @@
   text-overflow: ellipsis; /* Show ... when text is clipped */
   white-space: normal;
   line-clamp: 1; /* Allow wrapping */
+  color: var(--secondary-color);
+  font-weight: 600;
+  text-transform: capitalize;
 }

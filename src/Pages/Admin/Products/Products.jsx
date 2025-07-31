@@ -40,7 +40,7 @@ const Products = () => {
     selectedCategory && qP.append("category", selectedCategory);
     keyword && qP.append("keyword", keyword);
     try {
-      const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
+      const response = await axiosInstanceV1.get(`/products?${qP.toString()}`);
       if (response.status === 200) {
         setProductList(response.data.productList);
         setTotalPages(response.data.totalPages);
