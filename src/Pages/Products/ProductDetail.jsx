@@ -26,7 +26,10 @@ const style = {
 const ProductDetail = () => {
   const location = useLocation();
   // const ref = useRef();
-  const productName = decodeURIComponent(location.search.split("=")[1]);
+  const searchParams = new URLSearchParams(location.search);
+  const productName = searchParams.get("q"); // Automatically decodes
+  // console.log(productName); // "Wireless Headphones @ 2 GEN"
+
   const [product, setProduct] = useState(null);
   const [imageView, setImageView] = useState(0);
   const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
@@ -369,7 +372,7 @@ const ProductDetail = () => {
             <p className="rating">
               {product?.rating} <FaStar size={15} />
             </p>
-            <p style={{ cursor: "pointer" }} onClick={"#reviews"}>
+            <p style={{ cursor: "pointer" }}>
               ({product?.totalReviews} Reviews & Ratings)
             </p>
           </div>
@@ -440,7 +443,6 @@ const ProductDetail = () => {
                 type="button"
                 className="change"
                 onClick={handleChangeAddress}
-                
               >
                 Change
               </button>

@@ -23,7 +23,9 @@ const Category = () => {
   }, []);
   const handleRedirectCategory = (e, category) => {
     e.preventDefault();
-    navigate(`/category?q=${category}`);
+    navigate(
+      `/category?q=${encodeURIComponent(category).replace(/%20/g, "+")}`
+    );
     return;
   };
   return (
