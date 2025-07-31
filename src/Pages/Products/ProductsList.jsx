@@ -9,6 +9,7 @@ import { axiosInstanceV1 } from "../../Utils/ApiServices";
 import Filters from "../../Components/Products/Filters/Filters";
 import { useNavigate } from "react-router-dom";
 import EmptyRecords from "../../Components/EmptyRecords/EmptyRecords";
+import Loader from "../../Utils/Loader";
 
 const ProductsList = () => {
   const [productList, setProductList] = useState([]);
@@ -18,6 +19,7 @@ const ProductsList = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const qP = new URLSearchParams();
+  const [loader, setLoader] = useState(false);
 
   const fetchCategoryList = async () => {
     try {
@@ -46,12 +48,16 @@ const ProductsList = () => {
     if (search) qP.set("keyword", search);
 
     try {
+      setLoader(true);
       const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
       if (response.status === 200) {
         setProductList(response.data.productList);
       }
+      setLoader(false);
     } catch (error) {
       console.error("Fetch failed", error);
+      setLoader(false);
+      return error;
     }
   };
 
@@ -97,27 +103,43 @@ const ProductsList = () => {
               value={search}
             />
           </div>
-          <div className="product-body product-list list">
-            {!productList.length && <EmptyRecords Page={"Products"} />}
-            <Suspense
-              fallback={
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100vh",
-                  }}
-                >
-                  Loading...
-                </div>
-              }
+          {/* product-body product-list list */}
+          {loader ? (
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              {productList?.map((product) => {
-                return <ProductCard product={product} key={product._id} />;
-              })}
-            </Suspense>
-          </div>
+              <Loader />
+            </div>
+          ) : !productList.length ? (
+            <EmptyRecords Page={"Products"} />
+          ) : (
+            <div className="list-products">
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100vh",
+                    }}
+                  >
+                    Loading...
+                  </div>
+                }
+              >
+                {productList?.map((product) => {
+                  return <ProductCard product={product} key={product._id} />;
+                })}
+              </Suspense>
+            </div>
+          )}
         </div>
       </div>
     </div>

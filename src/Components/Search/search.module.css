@@ -7,10 +7,7 @@
   margin: 0px 1rem;
   box-sizing: border-box;
   gap: 0px;
-  border-start-end-radius: 30px;
-  border-bottom-right-radius: 30px;
-  border-start-start-radius: 30px;
-  border-bottom-left-radius: 30px;
+  /* border-radius: 10px; */
   margin-top: 10px;
 }
 .inputContainer.px {
@@ -32,6 +29,37 @@
 }
 
 .searchInput:focus + .searchContainer {
-  outline: 1px solid blue;
-  border: 2px solid blue;
+  outline: 1px solid var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+}
+
+@media screen and (max-width: 640px) {
+  .searchContainer {
+    width: 95%;
+  }
+
+  .searchInput {
+    margin: 0px;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .searchContainer {
+    width: 95%;
+    margin: 0px !important;
+  }
+
+  .searchInput {
+    margin: 0px;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .searchContainer {
+    width: 95%;
+    margin: 0px !important;
+  }
+
+  .searchInput {
+    margin: 0px;
+  }
 }

@@ -40,3 +40,45 @@
   outline: 1px solid blue;
   border: 2px solid blue;
 }
+
+@media screen and (max-width: 640px) {
+  .filters {
+    display: none;
+  }
+  .order {
+    padding: 0px;
+  }
+  .orderContainer {
+    width: 100%;
+  }
+
+  .searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .filters {
+    display: none;
+  }
+  .order {
+    padding: 0px;
+  }
+  .orderContainer {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .filters {
+    display: none;
+  }
+  .order {
+    padding: 0px;
+  }
+  .orderContainer {
+    width: 100%;
+  }
+}

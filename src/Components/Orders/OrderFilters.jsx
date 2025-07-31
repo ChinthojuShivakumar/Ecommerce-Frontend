@@ -9,8 +9,6 @@ const OrderFilters = ({ status, setStatus, year, setYear, availableYears }) => {
     "Returned",
   ];
 
-
-
   return (
     <div className={styles.filterContainer}>
       <div className={styles.title}>
@@ -47,9 +45,9 @@ const OrderFilters = ({ status, setStatus, year, setYear, availableYears }) => {
           <h3>Order Time Filters</h3>
         </div>
         <div className={styles.body}>
-          {availableYears?.map((y) => {
+          {availableYears?.map((y, i) => {
             return (
-              <div className={styles.childone}>
+              <div className={styles.childone} key={i}>
                 <input
                   type="checkbox"
                   name="year"

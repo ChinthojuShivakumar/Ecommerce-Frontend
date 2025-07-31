@@ -19,6 +19,7 @@ const ProductByCategory = React.lazy(() =>
 const Cart = React.lazy(() => import("./Pages/Cart/Cart"));
 
 function App() {
+  
   return (
     <BrowserRouter>
       <ErrorBoundary>

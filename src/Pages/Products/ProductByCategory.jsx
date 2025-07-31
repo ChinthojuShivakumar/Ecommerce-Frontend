@@ -5,11 +5,14 @@ import ProductCard from "../../Components/Products/ProductCard";
 import "./productlist.css";
 import Header from "../../Components/Layout/Header";
 import { axiosInstanceV1 } from "../../Utils/ApiServices";
+import EmptyRecords from "../../Components/EmptyRecords/EmptyRecords";
 
 const ProductByCategory = () => {
   const location = useLocation();
-  const category = location.search.split("=")[1];
+
   const [productList, setProductList] = useState([]);
+  const searchParams = new URLSearchParams(location.search);
+  const category = searchParams.get("q"); // Automatically decodes
 
   const fetchProductList = async () => {
     const qP = new URLSearchParams();
@@ -31,6 +34,7 @@ const ProductByCategory = () => {
   return (
     <div className="category-container">
       <Header />
+      {!productList.length && <EmptyRecords Page={"Products"} />}
       <div className="category-product-list">
         {productList?.map((product) => {
           return <ProductCard product={product} />;

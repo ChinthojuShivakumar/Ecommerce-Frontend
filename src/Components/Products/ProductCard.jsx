@@ -6,7 +6,12 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const handleRedirectDetailPage = (e, product) => {
     e.preventDefault();
-    navigate(`/product?q=${product.name}`, { state: product });
+    navigate(
+      `/product?q=${encodeURIComponent(product.name).replace(/%20/g, "+")}`,
+      {
+        state: product,
+      }
+    );
     return;
   };
   return (

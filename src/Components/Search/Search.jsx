@@ -18,11 +18,13 @@ const Search = () => {
     alignItems: "center",
     width: "5%",
     borderLeft: "1px solid black",
-    cursor:'pointer'
+    cursor: "pointer",
   };
   return (
     <div className={styles.searchContainer}>
-      <FiSearch size={28} style={leftSearch} />
+      {/* <p className={styles.leftSearch}>
+        <FiSearch size={28} style={leftSearch}  />
+      </p> */}
       <div className={`${styles.inputContainer} ${styles.px}`}>
         <input
           type="search"
@@ -32,7 +34,13 @@ const Search = () => {
           className={styles.searchInput}
         />
       </div>
-      <FiSearch size={28} style={rightSearch} />
+      {/* <p className={styles.rightSearch}>
+        <FiSearch
+          size={28}
+          style={rightSearch}
+          
+        />
+      </p> */}
     </div>
   );
 };

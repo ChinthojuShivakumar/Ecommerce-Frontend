@@ -54,3 +54,19 @@
   cursor: pointer;
   box-shadow: 0px 0.2px 3px 0px;
 }
+
+@media screen and (max-width: 640px) {
+  .buy {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .buy {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .buy {
+    width: 100%;
+  }
+}
