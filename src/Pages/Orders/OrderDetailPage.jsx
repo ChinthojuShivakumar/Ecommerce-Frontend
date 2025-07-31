@@ -80,6 +80,41 @@ const OrderDetailPage = () => {
     }
   };
 
+  const cancelBooking = async (bookingId, product_id) => {
+    const payload = {
+      status: "CANCELLED",
+      _id: bookingId,
+      productId: product_id,
+    };
+    try {
+      const response = await axiosInstanceV1.patch("/booking", payload);
+      if (response.status == 201) {
+        // successMessage(response.data.message);
+        return;
+      }
+    } catch (error) {
+      errorMessage(error.response.data.message);
+      return error;
+    }
+  };
+  const returnBooking = async (bookingId, product_id) => {
+    const payload = {
+      status: "RETURNED",
+      _id: bookingId,
+      productId: product_id,
+    };
+    try {
+      const response = await axiosInstanceV1.patch("/booking", payload);
+      if (response.status == 201) {
+        successMessage(response.data.message);
+        return;
+      }
+    } catch (error) {
+      // errorMessage(error.response.data.message);
+      return error;
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -213,10 +248,26 @@ const OrderDetailPage = () => {
               </div>
             </div>
           )}
-          {product.shippedAt && (
+          {!product.deliveredAt && (
             <div className={styles.footer}>
-              <p className={styles.cancel}>Cancel Booking</p>
-              <p className={styles.return}>Return Product</p>
+              <p
+                className={styles.cancel}
+                onClick={() => cancelBooking(state._id, product._id)}
+              >
+                Cancel Booking
+              </p>
+              {/* <p className={styles.return}>Return Product</p> */}
+            </div>
+          )}
+          {product.deliveredAt && (
+            <div className={styles.footer}>
+              <p
+                className={styles.cancel}
+                onClick={() => returnBooking(state._id, product._id)}
+              >
+                Return Booking
+              </p>
+              {/* <p className={styles.return}>Return Product</p> */}
             </div>
           )}
         </div>
