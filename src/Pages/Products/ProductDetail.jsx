@@ -205,13 +205,17 @@ const ProductDetail = () => {
     userId && fetchCartList();
   }, []);
 
-  useEffect(() => {
-    const findProduct =
-      location.state?.name === productName ? location.state : null;
+ useEffect(() => {
+  const findProduct =
+    location.state?.name === productName ? location.state : null;
 
-    findProduct && setProduct(findProduct);
-    if (!findProduct) fetchSingleProduct();
-  }, []);
+  if (findProduct) {
+    setProduct(findProduct);
+  } else {
+    fetchSingleProduct(); // fallback if state doesn't match or is missing
+  }
+}, [location.state, productName]);
+
 
   const payNow = async () => {
     try {
