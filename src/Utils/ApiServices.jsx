@@ -1,5 +1,8 @@
 import axios from "axios";
 import { errorMessage, successMessage } from "./Alert";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const TEST_BASE_URL = "http://localhost:8082/v1";
 export const TEST_HOST_URL = "http://localhost:5173";
@@ -94,7 +97,7 @@ console.log("ROLE", userRole);
 
 export const axiosInstanceV1 = axios.create({
   baseURL:
-    process.env.NODE_ENV === "production" ? PRODUCTION_BASE_URL : TEST_BASE_URL,
+    import.meta.env.MODE === "production" ? PRODUCTION_BASE_URL : TEST_BASE_URL,
   headers: userToken ? { Authorization: `Bearer ${userToken}` } : {},
 });
 
