@@ -12,7 +12,7 @@ dotenv.config();
 // export const PRODUCTION_HOST_URL =
 //   "https://instantdeliveryservices.vercel.app/";
 
-export const BASE_URL =
+ const BASE_URL =
   import.meta.env.MODE === "production"
     ? "https://ecommerce-backend-tng6.onrender.com/v1"
     : "http://localhost:8082/v1";
@@ -268,3 +268,5 @@ axiosInstanceV1.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export { BASE_URL };
