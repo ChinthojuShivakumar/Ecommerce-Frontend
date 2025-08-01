@@ -81,7 +81,7 @@ const Dashboard = () => {
   const fetchDashboard = async () => {
     try {
       const response = await Promise.all([
-        axiosInstanceV1.get("/product"),
+        axiosInstanceV1.get("/products"),
         axiosInstanceV1.get("/user"),
         axiosInstanceV1.get("/booking"),
         axiosInstanceV1.get("/category"),
