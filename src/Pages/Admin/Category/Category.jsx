@@ -7,7 +7,7 @@ import Modal from "../../../Components/Modal/Modal";
 import TextField from "../../../Components/TextField/TextField";
 import { useSearchParams } from "react-router-dom";
 import { LIMIT } from "../../../Constants/Constant";
-import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
+import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
 import { MdDelete, MdEdit } from "react-icons/md";
 
@@ -91,7 +91,7 @@ const Category = () => {
       try {
         setLoading(true);
         const response = await axiosInstanceV1.post(
-          `${BASE_URL}/category`,
+          `/category`,
           fD,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -112,7 +112,7 @@ const Category = () => {
       try {
         setLoading(true);
         const response = await axiosInstanceV1.put(
-          `${BASE_URL}/category/${categoryId}`,
+          `/category/${categoryId}`,
           fD,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -166,7 +166,7 @@ const Category = () => {
       // if (page > totalPages) return;
       setLoading(true);
       const response = await axiosInstanceV1.get(
-        `${BASE_URL}/category?${qP.toString()}`
+        `/category?${qP.toString()}`
       );
       if (response.status === 200) {
         // setUserList((prevData) => [...prevData, ...response.data.userList]);
@@ -190,7 +190,7 @@ const Category = () => {
     try {
       setLoading(true);
       const response = await axiosInstanceV1.delete(
-        `${BASE_URL}/category/${id}`
+        `/category/${id}`
       );
       if (response.status === 202) {
         fetchCategoryList(page, limit);

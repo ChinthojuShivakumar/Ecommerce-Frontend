@@ -4,7 +4,7 @@ import style from "./products.module.css";
 import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
+import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { LIMIT } from "../../../Constants/Constant";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
 import { MdDelete, MdEdit } from "react-icons/md";
