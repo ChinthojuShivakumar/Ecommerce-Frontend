@@ -1,8 +1,6 @@
 import axios from "axios";
 import { errorMessage, successMessage } from "./Alert";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 // export const TEST_BASE_URL = "http://localhost:8082/v1";
 // export const TEST_HOST_URL = "http://localhost:5173";
@@ -99,6 +97,8 @@ try {
 const userRole = localStorage.getItem("role");
 console.log("AXIOS TOKEN", userToken);
 console.log("ROLE", userRole);
+console.log(BASE_URL, "BASE_URL");
+
 
 export const axiosInstanceV1 = axios.create({
   baseURL: BASE_URL,
