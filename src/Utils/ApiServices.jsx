@@ -4,13 +4,18 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const TEST_BASE_URL = "http://localhost:8082/v1";
-export const TEST_HOST_URL = "http://localhost:5173";
+// export const TEST_BASE_URL = "http://localhost:8082/v1";
+// export const TEST_HOST_URL = "http://localhost:5173";
 
-export const PRODUCTION_BASE_URL =
-  "https://ecommerce-backend-tng6.onrender.com/v1";
-export const PRODUCTION_HOST_URL =
-  "https://instantdeliveryservices.vercel.app/";
+// export const PRODUCTION_BASE_URL =
+//   "https://ecommerce-backend-tng6.onrender.com/v1";
+// export const PRODUCTION_HOST_URL =
+//   "https://instantdeliveryservices.vercel.app/";
+
+export const BASE_URL =
+  import.meta.env.MODE === "production"
+    ? "https://ecommerce-backend-tng6.onrender.com/v1"
+    : "http://localhost:8082/v1";
 
 const statusCodes = [
   // Client-Side Errors (400-499)
@@ -96,8 +101,7 @@ console.log("AXIOS TOKEN", userToken);
 console.log("ROLE", userRole);
 
 export const axiosInstanceV1 = axios.create({
-  baseURL:
-    import.meta.env.MODE === "production" ? PRODUCTION_BASE_URL : TEST_BASE_URL,
+  baseURL: BASE_URL,
   headers: userToken ? { Authorization: `Bearer ${userToken}` } : {},
 });
 
