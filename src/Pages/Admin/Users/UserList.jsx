@@ -4,7 +4,7 @@ import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
 import styles from "./user.module.css";
 import Modal from "../../../Components/Modal/Modal";
 import { errorMessage } from "../../../Utils/Alert";
-import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
+import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { LIMIT } from "../../../Constants/Constant";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
@@ -77,7 +77,7 @@ const UserList = () => {
     if (!isEditing) {
       try {
         setLoading(true);
-        const response = await axiosInstanceV1.post(`${BASE_URL}/user`, inputs);
+        const response = await axiosInstanceV1.post(`/user`, inputs);
         if (response.status === 201) {
           clearInputs();
           fetchUserList(page, limit);
@@ -93,7 +93,7 @@ const UserList = () => {
       try {
         setLoading(true);
         const response = await axiosInstanceV1.put(
-          `${BASE_URL}/user/${userId}`,
+          `/user/${userId}`,
           inputs
         );
         if (response.status === 202) {
@@ -124,7 +124,7 @@ const UserList = () => {
       // if (page > totalPages) return;
       setLoading(true);
       const response = await axiosInstanceV1.get(
-        `${BASE_URL}/user?${qP.toString()}`
+        `/user?${qP.toString()}`
       );
       if (response.status === 200) {
         // setUserList((prevData) => [...prevData, ...response.data.userList]);
@@ -168,7 +168,7 @@ const UserList = () => {
   const deleteUser = async (id) => {
     try {
       setLoading(true);
-      const response = await axiosInstanceV1.delete(`${BASE_URL}/user/${id}`);
+      const response = await axiosInstanceV1.delete(`/user/${id}`);
       if (response.status === 202) {
         fetchUserList();
       }

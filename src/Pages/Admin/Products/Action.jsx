@@ -3,7 +3,7 @@ import styles from "./action.module.css";
 import Header from "../../../Components/Layout/Header";
 import SideMenu from "../../../Components/Admin/Sidemenu/Sidemenu";
 import { useLocation, useNavigate } from "react-router-dom";
-import { axiosInstanceV1, BASE_URL } from "../../../Utils/ApiServices";
+import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
 const Action = () => {
@@ -150,7 +150,7 @@ const Action = () => {
       // if (page > totalPages) return;
       setLoading(true);
       const response = await axiosInstanceV1.get(
-        `${BASE_URL}/category?${qP.toString()}`
+        `/category?${qP.toString()}`
       );
       if (response.status === 200) {
         // setUserList((prevData) => [...prevData, ...response.data.userList]);
