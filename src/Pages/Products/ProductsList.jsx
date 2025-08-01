@@ -49,7 +49,7 @@ const ProductsList = () => {
 
     try {
       setLoader(true);
-      const response = await axiosInstanceV1.get(`/product?${qP.toString()}`);
+      const response = await axiosInstanceV1.get(`/products?${qP.toString()}`);
       if (response.status === 200) {
         setProductList(response.data.productList);
       }
