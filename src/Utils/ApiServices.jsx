@@ -1,11 +1,13 @@
 import axios from "axios";
 import { errorMessage, successMessage } from "./Alert";
 
-// export const BASE_URL = "http://localhost:8082/v1";
-// export const HOST_URL = "http://localhost:8082/v1";
+export const TEST_BASE_URL = "http://localhost:8082/v1";
+export const TEST_HOST_URL = "http://localhost:5173";
 
-export const BASE_URL = "https://ecommerce-backend-tng6.onrender.com/v1";
-export const HOST_URL = "https://instantdeliveryservices.vercel.app/";
+export const PRODUCTION_BASE_URL =
+  "https://ecommerce-backend-tng6.onrender.com/v1";
+export const PRODUCTION_HOST_URL =
+  "https://instantdeliveryservices.vercel.app/";
 
 const statusCodes = [
   // Client-Side Errors (400-499)
@@ -91,7 +93,8 @@ console.log("AXIOS TOKEN", userToken);
 console.log("ROLE", userRole);
 
 export const axiosInstanceV1 = axios.create({
-  baseURL: BASE_URL,
+  baseURL:
+    process.env.NODE_ENV === "production" ? PRODUCTION_BASE_URL : TEST_BASE_URL,
   headers: userToken ? { Authorization: `Bearer ${userToken}` } : {},
 });
 
