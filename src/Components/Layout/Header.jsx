@@ -141,24 +141,7 @@ const Header = () => {
           window.location.reload();
           return;
         } else {
-          if (location.state?.from) {
-            navigate(location.state.from);
-          } else if (location.search) {
-            const params = new URLSearchParams(location.search);
-            const next = params.get("q");
-            if (next) {
-              navigate(next);
-            } else {
-              navigate(
-                `/product?q=${encodeURIComponent(next).replace(/%20/g, "+")}`,
-                {
-                  state: product,
-                }
-              );
-            }
-          } else {
-            navigate("/");
-          }
+          navigate("/");
         }
         clearInputs();
         return;
@@ -190,7 +173,10 @@ const Header = () => {
       }`}
     >
       <div className="nav-header">
-        <h1 onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+        <h1
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer", fontSize: "1.2rem !important" }}
+        >
           {!LOGO_WIDTH ? "Instant Delivery Services" : "IDS"}
         </h1>
         <p className="hamburger" onClick={handleHamburger}>
