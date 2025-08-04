@@ -175,11 +175,11 @@ const Header = () => {
         <p className="hamburger" onClick={handleHamburger}>
           {isMenuOpen ? (
             <span className={`${!isMenuOpen ? "show" : "hide"}`}>
-              <IoMdClose size={28} />
+              <IoMdClose size={28} color="white" />
             </span>
           ) : (
             <span className={`${isMenuOpen ? "show" : "hide"}`}>
-              <RxHamburgerMenu size={28} />
+              <RxHamburgerMenu size={28} color="white" />
             </span>
           )}
         </p>
