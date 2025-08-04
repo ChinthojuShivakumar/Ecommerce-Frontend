@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
       <div className="card-body">
         <h1 className="card-product-title">{product.name}</h1>
         <div className="card-item">
-          <p style={{ color: "black" }}>RS.{product.price}</p>
+          <p style={{ color: "black" }} className="card-price">RS.{product.price}</p>
           <p className="rating">
             {product?.rating} <FaStar size={15} />
           </p>
