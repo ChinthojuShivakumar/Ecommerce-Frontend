@@ -20,7 +20,7 @@ const Header = () => {
     "My Profile",
     !token ? "sign in" : "sign out",
   ];
-  const GENDER = ["male", "female", "others"];
+  const GENDER = ["Male", "Female", "Others"];
   const [isSmallScreen, setIsSmallScreen] = useState(SCREEN_WIDTH);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();

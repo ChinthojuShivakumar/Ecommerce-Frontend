@@ -100,7 +100,7 @@ const Profile = () => {
   // console.log(inputs);
 
   return (
-    <div>
+    <div className={styles.profile}>
       <h1>My Profile</h1>
 
       <h2 style={{ marginTop: "10px" }}>
