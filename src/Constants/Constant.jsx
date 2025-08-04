@@ -36,3 +36,7 @@ export const MONTH_NAMES = [
   "Nov",
   "Dec",
 ];
+
+export const TV = window.innerWidth > 1580;
+export const DESKTOP = window.innerWidth > 1281;
+export const LAPTOP = window.innerWidth > 1024;

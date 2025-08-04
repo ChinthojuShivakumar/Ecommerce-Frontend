@@ -91,7 +91,7 @@ const ProductsList = () => {
             setSelectedPrice={setSelectedPrice}
           />
         </div>
-        <div>
+        <div className="section">
           <div className="search-container">
             <input
               type="search"
