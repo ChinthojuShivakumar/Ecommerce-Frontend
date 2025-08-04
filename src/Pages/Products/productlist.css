@@ -13,6 +13,10 @@
   padding: 1rem 2rem;
 }
 
+.offer-title {
+  font-size: 1.2rem;
+}
+
 /* product list by category page starts */
 
 .category-product-list {
@@ -608,6 +612,10 @@ input[type="radio"]:checked {
   .offer-selection {
     font-size: smaller;
   }
+}
+
+.pd-price {
+  margin-top: 10px;
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {

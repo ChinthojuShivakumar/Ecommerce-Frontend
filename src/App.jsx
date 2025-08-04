@@ -13,13 +13,13 @@ const ProductsList = React.lazy(() => import("./Pages/Products/ProductsList"));
 const ProductDetail = React.lazy(() =>
   import("./Pages/Products/ProductDetail")
 );
+
 const ProductByCategory = React.lazy(() =>
   import("./Pages/Products/ProductByCategory")
 );
 const Cart = React.lazy(() => import("./Pages/Cart/Cart"));
 
 function App() {
-  
   return (
     <BrowserRouter>
       <ErrorBoundary>
@@ -35,9 +35,19 @@ function App() {
                       justifyContent: "center",
                       alignItems: "center",
                       height: "100vh",
+                      flexDirection: "column",
                     }}
                   >
-                    Loading...
+                    <img
+                      src="icon.jpg"
+                      alt="Logo"
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "10%",
+                      }}
+                    />
+                    <p style={{ color: "black" }}>Loading...</p>
                   </div>
                 }
               >

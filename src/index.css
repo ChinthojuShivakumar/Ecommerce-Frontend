@@ -33,6 +33,12 @@
   button {
     font-size: smaller;
   }
+
+  li {
+    font-size: smaller;
+    font-weight: 500;
+    line-height: 20px;
+  }
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
@@ -68,7 +74,7 @@
   }
   button {
     font-size: medium;
-    width: max-content !important;
+    width: max-content;
   }
 }
 

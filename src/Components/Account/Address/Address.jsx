@@ -5,9 +5,10 @@ import { modalStyle, userId } from "../../../Constants/Constant";
 import { errorMessage, successMessage } from "../../../Utils/Alert";
 import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 // import { userId } from "../../../Constants/Constant";
 
-const Address = () => {
+const Address = ({ prevPath = null, product = null }) => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [actionF, setActionF] = useState(false);
@@ -24,6 +25,7 @@ const Address = () => {
     addressType: "",
   };
   const [inputs, setInputs] = useState(initialInputs);
+  const navigate = useNavigate();
 
   const [addressList, setAddressList] = useState([]);
   const handleOpenModal = (e) => {
@@ -73,8 +75,11 @@ const Address = () => {
     try {
       const response = await axiosInstanceV1.post("/address/create", inputs);
       if (response.status === 201) {
-        successMessage(response.data.message);
+        // successMessage(response.data.message);
         clearInputs();
+        if (prevPath) {
+          return navigate(prevPath, { state: { productId: product?._id } });
+        }
         fetchAddressList();
         return;
       }
@@ -120,7 +125,7 @@ const Address = () => {
       };
       const response = await axiosInstanceV1.patch(`/address/${_id}`, payload);
       if (response.status === 202) {
-        successMessage(response.data.message);
+        // successMessage(response.data.message);
         fetchAddressList();
         setActionF(false);
         setActionId("");
@@ -140,6 +145,10 @@ const Address = () => {
   useEffect(() => {
     fetchAddressList();
   }, []);
+
+  useEffect(() => {
+    prevPath && setOpen(true);
+  }, [prevPath]);
   return (
     <div>
       <div className={styles.header}>
