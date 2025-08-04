@@ -258,6 +258,10 @@ const ProductDetail = () => {
         },
       ];
 
+      payload.totalPrice = product.price;
+      payload.discountAmount = discountAmount;
+      payload.discountPercent = product.discount;
+
       const response = await axiosInstanceV1.post("/booking", payload);
 
       if (response.status === 201) {
