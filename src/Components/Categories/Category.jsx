@@ -43,6 +43,10 @@ const Category = () => {
                 src={category.image}
                 alt={category.category}
                 loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/errorimage.png";
+                }}
               />
               <li>{category.category}</li>
             </ul>

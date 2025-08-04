@@ -317,7 +317,7 @@ const OrderDetailPage = () => {
               <div className={styles.priceText}>
                 <p>Discount:</p>
                 <p>
-                  <b>&#8377;{state.discountAmount.toFixed(2)}</b>
+                  <b>&#8377;{state.discountAmount?.toFixed(2)}</b>
                 </p>
               </div>
               <div className={styles.priceText}>
