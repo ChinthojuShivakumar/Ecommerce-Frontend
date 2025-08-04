@@ -40,7 +40,16 @@
   outline: 1px solid blue;
   border: 2px solid blue;
 }
+.filterContainer {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0px 10px;
+}
 
+.icon {
+  display: none;
+}
 @media screen and (max-width: 640px) {
   .filters {
     display: none;
@@ -50,6 +59,9 @@
   }
   .orderContainer {
     width: 100%;
+  }
+  .icon {
+    display: block;
   }
 
   .searchContainer {
@@ -70,6 +82,9 @@
   .orderContainer {
     width: 100%;
   }
+   .icon {
+    display: block;
+  }
 }
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .filters {
@@ -80,5 +95,8 @@
   }
   .orderContainer {
     width: 100%;
+  }
+   .icon {
+    display: block;
   }
 }
