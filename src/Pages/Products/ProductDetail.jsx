@@ -173,9 +173,11 @@ const ProductDetail = () => {
     try {
       // console.log(productName, "API CALL");
 
-      const response = await axiosInstanceV1.get(
-        `/product?${searchParams.toString()}`
-      );
+      const uri = location.state?.productId
+        ? `/product?q=${location?.state?.productId.toString()}`
+        : `/product?${searchParams.toString()}`;
+
+      const response = await axiosInstanceV1.get(uri);
       if (response.status == 200) {
         setProduct(response.data.Product);
         return;
@@ -206,6 +208,7 @@ const ProductDetail = () => {
   useEffect(() => {
     userId && fetchCartList();
   }, []);
+  // console.log(location);
 
   useEffect(() => {
     const findProduct =
@@ -222,6 +225,14 @@ const ProductDetail = () => {
     try {
       if (!paymentMode) {
         errorMessage("Please select payment mode..!");
+        return;
+      }
+
+      if (!defaultAddress) {
+        errorMessage("Please select delivery address as default..!");
+        navigate("/my profile", {
+          state: { prevPath: location.pathname, menu: 1, product: product },
+        });
         return;
       }
 
@@ -408,7 +419,9 @@ const ProductDetail = () => {
             </div>
           )}
           <div className="offers-section">
-            <h3 style={{ padding: "10px 0px" }}>Available offers</h3>
+            <h1 style={{ padding: "10px 0px" }} className="offer-title">
+              Available offers
+            </h1>
 
             <ul
               style={{
@@ -443,29 +456,31 @@ const ProductDetail = () => {
             </ul>
           </div>
 
-          <div className="address-container">
-            <div>
-              <h1>Address: </h1>
+          {defaultAddress && (
+            <div className="address-container">
+              <div>
+                <h1>Address: </h1>
+              </div>
+              <div className="address-body">
+                <HiLocationMarker size={20} color="rgb(110, 110, 223)" />
+                <input
+                  type="text"
+                  name="addressId"
+                  id="addressId"
+                  value={` ${defaultAddress?.name} - ${defaultAddress?.houseNumber}, ${defaultAddress?.area},  ${defaultAddress?.state} - ${defaultAddress?.pincode}`}
+                  className="address"
+                  readOnly
+                />
+                <button
+                  type="button"
+                  className="change"
+                  onClick={handleChangeAddress}
+                >
+                  Change
+                </button>
+              </div>
             </div>
-            <div className="address-body">
-              <HiLocationMarker size={20} color="rgb(110, 110, 223)" />
-              <input
-                type="text"
-                name="addressId"
-                id="addressId"
-                value={` ${defaultAddress?.name} - ${defaultAddress?.houseNumber}, ${defaultAddress?.area},  ${defaultAddress?.state} - ${defaultAddress?.pincode}`}
-                className="address"
-                readOnly
-              />
-              <button
-                type="button"
-                className="change"
-                onClick={handleChangeAddress}
-              >
-                Change
-              </button>
-            </div>
-          </div>
+          )}
 
           <div className="highlights">
             <h1>Highlights: </h1>
@@ -508,32 +523,33 @@ const ProductDetail = () => {
             <h2>Product Review: </h2>
           </div>
           <div className="review-body">
-            {product?.reviewList?.map((review) => {
-              return (
-                <div className="review-card" key={review._id}>
-                  <h3
-                    style={{
-                      color: "rgb(110, 110, 223)",
-                      textTransform: "capitalize",
-                      display: "flex",
-                      gap: "10px",
-                      justifyContent: "start",
-                      alignItems: "center",
-                    }}
-                  >
-                    {review.userId.name} -{" "}
-                    <span className="rating">
-                      {review.rating}
-                      <FaStar size={15} />
-                    </span>
-                  </h3>
-                  <p style={{ color: "black" }}>{review.comment}</p>
-                  <p style={{ color: "gray" }}>
-                    reviewed on: {review?.createdAt?.split("T")[0]}
-                  </p>
-                </div>
-              );
-            })}
+            {product &&
+              product?.reviewList?.map((review) => {
+                return (
+                  <div className="review-card" key={review._id}>
+                    <h3
+                      style={{
+                        color: "rgb(110, 110, 223)",
+                        textTransform: "capitalize",
+                        display: "flex",
+                        gap: "10px",
+                        justifyContent: "start",
+                        alignItems: "center",
+                      }}
+                    >
+                      {review.userId.name} -{" "}
+                      <span className="rating">
+                        {review.rating}
+                        <FaStar size={15} />
+                      </span>
+                    </h3>
+                    <p style={{ color: "black" }}>{review.comment}</p>
+                    <p style={{ color: "gray" }}>
+                      reviewed on: {review?.createdAt?.split("T")[0]}
+                    </p>
+                  </div>
+                );
+              })}
           </div>
         </div>
       )}
@@ -576,7 +592,15 @@ const ProductDetail = () => {
       </Modal>
       <Modal style={style} open={uAF}>
         <div>
-          <div style={{ display: "flex", justifyContent: "end" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px 0px",
+            }}
+          >
+            <h1>Select Default Address</h1>
+
             <CgClose
               size={24}
               cursor={"pointer"}

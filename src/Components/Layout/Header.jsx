@@ -27,6 +27,8 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [suOpen, setSUOpen] = useState(false);
   const location = useLocation();
+  // console.log(location);
+
   const initialSignInInputs = {
     email: "",
     password: "",
@@ -116,6 +118,7 @@ const Header = () => {
       const response = await axiosInstanceV1.post("/signup", signUpInputs);
       if (response.status === 201) {
         successMessage(response.data.message);
+        setIsMenuOpen(false);
         clearInputs();
         return;
       }
@@ -134,10 +137,28 @@ const Header = () => {
         const user = response.data.user;
         if (user.role.toLowerCase() !== "user") {
           navigate("/admin");
+          setIsMenuOpen(false);
           window.location.reload();
           return;
         } else {
-          navigate("/");
+          if (location.state?.from) {
+            navigate(location.state.from);
+          } else if (location.search) {
+            const params = new URLSearchParams(location.search);
+            const next = params.get("q");
+            if (next) {
+              navigate(next);
+            } else {
+              navigate(
+                `/product?q=${encodeURIComponent(next).replace(/%20/g, "+")}`,
+                {
+                  state: product,
+                }
+              );
+            }
+          } else {
+            navigate("/");
+          }
         }
         clearInputs();
         return;

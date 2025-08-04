@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import CartCard from "../../Components/Cart/CartCard/CartCard";
+import { IoFilterSharp } from "react-icons/io5";
 import Header from "../../Components/Layout/Header";
 import styles from "./order.module.css";
 import OrderCard from "../../Components/Order/OrderCard";
@@ -12,6 +12,7 @@ const Order = () => {
   const [year, setYear] = useState("");
   const [availableYear, setAvailableYear] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [bD, setBd] = useState(false);
 
   useEffect(() => {
     const params = {};
@@ -32,6 +33,8 @@ const Order = () => {
             setStatus={setStatus}
             setYear={setYear}
             availableYears={availableYear}
+            bD={bD}
+            setBd={setBd}
           />
         </div>
         <div className={styles.orderContainer}>
@@ -45,13 +48,22 @@ const Order = () => {
             />
             <label htmlFor=""></label>
           </div> */}
-          <Search />
+          <div className={styles.filterContainer}>
+            <Search />
+            <p onClick={() => setBd(true)}>
+              {" "}
+              <IoFilterSharp
+                size={26}
+                className={styles.icon}
+                cursor={"pointer"}
+              />
+            </p>
+          </div>
           <div className={styles.orderCard}>
             <OrderCard
               status={status}
               year={year}
               setAvailableYear={setAvailableYear}
-   
             />
           </div>
         </div>
