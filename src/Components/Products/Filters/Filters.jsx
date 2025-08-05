@@ -35,10 +35,10 @@ const Filters = ({
                   value={selectedCategory}
                   onChange={() =>
                     setSelectedCategory(
-                      selectedCategory === item._id ? "" : item._id
+                      (selectedCategory === item._id || selectedCategory === item.name) ? "" : item._id
                     )
                   }
-                  checked={selectedCategory === item._id}
+                  checked={selectedCategory === item._id || selectedCategory === item.name}
                 />
                 <label htmlFor={item}>{item.name}</label>
               </div>

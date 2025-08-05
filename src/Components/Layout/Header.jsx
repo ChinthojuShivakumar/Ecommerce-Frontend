@@ -58,6 +58,12 @@ const Header = () => {
     // }
     if (item === "Home") {
       navigate("/");
+
+      return;
+    }
+
+    if (item.toLowerCase() === "products") {
+      navigate("/products");
       return;
     }
 
@@ -74,6 +80,12 @@ const Header = () => {
       return;
     }
     if (token) navigate(`/${item.toLowerCase()}`);
+
+    if (!token && item.toLowerCase() != "products") {
+      setOpen(true)
+      errorMessage("Acess Denied..! Please Login")
+      return
+    }
   };
 
   const handleCloseModal = () => {
@@ -141,7 +153,10 @@ const Header = () => {
           window.location.reload();
           return;
         } else {
-          navigate("/");
+
+          navigate(`${location.pathname}${location.search || ""}`);
+          setIsMenuOpen(false);
+          window.location.reload();
         }
         clearInputs();
         return;
@@ -168,9 +183,8 @@ const Header = () => {
   }, []);
   return (
     <div
-      className={`nav-container ${
-        location.pathname.includes("/admin") && "admin"
-      }`}
+      className={`nav-container ${location.pathname.includes("/admin") && "admin"
+        }`}
     >
       <div className="nav-header">
         <h1
@@ -194,19 +208,8 @@ const Header = () => {
       <div className={`nav-list ${isMenuOpen && "show"}`}>
         {location.pathname.includes("/admin")
           ? navItems
-              .filter((item) => ["sign out"].includes(item))
-              .map((item, i) => {
-                return (
-                  <li
-                    className="list-item"
-                    key={i}
-                    onClick={(e) => handleNavigate(e, item)}
-                  >
-                    {item}
-                  </li>
-                );
-              })
-          : navItems.map((item, i) => {
+            .filter((item) => ["sign out"].includes(item))
+            .map((item, i) => {
               return (
                 <li
                   className="list-item"
@@ -216,7 +219,18 @@ const Header = () => {
                   {item}
                 </li>
               );
-            })}
+            })
+          : navItems.map((item, i) => {
+            return (
+              <li
+                className="list-item"
+                key={i}
+                onClick={(e) => handleNavigate(e, item)}
+              >
+                {item}
+              </li>
+            );
+          })}
       </div>
       <Modal
         open={open}
@@ -361,7 +375,7 @@ const Header = () => {
                     setSignUpInputs({ ...signUpInputs, gender: e.target.value })
                   }
                   checked={item === signUpInputs.gender}
-                  // disabled={pF}
+                // disabled={pF}
                 />
                 <label style={{ textTransform: "capitalize" }} htmlFor={item}>
                   {item}

@@ -23,8 +23,10 @@ const Category = () => {
   }, []);
   const handleRedirectCategory = (e, category) => {
     e.preventDefault();
+    console.log(category);
+    
     navigate(
-      `/category?q=${encodeURIComponent(category).replace(/%20/g, "+")}`
+      `/products?category=${encodeURIComponent(category).replace(/%20/g, "+")}`
     );
     return;
   };
