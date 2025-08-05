@@ -328,11 +328,11 @@ const ProductDetail = () => {
             {product?.images?.length > 0 &&
               (() => {
                 const image = product.images[imageView];
-                const extension = image.split(".").pop().toLowerCase();
+                const extension = image.url.split(".").pop().toLowerCase();
 
                 return IMAGE_EXTENSIONS.includes(extension) ? (
                   <img
-                    src={image}
+                    src={image.url}
                     alt={product?.name}
                     onError={(e) => {
                       e.target.onerror = null;

@@ -521,7 +521,7 @@ const Action = () => {
               <div className={styles.imagecontainer}>
                 {inputs.imagePreviews &&
                   inputs.imagePreviews?.map((image, i) => (
-                    <img alt={i} src={image} key={i} className={styles.image} />
+                    <img alt={i} src={image.url || image} key={i} className={styles.image} />
                   ))}
               </div>
               <input

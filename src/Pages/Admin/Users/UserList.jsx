@@ -8,6 +8,7 @@ import { axiosInstanceV1 } from "../../../Utils/ApiServices";
 import { LIMIT } from "../../../Constants/Constant";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../../Components/Admin/Pagination/Pagination";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const UserList = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -258,11 +259,10 @@ const UserList = () => {
                         <td className={`${styles.td}`}>{user.phoneNumber}</td>
                         <td className={` ${styles.td}`}>{user.email}</td>
                         <td
-                          className={` ${styles.td} ${
-                            user.status === "Active"
-                              ? styles.active
-                              : styles.inactive
-                          }`}
+                          className={` ${styles.td} ${user.status === "Active"
+                            ? styles.active
+                            : styles.inactive
+                            }`}
                         >
                           {user.status}
                         </td>
@@ -273,13 +273,13 @@ const UserList = () => {
                               className={styles.edit}
                               onClick={(e) => handleEdit(e, user._id)}
                             >
-                              Edit
+                              <MdEdit size={28} />
                             </button>
                             <button
                               className={styles.delete}
-                              onClick={() => deleteUser(user._id)}
+                              onClick={() => deleteCategory(user._id)}
                             >
-                              Delete
+                              <MdDelete size={28} />
                             </button>
                           </div>
                         </td>
@@ -466,7 +466,7 @@ const UserList = () => {
             </div>
           </div>
         </div>
-        <div className={styles.action}>
+        <div className={`${styles.action} ${styles.mact}`}>
           <button className={styles.cancel} onClick={handleCloseModal}>
             Cancel
           </button>

@@ -169,7 +169,7 @@ const CartCard = ({
             <div className={styles.cardContent} key={i}>
               <div className={styles.cardImage}>
                 <img
-                  src={product?.productId?.images[0]}
+                  src={product?.productId?.images[0]?.url}
                   alt={product?.productId?.name}
                   onError={(e) => {
                     e.target.onerror = null;

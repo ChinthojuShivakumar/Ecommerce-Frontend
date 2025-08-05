@@ -107,7 +107,7 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
               <div className={styles.productData}>
                 <div className={styles.cardImage}>
                   <img
-                    src={it?.product?.images[0]}
+                    src={it?.product?.images[0]?.url}
                     alt={it?.product?.name}
                     onError={(e) => {
                       e.target.onerror = null;
