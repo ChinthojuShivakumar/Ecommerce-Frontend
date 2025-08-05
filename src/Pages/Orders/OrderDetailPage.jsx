@@ -138,7 +138,7 @@ const OrderDetailPage = () => {
               </div>
               <div className={styles.cardImage}>
                 <img
-                  src={product?.product?.images[0]}
+                  src={product?.product?.images[0]?.url}
                   alt={product?.product?.name}
                   onError={(e) => {
                     e.target.onerror = null;
