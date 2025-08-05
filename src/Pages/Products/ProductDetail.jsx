@@ -26,6 +26,7 @@ const style = {
 const ProductDetail = () => {
   const location = useLocation();
   // const ref = useRef();
+  const token = JSON.parse(localStorage.getItem("token"))
   const searchParams = new URLSearchParams(location.search);
   const productName = searchParams.get("q"); // Automatically decodes
   // console.log(productName); // "Wireless Headphones @ 2 GEN"
@@ -101,6 +102,11 @@ const ProductDetail = () => {
 
   const createCart = async (productId) => {
     try {
+      if (!token || !userId) {
+        errorMessage("Unauthrozied..! :(")
+        errorMessage("Please Login...!")
+        return
+      }
       const payload = {
         userId: userId,
         productId: productId,
@@ -168,6 +174,7 @@ const ProductDetail = () => {
       return error;
     }
   };
+console.log(location);
 
   const fetchSingleProduct = async () => {
     try {
@@ -180,6 +187,8 @@ const ProductDetail = () => {
       const response = await axiosInstanceV1.get(uri);
       if (response.status == 200) {
         setProduct(response.data.Product);
+        searchParams.set("q", response.data.Product.name)
+        navigate(`${location.pathname}?${searchParams.toString()}`);
         return;
       }
     } catch (error) {
@@ -223,6 +232,12 @@ const ProductDetail = () => {
 
   const payNow = async () => {
     try {
+
+      if (!token || !userId) {
+        errorMessage("Unauthrozied..! :(")
+        errorMessage("Please Login...!")
+        return
+      }
       if (!paymentMode) {
         errorMessage("Please select payment mode..!");
         return;
@@ -354,9 +369,8 @@ const ProductDetail = () => {
               </button>
               <button
                 type="button"
-                className={`right ${
-                  imageView === product?.images?.length - 1 && "stop-cursor"
-                }`}
+                className={`right ${imageView === product?.images?.length - 1 && "stop-cursor"
+                  }`}
                 onClick={handleNext}
                 disabled={imageView === product?.images?.length - 1}
               >
@@ -523,7 +537,7 @@ const ProductDetail = () => {
             <h2>Product Review: </h2>
           </div>
           <div className="review-body">
-            {product &&
+            {Array.isArray(product?.reviewList) && product?.reviewList?.length > 0 &&
               product?.reviewList?.map((review) => {
                 return (
                   <div className="review-card" key={review._id}>
@@ -630,9 +644,9 @@ const ProductDetail = () => {
                     style={
                       item?.isDefault
                         ? {
-                            backgroundColor: "rgb(199, 199, 240)",
-                            border: "1px solid rgb(199, 199, 240)",
-                          }
+                          backgroundColor: "rgb(199, 199, 240)",
+                          border: "1px solid rgb(199, 199, 240)",
+                        }
                         : {}
                     }
                     onClick={() => changeDefaultAddress(item._id)}
@@ -643,7 +657,7 @@ const ProductDetail = () => {
                         {item.addressType === "Home"
                           ? `'s ${item.addressType}`
                           : item.addressType === "Work" &&
-                            ` ${item.addressType}place`}{" "}
+                          ` ${item.addressType}place`}{" "}
                         {item.isDefault && (
                           <span className={"span"}>default</span>
                         )}

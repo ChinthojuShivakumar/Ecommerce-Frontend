@@ -7,7 +7,7 @@ const ProductCard = React.lazy(() =>
 import "./productlist.css";
 import { axiosInstanceV1 } from "../../Utils/ApiServices";
 import Filters from "../../Components/Products/Filters/Filters";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import EmptyRecords from "../../Components/EmptyRecords/EmptyRecords";
 import Loader from "../../Utils/Loader";
 
@@ -20,6 +20,9 @@ const ProductsList = () => {
   const navigate = useNavigate();
   const qP = new URLSearchParams();
   const [loader, setLoader] = useState(false);
+  const location = useLocation()
+  console.log(location);
+
 
   const fetchCategoryList = async () => {
     try {
@@ -61,6 +64,15 @@ const ProductsList = () => {
     }
   };
 
+ useEffect(() => {
+  const urlParams = new URLSearchParams(location.search);
+  const categoryFromURL = urlParams.get("category");
+  if (categoryFromURL) {
+    setSelectedCategory(categoryFromURL);
+  }
+}, [location.search]);
+
+
   useEffect(() => {
     const qP = new URLSearchParams();
 
@@ -75,7 +87,11 @@ const ProductsList = () => {
     }, 2000);
 
     return () => clearTimeout(debounce); // cleanup for debounce
-  }, [selectedCategory, selectedPrice, search]);
+  }, [location.search, selectedPrice, search, selectedCategory]);
+
+
+
+
 
   return (
     <div>

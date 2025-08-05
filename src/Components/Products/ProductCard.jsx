@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
     );
     return;
   };
-  console.log(product);
+  // console.log(product);
   
   return (
     <div
