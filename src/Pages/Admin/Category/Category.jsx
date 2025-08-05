@@ -77,6 +77,9 @@ const Category = () => {
     //   return;
     // }
   };
+
+  console.log(inputs);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if (inputs.password !== inputs.confirmPassword) {
@@ -85,7 +88,7 @@ const Category = () => {
     // }
     const fD = new FormData();
     fD.append("name", inputs.name);
-    fD.append("image", inputs.image);
+    inputs.image instanceof File && fD.append("image", inputs.image);
 
     if (!isEditing) {
       try {
@@ -136,6 +139,8 @@ const Category = () => {
     e.preventDefault();
 
     const findCategory = categoryList.find((category) => category._id === id);
+    console.log(findCategory);
+    
     if (!findCategory) {
       clearInputs();
       return;
@@ -144,7 +149,7 @@ const Category = () => {
       setInputs({
         ...inputs,
         name: findCategory.name,
-        imagePreview: findCategory.image,
+        imagePreview: findCategory.image.url,
         image: findCategory.image,
       });
       setCategoryId(id);

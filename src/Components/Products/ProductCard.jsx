@@ -15,6 +15,8 @@ const ProductCard = ({ product }) => {
     );
     return;
   };
+  console.log(product);
+  
   return (
     <div
       className="card-container"
@@ -22,7 +24,7 @@ const ProductCard = ({ product }) => {
     >
       <div className="card-image">
         <img
-          src={product?.images[0]}
+          src={product?.images[0]?.url}
           alt={product.name}
           loading="lazy"
           onError={(e) => {

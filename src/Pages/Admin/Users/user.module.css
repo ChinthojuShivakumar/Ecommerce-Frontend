@@ -29,7 +29,7 @@
   align-items: center;
 }
 
-.add > button {
+.add>button {
   width: 10rem;
   height: 40px;
   border: none;
@@ -42,7 +42,7 @@
   transition: all 0.1s ease-in-out;
 }
 
-.add > button:hover {
+.add>button:hover {
   border: 2px solid rgba(55, 122, 246);
   background-color: inherit;
   color: rgba(55, 122, 246);
@@ -61,7 +61,12 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  width: 100%;
   /* margin-top: 1rem; */
+}
+
+.action.mact {
+  margin-top: 10px;
 }
 
 .cancel,
@@ -71,7 +76,6 @@
   border: none;
   border-radius: 0.2rem;
   font-size: 1rem;
-  background-color: cornflowerblue;
   color: whitesmoke;
   font-weight: 600;
   cursor: pointer;
@@ -79,11 +83,14 @@
 }
 
 .cancel {
-  background-color: red !important;
+  border: none;
+  color: black;
+  /* background-color: white; */
 }
 
 .submit {
-  background-color: green;
+  /* background-color: green; */
+  background-color: cornflowerblue;
 }
 
 .submit:disabled {
@@ -106,7 +113,7 @@
   border-radius: 0.2rem;
 }
 
-.inputcontainer > .input:focus {
+.inputcontainer>.input:focus {
   border: 2px solid #2196f3;
 }
 
@@ -173,28 +180,52 @@
 .active {
   color: green;
 }
+
 .inactive {
   color: red;
 }
+
+.action {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
 .edit,
 .delete {
   border: none;
-  width: 5rem;
-  height: 50px;
-  padding: 1rem;
+  width: 3rem;
+  height: 30px;
+  /* padding: 1rem; */
   cursor: pointer;
   font-size: 1rem;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit {
-  background-color: rgb(117, 117, 11);
+  background-color: #2196f3;
   border-radius: 0.2rem;
 }
 
 .delete {
   background-color: rgb(209, 66, 66);
   border-radius: 0.2rem;
+}
+
+.edit:hover {
+  background-color: white;
+  border: 2px solid #2196f3;
+  color: #2196f3;
+}
+
+.delete:hover {
+  background-color: white;
+  border: 2px solid red;
+  color: red;
 }
 
 .radiogroup {
