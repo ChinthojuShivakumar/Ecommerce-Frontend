@@ -144,7 +144,7 @@
     grid-template-columns: repeat(5, minmax(250px, 1fr));
   }
   .list-products {
-    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
   }
 }
 @media screen and (min-width: 1581px) {
