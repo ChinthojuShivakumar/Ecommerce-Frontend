@@ -40,7 +40,7 @@ const Category = () => {
             >
               <img
                 className="cat-img"
-                src={category.image}
+                src={category.image?.url}
                 alt={category.category}
                 loading="lazy"
                 onError={(e) => {
