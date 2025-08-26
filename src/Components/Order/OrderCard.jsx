@@ -12,13 +12,13 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
 
   const navigate = useNavigate();
   const [links, setLinks] = useState("");
-  const qP = new URLSearchParams();
 
   useEffect(() => {
     fetchBookingList();
   }, [status, year]);
 
   const fetchBookingList = async () => {
+    const qP = new URLSearchParams();
     status &&
       qP.append("status", status === "ON THE WAY" ? "CONFIRMED" : status);
     year && qP.append("year", year);
@@ -89,7 +89,8 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
     const qP = new URLSearchParams();
     qP.append("linkId", booking.orderId);
     qP.append("userId", booking.userId._id);
-    qP.append("orderId", productId);11
+    qP.append("orderId", productId);
+    11;
     navigate(`/order?${qP.toString()}`, { state: booking });
     return;
   };

@@ -20,6 +20,7 @@ const Action = () => {
     category: "",
     highlights: [],
     specifications: {},
+    discount: "",
   };
   const [inputs, setInputs] = useState(initialInputs);
   const [isEditing, setIsEditing] = useState(false);
@@ -81,6 +82,10 @@ const Action = () => {
 
     if (type === "highlights") {
       setHighLights(e.target.value);
+      return;
+    }
+    if (type === "discount") {
+      setInputs({ ...inputs, discount: Number(e.target.value) });
       return;
     }
     if (type === "key") {
@@ -149,9 +154,7 @@ const Action = () => {
     try {
       // if (page > totalPages) return;
       setLoading(true);
-      const response = await axiosInstanceV1.get(
-        `/category?${qP.toString()}`
-      );
+      const response = await axiosInstanceV1.get(`/category?${qP.toString()}`);
       if (response.status === 200) {
         // setUserList((prevData) => [...prevData, ...response.data.userList]);
         setCategoryList(response.data.categoryList);
@@ -176,6 +179,7 @@ const Action = () => {
     fD.append("price", inputs.price);
     fD.append("rating", inputs.rating);
     fD.append("description", inputs.description);
+    fD.append("discount", inputs.discount);
 
     inputs.images && inputs.images.map((image) => fD.append("image", image));
     inputs.highlights &&
@@ -246,6 +250,7 @@ const Action = () => {
         stock: location.state.stock,
         highlights: location.state.highlights,
         specifications: location.state.specifications,
+        discount: Number(location.state.discount),
       });
     }
   }, [location.state]);
@@ -326,19 +331,43 @@ const Action = () => {
                 value={inputs.description}
               />
             </div>
-            <div className={styles.inputcontainer}>
-              <label htmlFor="price" className={styles.label}>
-                Price
-              </label>
-              <input
-                id="name"
-                className={styles.input}
-                type="text"
-                required
-                name="name"
-                onChange={(e) => handleChange(e, "price")}
-                value={inputs.price}
-              />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div className={styles.inputcontainer}>
+                <label htmlFor="price" className={styles.label}>
+                  Price
+                </label>
+                <input
+                  id="name"
+                  className={styles.input}
+                  type="text"
+                  required
+                  name="name"
+                  onChange={(e) => handleChange(e, "price")}
+                  value={inputs.price}
+                />
+              </div>
+              <div className={styles.inputcontainer}>
+                <label htmlFor="discount" className={styles.label}>
+                  Discount
+                </label>
+                <input
+                  id="name"
+                  className={styles.input}
+                  type="number"
+                  required
+                  name="name"
+                  onChange={(e) => handleChange(e, "discount")}
+                  value={inputs.discount}
+                />
+              </div>
             </div>
             <div className={styles.inputcontainer}>
               <label htmlFor="rating" className={styles.label}>
@@ -521,7 +550,12 @@ const Action = () => {
               <div className={styles.imagecontainer}>
                 {inputs.imagePreviews &&
                   inputs.imagePreviews?.map((image, i) => (
-                    <img alt={i} src={image.url || image} key={i} className={styles.image} />
+                    <img
+                      alt={i}
+                      src={image.url || image}
+                      key={i}
+                      className={styles.image}
+                    />
                   ))}
               </div>
               <input

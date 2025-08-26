@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./bookingdetail.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiHome } from "react-icons/bi";
 import { LuLocate } from "react-icons/lu";
 import { PiPhone } from "react-icons/pi";
@@ -16,7 +16,7 @@ const BookingDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
-  console.log(state);
+  // console.log(state);
 
   const qP = new URLSearchParams(location.search);
   const [product, setProduct] = useState({});
@@ -28,7 +28,7 @@ const BookingDetail = () => {
   const [currentStep, setCurrentStep] = useState(1);
   // let currentStep = 1;
 
-  useState(() => {
+  useEffect(() => {
     const findProduct = state?.products.find(
       (product) => product._id === qP.get("productId")
     );
@@ -43,6 +43,12 @@ const BookingDetail = () => {
     }
 
     if (!findProduct.shippedAt && !findProduct.deliveredAt) {
+      step = 1;
+    }
+    if (
+      findProduct.shippedAt &&
+      findProduct.status.toLowerCase() === "out for delivery"
+    ) {
       step = 3;
     }
     const createdAt = new Date(stars.createdAt);
@@ -56,6 +62,7 @@ const BookingDetail = () => {
     setCurrentStep(step);
     setProduct(findProduct);
   }, [state]);
+  console.log(currentStep);
 
   const handleClickProduct = (booking, productId) => {
     const qP = new URLSearchParams();
@@ -116,7 +123,7 @@ const BookingDetail = () => {
               </div>
               <div className={styles.cardImage}>
                 <img
-                  src={product?.product?.images[0]}
+                  src={product?.product?.images[0]?.url}
                   alt={product?.product?.name}
                   onError={(e) => {
                     e.target.onerror = null;
@@ -207,7 +214,7 @@ const BookingDetail = () => {
                           {/* <p>RS.{item.originalPrice}</p> */}
                         </div>
                         <div className={styles.cardImage}>
-                          <img src={item?.product?.images[0]} />
+                          <img src={item?.product?.images[0]?.url} />
                         </div>
                       </div>
                     );
