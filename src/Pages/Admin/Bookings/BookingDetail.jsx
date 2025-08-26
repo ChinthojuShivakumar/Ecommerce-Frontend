@@ -32,7 +32,7 @@ const BookingDetail = () => {
     const findProduct = state?.products.find(
       (product) => product._id === qP.get("productId")
     );
-    console.log(findProduct);
+    // console.log(findProduct);
     setStatus(findProduct.status);
     let step = 1;
     if (findProduct?.shippedAt) {
@@ -62,7 +62,7 @@ const BookingDetail = () => {
     setCurrentStep(step);
     setProduct(findProduct);
   }, [state]);
-  console.log(currentStep);
+  // console.log(currentStep);
 
   const handleClickProduct = (booking, productId) => {
     const qP = new URLSearchParams();
