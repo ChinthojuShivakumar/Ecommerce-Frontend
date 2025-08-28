@@ -22,41 +22,52 @@ const OrderDetailPage = () => {
   const [comment, setComment] = useState("");
   const [status, setStatus] = useState(null);
 
-  const steps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
-  const [currentStep, setCurrentStep] = useState(1);
-  // let currentStep = 1;
+  const [steps, setSteps] = useState(["Order Placed", "Shipped", "Out for Delivery", "Delivered"]);
+const [currentStep, setCurrentStep] = useState(1);
 
-  useEffect(() => {
-    const findProduct = state.products.find(
-      (product) => product._id === qP.get("orderId")
-    );
-    setProduct(findProduct);
-    console.log(findProduct);
-    setComment(findProduct.review?.comment);
-    setStars(findProduct.review?.rating);
-    
-    if(findProduct.status.toLowerCase()==='returned'){
-      steps.push('Returned')
-    }
 
-    let step = 1;
-    if (findProduct.shippedAt) {
-      step = 2;
-    }
-    if (findProduct.deliveredAt) {
-      step = 4;
-    }
-    const createdAt = new Date(stars.createdAt);
+useEffect(() => {
+  const findProduct = state.products.find(
+    (product) => product._id === qP.get("orderId")
+  );
+
+  setProduct(findProduct);
+  setComment(findProduct.review?.comment);
+  setStars(findProduct.review?.rating);
+
+  // dynamically update steps based on product status
+  let newSteps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
+  if (findProduct.status?.toLowerCase() === "returned") {
+    newSteps.push("Returned");
+  } else if (findProduct.status?.toLowerCase() === "cancelled") {
+    newSteps.push("Cancelled");
+  }
+  setSteps(newSteps);
+
+  // calculate current step
+  let step = 1;
+  if (findProduct.shippedAt) {
+    step = 2;
+  }
+  if (findProduct.deliveredAt) {
+    step = 4;
+  }
+
+  // check if delivery exceeded 7 days → set step = 3
+  if (findProduct.createdAt) {
+    const createdAt = new Date(findProduct.createdAt);
     const sevenDaysLater = new Date(createdAt);
     sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
 
-    if (new Date(state.createdAt) > sevenDaysLater) {
+    if (new Date() > sevenDaysLater && step < 3) {
       step = 3;
     }
+  }
 
-    setCurrentStep(step);
-    setStatus(findProduct.status);
-  }, [state]);
+  setCurrentStep(step);
+  setStatus(findProduct.status);
+}, [state, qP]);
+
 
   const handleClickProduct = (booking, productId) => {
     const qP = new URLSearchParams();
