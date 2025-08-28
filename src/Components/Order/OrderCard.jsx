@@ -123,7 +123,9 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
                   <p className={styles.price}>
                     RS.<strike>{it?.originalPrice}</strike>{" "}
                     <b>{it?.discountPrice}</b>{" "}
-                    <strong>{it?.discountPercent}% off</strong>
+                    <strong style={{ color: "var(--secondary-color)" }}>
+                      {it?.discountPercent}% off
+                    </strong>
                   </p>
                 </div>
               </div>

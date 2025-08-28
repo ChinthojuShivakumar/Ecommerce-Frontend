@@ -26,7 +26,7 @@ const style = {
 const ProductDetail = () => {
   const location = useLocation();
   // const ref = useRef();
-  const token = JSON.parse(localStorage.getItem("token"))
+  const token = JSON.parse(localStorage.getItem("token"));
   const searchParams = new URLSearchParams(location.search);
   const productName = searchParams.get("q"); // Automatically decodes
   // console.log(productName); // "Wireless Headphones @ 2 GEN"
@@ -103,9 +103,9 @@ const ProductDetail = () => {
   const createCart = async (productId) => {
     try {
       if (!token || !userId) {
-        errorMessage("Unauthrozied..! :(")
-        errorMessage("Please Login...!")
-        return
+        errorMessage("Unauthrozied..! :(");
+        errorMessage("Please Login...!");
+        return;
       }
       const payload = {
         userId: userId,
@@ -174,7 +174,7 @@ const ProductDetail = () => {
       return error;
     }
   };
-console.log(location);
+
 
   const fetchSingleProduct = async () => {
     try {
@@ -187,7 +187,7 @@ console.log(location);
       const response = await axiosInstanceV1.get(uri);
       if (response.status == 200) {
         setProduct(response.data.Product);
-        searchParams.set("q", response.data.Product.name)
+        searchParams.set("q", response.data.Product.name);
         navigate(`${location.pathname}?${searchParams.toString()}`);
         return;
       }
@@ -232,11 +232,10 @@ console.log(location);
 
   const payNow = async () => {
     try {
-
       if (!token || !userId) {
-        errorMessage("Unauthrozied..! :(")
-        errorMessage("Please Login...!")
-        return
+        errorMessage("Unauthrozied..! :(");
+        errorMessage("Please Login...!");
+        return;
       }
       if (!paymentMode) {
         errorMessage("Please select payment mode..!");
@@ -257,7 +256,7 @@ console.log(location);
       const orderId = `Order_${Date.now()}`;
       // let userId = userId;
       const quantity = 1;
-      const shippingPrice = 50;
+      const shippingPrice = 10;
 
       const discountPrice =
         product.price - (product.price * product.discount) / 100;
@@ -269,8 +268,8 @@ console.log(location);
 
       if (shippingPrice) payload.shippingPrice = shippingPrice;
 
-      if (discountAmount) payload.discountAmount = discountAmount;
-      if (finalPrice) payload.finalPrice = finalPrice;
+      if (discountAmount) payload.discountAmount = discountAmount.toFixed(2);
+      if (finalPrice) payload.finalPrice = finalPrice.toFixed(2);
       if (paymentMode) payload.paymentMode = paymentMode;
       if (product.discount) payload.discountPercent = product.discount;
       if (defaultAddress) payload.addressId = defaultAddress._id;
@@ -369,8 +368,9 @@ console.log(location);
               </button>
               <button
                 type="button"
-                className={`right ${imageView === product?.images?.length - 1 && "stop-cursor"
-                  }`}
+                className={`right ${
+                  imageView === product?.images?.length - 1 && "stop-cursor"
+                }`}
                 onClick={handleNext}
                 disabled={imageView === product?.images?.length - 1}
               >
@@ -415,7 +415,7 @@ console.log(location);
             <p className="rating">
               {product?.rating} <FaStar size={15} />
             </p>
-            <p style={{ cursor: "pointer" }}>
+            <p style={{ cursor: "pointer", color: "var(--secondary-color)" }}>
               ({product?.totalReviews} Reviews & Ratings)
             </p>
           </div>
@@ -537,7 +537,8 @@ console.log(location);
             <h2>Product Review: </h2>
           </div>
           <div className="review-body">
-            {Array.isArray(product?.reviewList) && product?.reviewList?.length > 0 &&
+            {Array.isArray(product?.reviewList) &&
+              product?.reviewList?.length > 0 &&
               product?.reviewList?.map((review) => {
                 return (
                   <div className="review-card" key={review._id}>
@@ -644,9 +645,9 @@ console.log(location);
                     style={
                       item?.isDefault
                         ? {
-                          backgroundColor: "rgb(199, 199, 240)",
-                          border: "1px solid rgb(199, 199, 240)",
-                        }
+                            backgroundColor: "rgb(199, 199, 240)",
+                            border: "1px solid rgb(199, 199, 240)",
+                          }
                         : {}
                     }
                     onClick={() => changeDefaultAddress(item._id)}
@@ -657,7 +658,7 @@ console.log(location);
                         {item.addressType === "Home"
                           ? `'s ${item.addressType}`
                           : item.addressType === "Work" &&
-                          ` ${item.addressType}place`}{" "}
+                            ` ${item.addressType}place`}{" "}
                         {item.isDefault && (
                           <span className={"span"}>default</span>
                         )}

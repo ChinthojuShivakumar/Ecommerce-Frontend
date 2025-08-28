@@ -50,6 +50,10 @@
     font-size: smaller;
   }
 
+  h2 {
+    font-size: 1.5em !important;
+  }
+
   p {
     font-size: smaller !important;
   }
@@ -96,6 +100,3 @@
 }
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
 } */
-
-
-
