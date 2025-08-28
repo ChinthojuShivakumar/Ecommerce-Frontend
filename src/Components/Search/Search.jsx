@@ -28,8 +28,8 @@ const Search = () => {
       <div className={`${styles.inputContainer} ${styles.px}`}>
         <input
           type="search"
-          name=""
-          id=""
+          name="search"
+          id="search"
           placeholder="Search for orders"
           className={styles.searchInput}
         />

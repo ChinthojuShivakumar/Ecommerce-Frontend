@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import Home from "./Pages/Home/Home";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import NotFound from "./Pages/NotFound/NotFound";
 import Order from "./Pages/Orders/Order";
 import AdminRoutes from "./Pages/Admin/Routes/Routes";
@@ -20,6 +20,22 @@ const ProductByCategory = React.lazy(() =>
 const Cart = React.lazy(() => import("./Pages/Cart/Cart"));
 
 function App() {
+  useEffect(() => {
+    const handleContextMenu = (e) => e.preventDefault();
+    document.addEventListener("contextmenu", handleContextMenu);
+    const handleTouchStart = (e) => {
+      if (e.touches.length > 1) return; // allow pinch zoom
+      e.preventDefault();
+    };
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("touchstart", handleTouchStart);
+    };
+  }, []);
   return (
     <BrowserRouter>
       <ErrorBoundary>
