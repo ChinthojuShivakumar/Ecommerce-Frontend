@@ -63,11 +63,10 @@ useEffect(() => {
     step = 4;
   }
   if(findProduct.returnedAt) {
+    setCurrentStep(5)
     step=5
     }
-    if(findProduct.cancelledAt) {
-      step=2
-      }
+  
 
   // check if delivery exceeded 7 days → set step = 3
   if (findProduct.createdAt) {
