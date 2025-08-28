@@ -34,6 +34,10 @@ const OrderDetailPage = () => {
     console.log(findProduct);
     setComment(findProduct.review?.comment);
     setStars(findProduct.review?.rating);
+    
+    if(findProduct.status.toLowerCase()==='returned'){
+      steps.push('Returned')
+    }
 
     let step = 1;
     if (findProduct.shippedAt) {
