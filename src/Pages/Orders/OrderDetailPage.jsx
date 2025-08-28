@@ -35,7 +35,8 @@ useEffect(() => {
   setComment(findProduct.review?.comment);
   setStars(findProduct.review?.rating);
 
-  // dynamically update steps based on product let newSteps = [];
+  // dynamically update steps based on product
+ let newSteps = [];
 
   // 1. cancelled → only 2 steps
   if (findProduct.status?.toLowerCase() === "cancelled") {
