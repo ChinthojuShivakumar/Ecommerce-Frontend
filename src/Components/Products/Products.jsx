@@ -8,44 +8,58 @@ import { DESKTOP, LAPTOP, TV } from "../../Constants/Constant";
 const Products = ({ productList }) => {
   return (
     <div className="product-container">
-      {productList && (
-        <div>
+      <div className="cat-container">
+        {productList && (
           <div>
-            <h2 className="title">Your Top Products here</h2>
+            <div
+              style={{
+                padding: "10px",
+                borderBottom: "1px solid var(--light)",
+              }}
+            >
+              <h2 className="title">Your Top Products here</h2>
+            </div>
+            <div className="product-list">
+              {productList
+                ?.sort(() => 0.5 - Math.random()) // randomly shuffle
+                .slice(0, TV ? 6 : DESKTOP ? 5 : LAPTOP ? 4 : 6)
+                ?.map((product) => {
+                  return (
+                    <Suspense key={product._id} fallback={<ProductSkeleton />}>
+                      <ProductCard product={product} />
+                    </Suspense>
+                  );
+                })}
+            </div>
           </div>
-          <div className="product-list">
-            {productList
-              ?.sort(() => 0.5 - Math.random()) // randomly shuffle
-              .slice(0, TV ? 6 : DESKTOP ? 5 : LAPTOP ? 4 : 6)
-              ?.map((product) => {
-                return (
-                  <Suspense key={product._id} fallback={<ProductSkeleton />}>
-                    <ProductCard product={product} />
-                  </Suspense>
-                );
-              })}
-          </div>
-        </div>
-      )}
-      {productList && (
-        <div>
+        )}
+      </div>
+      <div className="cat-container">
+        {productList && (
           <div>
-            <h2 className="title">Discover Products</h2>
+            <div
+              style={{
+                padding: "10px",
+                borderBottom: "1px solid var(--light)",
+              }}
+            >
+              <h2 className="title">Discover Products</h2>
+            </div>
+            <div className="product-list">
+              {productList
+                ?.sort(() => 0.5 - Math.random()) // randomly shuffle
+                .slice(0, TV ? 6 : DESKTOP ? 5 : LAPTOP ? 4 : 6)
+                ?.map((product) => {
+                  return (
+                    <Suspense key={product._id} fallback={<ProductSkeleton />}>
+                      <ProductCard product={product} />
+                    </Suspense>
+                  );
+                })}
+            </div>
           </div>
-          <div className="product-list">
-            {productList
-              ?.sort(() => 0.5 - Math.random()) // randomly shuffle
-              .slice(0, TV ? 6 : DESKTOP ? 5 : LAPTOP ? 4 : 6)
-              ?.map((product) => {
-                return (
-                  <Suspense key={product._id} fallback={<ProductSkeleton />}>
-                    <ProductCard product={product} />
-                  </Suspense>
-                );
-              })}
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

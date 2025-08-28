@@ -1,5 +1,13 @@
 /* product card styling starts */
-
+.cat-container {
+  background-color: white;
+  margin: 0px 2%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
 .card-container {
   width: auto;
   background-color: white;
@@ -8,7 +16,7 @@
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   /* border: 0.08px solid gray; */
-  box-shadow: 0 0 1.6px 0;
+  box-shadow: var(--shadow);
 }
 
 .card-container:hover {
@@ -70,7 +78,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 1rem 2rem;
+  padding: 1rem 0rem;
 }
 
 .product {
