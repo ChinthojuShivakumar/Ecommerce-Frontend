@@ -21,19 +21,34 @@ const Cart = React.lazy(() => import("./Pages/Cart/Cart"));
 
 function App() {
   useEffect(() => {
+    // Disable right click (desktop)
     const handleContextMenu = (e) => e.preventDefault();
     document.addEventListener("contextmenu", handleContextMenu);
+
+    // Detect long press (mobile)
+    let touchTimer;
+
     const handleTouchStart = (e) => {
       if (e.touches.length > 1) return; // allow pinch zoom
-      e.preventDefault();
+
+      touchTimer = setTimeout(() => {
+        e.preventDefault(); // block after long press
+      }, 500); // 500ms threshold
     };
+
+    const handleTouchEnd = () => {
+      clearTimeout(touchTimer); // normal tap, cancel timer
+    };
+
     document.addEventListener("touchstart", handleTouchStart, {
       passive: false,
     });
+    document.addEventListener("touchend", handleTouchEnd);
 
     return () => {
       document.removeEventListener("contextmenu", handleContextMenu);
       document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchend", handleTouchEnd);
     };
   }, []);
   return (
