@@ -38,27 +38,7 @@ const Order = () => {
           />
         </div>
         <div className={styles.orderContainer}>
-          {/* <div className={`${styles.inputContainer} ${styles.px}`}>
-            <input
-              type="search"
-              name=""
-              id=""
-              placeholder="Search your orders"
-              className={styles.searchInput}
-            />
-            <label htmlFor=""></label>
-          </div> */}
-          {/* <div className={styles.filterContainer}>
-            <Search />
-            <p onClick={() => setBd(true)}>
-              {" "}
-              <IoFilterSharp
-                size={26}
-                className={styles.icon}
-                cursor={"pointer"}
-              />
-            </p>
-          </div> */}
+         
           <div className={styles.orderCard}>
             <OrderCard
               status={status}

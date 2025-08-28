@@ -207,7 +207,9 @@ const CartCard = ({
                         100
                     ).toFixed(2)}
                   </b>
-                  <strong>{product.productId.discount}% off</strong>
+                  <strong style={{ color: "var(--secondary-color)" }}>
+                    {product.productId.discount}% off
+                  </strong>
                 </p>
                 <div className={styles.quantityContainer}>
                   <button
@@ -240,10 +242,15 @@ const CartCard = ({
                   </button>
                 </div>
                 <div className={styles.action}>
-                  <h5 onClick={() => handleRemove(product)}>Remove</h5>
-                  <h5 onClick={() => handleSaveLater(product)}>
-                    Save For Later
+                  <h5
+                    style={{ color: "red", marginRight:"10px" }}
+                    onClick={() => handleRemove(product)}
+                  >
+                    Remove
                   </h5>
+                  {/* <h5 onClick={() => handleSaveLater(product)}>
+                    Save For Later
+                  </h5> */}
                 </div>
               </div>
             </div>

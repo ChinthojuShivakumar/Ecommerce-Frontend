@@ -1,10 +1,11 @@
 .priceContainer {
   background: #f9f9f9;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   padding: 20px;
   /* height: 250px; fixed height */
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(231, 215, 215, 0.05);
+  box-shadow: var(--shadow);
+  background-color: white;
   margin-top: 10px;
 }
 

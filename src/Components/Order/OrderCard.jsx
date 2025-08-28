@@ -117,7 +117,18 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
                   />
                 </div>
                 <div className={styles.cardBody}>
-                  <h1 style={{ textTransform: "capitalize" }}>
+                  <h1
+                    style={{
+                      textTransform: "capitalize",
+                   
+                      display: "-webkit-box",
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "normal",
+                    }}
+                  >
                     {it?.product?.name}
                   </h1>
                   <p className={styles.price}>
