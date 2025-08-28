@@ -26,3 +26,21 @@
   background-color: rgb(78, 78, 195);
   border-radius: 0.2rem;
 }
+
+@media screen and (max-width: 640px) {
+  .container {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    padding: 5px;
+  }
+
+  .listitem {
+    padding: 3px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+}

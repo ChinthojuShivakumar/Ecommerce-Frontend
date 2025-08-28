@@ -21,11 +21,14 @@
 }
 
 @media screen and (max-width: 640px) {
+  .container {
+    flex-direction: column;
+  }
   .section {
     font-size: smaller !important;
   }
   .itemone {
-    display: none;
+    width: 100%;
   }
   .itemtwo {
     padding: 5px;
@@ -38,11 +41,14 @@
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
   .section {
     font-size: smaller !important;
   }
   .itemone {
-    display: none;
+    width: 100%;
   }
   .itemtwo {
     padding: 5px;

@@ -73,8 +73,20 @@ const Address = ({ prevPath = null, product = null }) => {
 
   const postAddress = async () => {
     try {
-      const response = await axiosInstanceV1.post("/address/create", inputs);
-      if (response.status === 201) {
+      if (!editMode) {
+        const response = await axiosInstanceV1.post("/address/create", inputs);
+        if (response.status === 201) {
+          // successMessage(response.data.message);
+          clearInputs();
+          if (prevPath) {
+            return navigate(prevPath, { state: { productId: product?._id } });
+          }
+          fetchAddressList();
+          return;
+        }
+      }
+      const response = await axiosInstanceV1.put(`/address/${inputs?._id}`, inputs);
+      if (response.status === 202) {
         // successMessage(response.data.message);
         clearInputs();
         if (prevPath) {
@@ -88,6 +100,7 @@ const Address = ({ prevPath = null, product = null }) => {
     }
   };
 
+ 
   const fetchAddressList = async () => {
     const qP = new URLSearchParams();
     userId && qP.append("userId", userId);
@@ -101,6 +114,16 @@ const Address = ({ prevPath = null, product = null }) => {
     } catch (error) {
       return errorMessage(error.message);
     }
+  };
+
+  const editAddress = (e, _id, item) => {
+    e.preventDefault();
+
+    setInputs({ ...inputs, ...item });
+    setEditMode(true);
+    setOpen(true);
+    setActionF(false)
+    setActionId("")
   };
 
   const deleteAddress = async (_id) => {
@@ -157,6 +180,7 @@ const Address = ({ prevPath = null, product = null }) => {
           Add Address
         </button>
       </div>
+      
       {addressList?.map((item) => {
         return (
           <div className={styles.card} key={item._id}>
@@ -181,7 +205,12 @@ const Address = ({ prevPath = null, product = null }) => {
                     actionId !== item._id && styles.hide
                   }`}
                 >
-                  <p className={styles.edit}>Edit</p>
+                  <p
+                    className={styles.edit}
+                    onClick={(e) => editAddress(e, item._id, item)}
+                  >
+                    Edit
+                  </p>
                   <p
                     className={styles.delete}
                     onClick={() => deleteAddress(item._id)}
@@ -310,7 +339,7 @@ const Address = ({ prevPath = null, product = null }) => {
               className={styles.action}
               onClick={postAddress}
             >
-              Add
+              {editMode ? "Update" : "Add"}
             </button>
             <button
               type="button"
