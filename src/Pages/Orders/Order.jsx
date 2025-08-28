@@ -48,7 +48,7 @@ const Order = () => {
             />
             <label htmlFor=""></label>
           </div> */}
-          <div className={styles.filterContainer}>
+          {/* <div className={styles.filterContainer}>
             <Search />
             <p onClick={() => setBd(true)}>
               {" "}
@@ -58,7 +58,7 @@ const Order = () => {
                 cursor={"pointer"}
               />
             </p>
-          </div>
+          </div> */}
           <div className={styles.orderCard}>
             <OrderCard
               status={status}

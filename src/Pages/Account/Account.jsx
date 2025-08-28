@@ -9,8 +9,6 @@ import { useLocation } from "react-router-dom";
 const Account = () => {
   const [menu, setMenu] = useState(0);
   const location = useLocation();
-  console.log(location);
-  
 
   useEffect(() => {
     location?.state?.menu && setMenu(location.state.menu);

@@ -4,14 +4,14 @@ import { errorMessage, successMessage } from "./Alert";
 // export const TEST_BASE_URL = "http://localhost:8082/v1";
 // export const TEST_HOST_URL = "http://localhost:5173";
 
-const BASE_URL = "https://ecommerce-backend-tng6.onrender.com/v1";
+// const BASE_URL = "https://ecommerce-backend-tng6.onrender.com/v1";
 // export const PRODUCTION_HOST_URL =
 //   "https://instantdeliveryservices.vercel.app/";
 
-// const BASE_URL =
-//   import.meta.env.MODE === "production"
-//     ? "https://ecommerce-backend-tng6.onrender.com/v1"
-//     : "http://localhost:8082/v1";
+const BASE_URL =
+  import.meta.env.MODE === "production"
+    ? "https://ecommerce-backend-tng6.onrender.com/v1"
+    : "http://localhost:8082/v1";
 
 const statusCodes = [
   // Client-Side Errors (400-499)
