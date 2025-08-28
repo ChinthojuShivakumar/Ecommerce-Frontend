@@ -35,13 +35,22 @@ useEffect(() => {
   setComment(findProduct.review?.comment);
   setStars(findProduct.review?.rating);
 
-  // dynamically update steps based on product status
-  let newSteps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
+  // dynamically update steps based on product let newSteps = [];
+
+  // 1. cancelled → only 2 steps
+  if (findProduct.status?.toLowerCase() === "cancelled") {
+    newSteps = ["Order Placed", "Cancelled"];
+    setSteps(newSteps);
+    setCurrentStep(2); // since cancelled is final
+    return; // stop further calculation
+  }
+
+  // 2. returned → append to normal flow
+  newSteps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
   if (findProduct.status?.toLowerCase() === "returned") {
     newSteps.push("Returned");
-  } else if (findProduct.status?.toLowerCase() === "cancelled") {
-    newSteps.push("Cancelled");
   }
+
   setSteps(newSteps);
 
   // calculate current step
@@ -52,6 +61,12 @@ useEffect(() => {
   if (findProduct.deliveredAt) {
     step = 4;
   }
+  if(findProduct.returnedAt) {
+    step=5
+    }
+    if(findProduct.cancelledAt) {
+      step=2
+      }
 
   // check if delivery exceeded 7 days → set step = 3
   if (findProduct.createdAt) {
