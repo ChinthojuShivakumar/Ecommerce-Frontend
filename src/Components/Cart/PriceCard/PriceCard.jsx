@@ -9,19 +9,19 @@ const PriceCard = ({ price, handleBuyProduct }) => {
         <div className={styles.priceBody}>
           <div className={styles.priceItem}>
             <strong>Items:</strong>
-            <p>Rs.{price?.totalPrice}</p>
+            <p style={{color:"black"}}>Rs.{price?.totalPrice}</p>
           </div>
           <div className={styles.priceItem}>
             <strong>Discount Amount:</strong>
-            <p>Rs.{price?.discountAmount}</p>
+            <p style={{color:"black"}}>Rs.{price?.discountAmount}</p>
           </div>
           <div className={styles.priceItem}>
             <strong>Shipping Amount:</strong>
-            <p>Rs.{price?.shippingPrice}</p>
+            <p style={{color:"black"}}>Rs.{price?.shippingPrice}</p>
           </div>
           <div className={`${styles.priceItem}`}>
             <strong>Total Amount:</strong>
-            <p className={styles?.finalAmount}>Rs.{price?.finalPrice}</p>
+            <p style={{color:"black"}} className={styles?.finalAmount}>Rs.{price?.finalPrice}</p>
           </div>
         </div>
         <div className={styles.buttonContainer}>

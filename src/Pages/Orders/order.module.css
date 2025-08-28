@@ -4,10 +4,11 @@
   padding: 0px 1.5rem;
   box-sizing: border-box;
   width: 100%;
+  /* gap: 10px; */
 }
 
 .orderContainer {
-  width: 80%;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -26,6 +27,9 @@
 .orderCard {
   width: 100%;
   cursor: pointer;
+  box-shadow: var(--shadow);
+  background-color: white;
+  margin: 10px 0px;
 }
 
 .searchInput {
@@ -82,7 +86,7 @@
   .orderContainer {
     width: 100%;
   }
-   .icon {
+  .icon {
     display: none;
   }
 }
@@ -96,7 +100,7 @@
   .orderContainer {
     width: 100%;
   }
-   .icon {
+  .icon {
     display: block;
   }
 }

@@ -12,7 +12,8 @@
 
 .itemtwo {
   width: 85%;
-  background-color: var(--extra-light);
+  box-shadow: var(--shadow);
+  background-color: white;
   padding: 10px;
 }
 
