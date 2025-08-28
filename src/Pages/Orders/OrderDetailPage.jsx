@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../Components/Layout/Header";
 import styles from "./orderdetailpage.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiHome } from "react-icons/bi";
 import { LuLocate } from "react-icons/lu";
 import { PiPhone } from "react-icons/pi";
@@ -15,22 +15,25 @@ const OrderDetailPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
-  console.log(state);
+
   const qP = new URLSearchParams(location.search);
   const [product, setProduct] = useState({});
   const [stars, setStars] = useState(-1);
   const [comment, setComment] = useState("");
+  const [status, setStatus] = useState(null);
 
   const steps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
   const [currentStep, setCurrentStep] = useState(1);
   // let currentStep = 1;
 
-  useState(() => {
+  useEffect(() => {
     const findProduct = state.products.find(
       (product) => product._id === qP.get("orderId")
     );
     setProduct(findProduct);
     console.log(findProduct);
+    setComment(findProduct.review?.comment);
+    setStars(findProduct.review?.rating);
 
     let step = 1;
     if (findProduct.shippedAt) {
@@ -48,6 +51,7 @@ const OrderDetailPage = () => {
     }
 
     setCurrentStep(step);
+    setStatus(findProduct.status);
   }, [state]);
 
   const handleClickProduct = (booking, productId) => {
@@ -72,6 +76,7 @@ const OrderDetailPage = () => {
       const response = await axiosInstanceV1.post("/review/create", payload);
       if (response.status == 201) {
         successMessage(response.data.message);
+        navigate(-1);
         return;
       }
     } catch (error) {
@@ -131,7 +136,9 @@ const OrderDetailPage = () => {
                   <p className={styles.price}>
                     RS.<strike>{product?.originalPrice}</strike>{" "}
                     <b>{product?.discountPrice?.toFixed(2)}</b>
-                    <strong>{product.discountPercent}% off</strong>
+                    <strong style={{ color: "var(--secondary-color)" }}>
+                      {product.discountPercent}% off
+                    </strong>
                   </p>
                   <p style={{ color: "black" }}>Quantity: {product.quantity}</p>
                 </div>
@@ -148,23 +155,31 @@ const OrderDetailPage = () => {
               </div>
             </div>
             <Stepper steps={steps} currentStep={currentStep} />
-            <div className={styles.ratingContainer}>
-              {Array.from({ length: 5 }).map((_, i) => {
-                return (
-                  <FaStar
-                    size={38}
-                    key={i}
-                    cursor={"pointer"}
-                    onClick={() => setStars(stars === i ? -1 : i)}
-                    values={stars}
-                    style={{
-                      color: i <= stars ? "green" : "rgb(206, 198, 198)",
-                    }}
-                  />
-                );
-              })}
-            </div>
-            {stars >= 0 && (
+            {status?.toUpperCase() === "DELIVERED" && (
+              <div className={styles.ratingContainer}>
+                {Array.from({ length: 5 }).map((_, i) => {
+                  return (
+                    <FaStar
+                      size={38}
+                      key={i}
+                      cursor={"pointer"}
+                      onClick={() =>
+                        product.review == null &&
+                        setStars(stars === i + 1 ? -1 : i + 1)
+                      }
+                      values={stars}
+                      style={{
+                        color:
+                          i + 1 <= stars
+                            ? "var(--secondary-color)"
+                            : "rgb(206, 198, 198)",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            )}
+            {status?.toUpperCase() === "DELIVERED" && stars >= 0 && (
               <div className={styles.comment}>
                 <textarea
                   style={{
@@ -172,20 +187,25 @@ const OrderDetailPage = () => {
                     margin: "15px 0px",
                     padding: "5px",
                     fontSize: "1rem",
+                    resize: "none", // disable resize
+                    overflow: "auto", // keep scroll if text overflows
                   }}
                   placeholder="Write comment on rating"
                   cols={10}
                   rows={5}
                   onChange={(e) => setComment(e.target.value)}
                   value={comment}
+                  disabled={product.review !== null}
                 ></textarea>
-                <button
-                  type="button"
-                  className={styles.submit}
-                  onClick={() => postReview(product.product._id, state._id)}
-                >
-                  Submit
-                </button>
+                {product.review == null && (
+                  <button
+                    type="button"
+                    className={styles.submit}
+                    onClick={() => postReview(product.product._id, state._id)}
+                  >
+                    Submit
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -259,17 +279,20 @@ const OrderDetailPage = () => {
               {/* <p className={styles.return}>Return Product</p> */}
             </div>
           )}
-          {product.deliveredAt && (
-            <div className={styles.footer}>
-              <p
-                className={styles.cancel}
-                onClick={() => returnBooking(state._id, product._id)}
-              >
-                Return Booking
-              </p>
-              {/* <p className={styles.return}>Return Product</p> */}
-            </div>
-          )}
+          {product.deliveredAt &&
+            new Date() <=
+              new Date(product.deliveredAt).getTime() +
+                7 * 24 * 60 * 60 * 1000 && (
+              <div className={styles.footer}>
+                <p
+                  className={styles.cancel}
+                  onClick={() => returnBooking(state._id, product._id)}
+                >
+                  Return Booking
+                </p>
+                {/* <p className={styles.return}>Return Product</p> */}
+              </div>
+            )}
         </div>
         <div>
           <div>
@@ -280,25 +303,24 @@ const OrderDetailPage = () => {
               <div className={styles.addressHeader}>
                 <div className={styles.address}>
                   <div className={styles.addressType}>
-                    {state.addressId.addressType === "Home" ? (
+                    {state.addressId?.addressType === "Home" ? (
                       <BiHome size={26} />
                     ) : (
                       <LuLocate size={26} />
                     )}
-                    <strong>{state.addressId.addressType}</strong>
+                    <strong>{state.addressId?.addressType}</strong>
                   </div>
 
                   <div className={styles.addressText}>
-                    {state.addressId.houseNumber}, {state.addressId.village},{" "}
-                    {state.addressId.mandala},<br />
-                    {state.addressId.district}, {state.addressId.state} -{" "}
-                    {state.addressId.pincode}
+                    {state.addressId?.houseNumber}, {state.addressId?.area},{" "}
+                     {state.addressId?.state} -{" "}
+                    {state.addressId?.pincode}
                   </div>
                 </div>
 
                 <p className={styles.phoneNumber}>
                   <PiPhone size={20} />
-                  {state.addressId.name} <b>{state.addressId.phoneNumber}</b>
+                  {state.addressId?.name} <b>{state.addressId?.phoneNumber}</b>
                 </p>
               </div>
             </div>

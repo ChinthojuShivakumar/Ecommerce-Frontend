@@ -96,7 +96,7 @@ const Reviews = () => {
                 {reviewList.map((item, i) => {
                   return (
                     <tr key={`${item._id}`} className={styles.tablerow}>
-                      <td className={styles.td}>{item?.orderId}</td>
+                      <td className={styles.td}>{item?.orderId?.bookingId}</td>
                       <td className={styles.td}>{item?.productId?.name}</td>
                       <td className={styles.td}>{item?.userId?.name}</td>
                       <td className={styles.td}>{item?.comment}</td>

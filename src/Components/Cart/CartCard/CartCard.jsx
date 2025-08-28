@@ -16,9 +16,12 @@ const CartCard = ({
   setSaveLaterList,
   fetchCartList,
   priceDrop,
+  user_id,
 }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [defaultAddress, setDefaultAddress] = useState(null);
+
   const PAYMENT_MODES = [
     { mode: "card", icon: <GiWallet size={26} /> },
     { mode: "upi", icon: <FaAmazonPay size={26} /> },
@@ -91,13 +94,14 @@ const CartCard = ({
     }
     // setQuantity(quantity - 1);
   };
+
   const payNow = async () => {
     try {
       if (!paymentMode) {
         errorMessage("Please select payment mode..!");
         return;
       }
-      const payload = { addressId: "686f812ae38f061714755531" };
+      const payload = { addressId: defaultAddress };
       const orderId = `Order_${Date.now()}`;
 
       let originalPriceTotal = 0;
@@ -156,7 +160,20 @@ const CartCard = ({
       setUserId(user._id);
     }
     getUser();
+    fetchDefaultAddress();
   }, [cartList]);
+
+  const fetchDefaultAddress = async () => {
+    try {
+      const response = await axiosInstanceV1.get(`/address/default/${user_id}`);
+      if (response.status === 200) {
+        setDefaultAddress(response.data.defaultAddress._id);
+      }
+    } catch (error) {
+      errorMessage(error.response?.data.message || error.message);
+      return error;
+    }
+  };
 
   // useEffect(() => {
   //   priceFilters();

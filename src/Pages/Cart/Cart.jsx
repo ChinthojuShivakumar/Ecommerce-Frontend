@@ -47,6 +47,7 @@ const Cart = () => {
             setCartList={setCartList}
             fetchCartList={fetchCartList}
             priceDrop={priceDrop}
+            user_id = {userId}
           />
           {/* <PriceCard /> */}
         </div>
