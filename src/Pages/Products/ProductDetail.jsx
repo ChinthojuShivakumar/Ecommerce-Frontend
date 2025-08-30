@@ -175,7 +175,6 @@ const ProductDetail = () => {
     }
   };
 
-
   const fetchSingleProduct = async () => {
     try {
       // console.log(productName, "API CALL");
@@ -398,7 +397,9 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className="pd-body">
-          <h1 style={{ textTransform: "capitalize" }}>{product?.name}</h1>
+          <h1 style={{ textTransform: "capitalize", fontSize: "1.6rem !important" }}>
+            {product?.name}
+          </h1>
           <div className="pd-price">
             <p className="price-text">
               <strike> RS.{product?.price}</strike>{" "}
@@ -534,7 +535,7 @@ const ProductDetail = () => {
       {product?.reviewList?.length > 0 && (
         <div className="review-container" id="reviews">
           <div className="review-header">
-            <h2>Product Review: </h2>
+            <h2>Product Reviews: </h2>
           </div>
           <div className="review-body">
             {Array.isArray(product?.reviewList) &&

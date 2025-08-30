@@ -258,7 +258,7 @@ const CartCard = ({
         })}
       </div>
       {cartList?.length > 0 && (
-        <div>
+        <div className={styles.priceCard}> 
           <PriceCard price={priceDrop} handleBuyProduct={handleBuyProduct} />
         </div>
       )}

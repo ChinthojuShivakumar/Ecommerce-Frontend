@@ -191,7 +191,8 @@ const Header = () => {
           onClick={() => navigate("/")}
           style={{ cursor: "pointer", fontSize: "1.2rem !important" }}
         >
-          {!LOGO_WIDTH ? "Instant Delivery Services" : "IDS"}
+          {/* {!LOGO_WIDTH ? "Instant Delivery Services" : <} */}
+          Instant Delivery Services
         </h1>
         <p className="hamburger" onClick={handleHamburger}>
           {isMenuOpen ? (

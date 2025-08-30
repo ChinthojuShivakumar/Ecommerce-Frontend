@@ -84,7 +84,7 @@ const ProductsList = () => {
 
     const debounce = setTimeout(() => {
       fetchProductList({ selectedCategory, selectedPrice, search });
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(debounce); // cleanup for debounce
   }, [location.search, selectedPrice, search, selectedCategory]);
