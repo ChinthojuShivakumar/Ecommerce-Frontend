@@ -94,7 +94,8 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
   return (
     <div className={styles.cardContainer}>
       {!bookingList.length && <EmptyRecords Page={"Booking"} />}
-      {bookingList?.map((item) =>
+      <div className={styles.content}>
+        {bookingList?.map((item) =>
         item?.products?.map((it) => (
           <div className={styles.cardContent} key={it?._id}>
             <div
@@ -175,6 +176,7 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
           </div>
         ))
       )}
+      </div>
     </div>
   );
 };
