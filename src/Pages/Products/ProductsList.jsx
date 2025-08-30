@@ -21,7 +21,7 @@ const ProductsList = () => {
   const qP = new URLSearchParams();
   const [loader, setLoader] = useState(false);
   const location = useLocation()
-  console.log(location);
+  // console.log(location);
 
 
   const fetchCategoryList = async () => {

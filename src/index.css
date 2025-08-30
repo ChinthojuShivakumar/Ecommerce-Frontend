@@ -90,13 +90,13 @@ body {
   p,
   li,
   span {
-    font-size: medium !important;
+    font-size: larger !important;
   }
   p {
-    font-size: medium !important;
+    font-size: larger !important;
   }
   button {
-    font-size: medium !important;
+    font-size: larger !important;
     width: max-content;
   }
   img {
@@ -106,7 +106,7 @@ body {
   }
   h2,
   h3 {
-    font-size: medium !important;
+    font-size: larger !important;
   }
 }
 
