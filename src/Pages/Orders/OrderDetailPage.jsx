@@ -22,67 +22,73 @@ const OrderDetailPage = () => {
   const [comment, setComment] = useState("");
   const [status, setStatus] = useState(null);
 
-  const [steps, setSteps] = useState(["Order Placed", "Shipped", "Out for Delivery", "Delivered"]);
-const [currentStep, setCurrentStep] = useState(1);
+  const [steps, setSteps] = useState([
+    "Order Placed",
+    "Shipped",
+    "Out for Delivery",
+    "Delivered",
+  ]);
+  const [currentStep, setCurrentStep] = useState(1);
 
+  useEffect(() => {
+    const findProduct = state.products.find(
+      (product) => product._id === qP.get("orderId")
+    );
 
-useEffect(() => {
-  const findProduct = state.products.find(
-    (product) => product._id === qP.get("orderId")
-  );
+    setProduct(findProduct);
+    setComment(findProduct.review?.comment);
+    setStars(findProduct.review?.rating);
 
-  setProduct(findProduct);
-  setComment(findProduct.review?.comment);
-  setStars(findProduct.review?.rating);
+    // dynamically update steps based on product
+    let newSteps = [];
 
-  // dynamically update steps based on product
- let newSteps = [];
+    // 1. cancelled → only 2 steps
+    if (findProduct.status?.toLowerCase() === "cancelled") {
+      newSteps = ["Order Placed", "Cancelled"];
+      setSteps(newSteps);
+      setCurrentStep(2); // since cancelled is final
+      return; // stop further calculation
+    }
 
-  // 1. cancelled → only 2 steps
-  if (findProduct.status?.toLowerCase() === "cancelled") {
-    newSteps = ["Order Placed", "Cancelled"];
+    // 2. returned → append to normal flow
+    if (findProduct.status?.toLowerCase() === "returned") {
+      newSteps = ["Order Placed", "Returned"];
+      setSteps(newSteps);
+      setCurrentStep(2); // since cancelled is final
+      return;
+    }
+
+    newSteps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
+
     setSteps(newSteps);
-    setCurrentStep(2); // since cancelled is final
-    return; // stop further calculation
-  }
 
-  // 2. returned → append to normal flow
-  newSteps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
-  if (findProduct.status?.toLowerCase() === "returned") {
-    newSteps.push("Returned");
-  }
-
-  setSteps(newSteps);
-
-  // calculate current step
-  let step = 1;
-  if (findProduct.shippedAt) {
-    step = 2;
-  }
-  if (findProduct.deliveredAt) {
-    step = 4;
-  }
-  if(findProduct.returnedAt) {
-    setCurrentStep(5)
-    step=5
+    // calculate current step
+    let step = 1;
+    if (findProduct.shippedAt) {
+      step = 2;
     }
-  
-
-  // check if delivery exceeded 7 days → set step = 3
-  if (findProduct.createdAt) {
-    const createdAt = new Date(findProduct.createdAt);
-    const sevenDaysLater = new Date(createdAt);
-    sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
-
-    if (new Date() > sevenDaysLater && step < 3) {
-      step = 3;
+    if (findProduct.deliveredAt) {
+      step = 4;
     }
-  }
+    if (findProduct.returnedAt) {
+      setCurrentStep(5);
+      step = 5;
+    }
 
-  setCurrentStep(step);
-  setStatus(findProduct.status);
-}, [state, qP]);
+    // check if delivery exceeded 7 days → set step = 3
+    if (findProduct.createdAt) {
+      const createdAt = new Date(findProduct.createdAt);
+      const sevenDaysLater = new Date(createdAt);
+      sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
 
+      if (new Date() > sevenDaysLater && step < 3) {
+        step = 3;
+      }
+    }
+
+    setCurrentStep(step);
+    setStatus(findProduct.status);
+  }, [state]);
 
   const handleClickProduct = (booking, productId) => {
     const qP = new URLSearchParams();
@@ -239,8 +245,19 @@ useEffect(() => {
               </div>
             )}
           </div>
+           {!product.deliveredAt && (
+            <div className={styles.footer}>
+              <p
+                className={styles.cancel}
+                onClick={() => cancelBooking(state._id, product._id)}
+              >
+                Cancel Booking
+              </p>
+              {/* <p className={styles.return}>Return Product</p> */}
+            </div>
+          )}
           {state.products.length > 1 && (
-            <div>
+            <div className={styles.otherProducts}>
               <div style={{ margin: "10px 0px" }}>
                 <h2>Other Products on this order</h2>
               </div>
@@ -298,18 +315,9 @@ useEffect(() => {
               </div>
             </div>
           )}
-          {!product.deliveredAt && (
-            <div className={styles.footer}>
-              <p
-                className={styles.cancel}
-                onClick={() => cancelBooking(state._id, product._id)}
-              >
-                Cancel Booking
-              </p>
-              {/* <p className={styles.return}>Return Product</p> */}
-            </div>
-          )}
+         
           {product.deliveredAt &&
+            !product.returnedAt &&
             new Date() <=
               new Date(product.deliveredAt).getTime() +
                 7 * 24 * 60 * 60 * 1000 && (
@@ -318,14 +326,14 @@ useEffect(() => {
                   className={styles.cancel}
                   onClick={() => returnBooking(state._id, product._id)}
                 >
-                  Return Booking
+                  Return Item
                 </p>
                 {/* <p className={styles.return}>Return Product</p> */}
               </div>
             )}
         </div>
         <div>
-          <div>
+          <div className={styles.second}>
             <div>
               <h2>Address Details</h2>
             </div>
@@ -343,8 +351,7 @@ useEffect(() => {
 
                   <div className={styles.addressText}>
                     {state.addressId?.houseNumber}, {state.addressId?.area},{" "}
-                     {state.addressId?.state} -{" "}
-                    {state.addressId?.pincode}
+                    {state.addressId?.state} - {state.addressId?.pincode}
                   </div>
                 </div>
 

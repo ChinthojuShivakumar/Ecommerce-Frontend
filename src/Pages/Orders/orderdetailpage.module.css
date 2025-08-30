@@ -36,7 +36,8 @@
 }
 
 .subContainer {
-  box-shadow: 0px 0px 1px 0px;
+  box-shadow: var(--shadow);
+  background-color: white;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -53,8 +54,11 @@
   align-items: start;
   /* border: 1px solid gray; */
   margin-top: 10px;
-  padding: 10px;
-  box-shadow: 0px 0px 1px 0px;
+  padding:  10px 0px;
+  box-shadow: var(--shadow);
+  border-bottom: 2px solid var(--light);
+  border-top: 2px solid var(--light);
+  background-color: white;
   cursor: pointer;
 }
 
@@ -99,12 +103,19 @@
   padding-top: 5px;
 }
 
+.otherProducts {
+  box-shadow: var(--shadow);
+  background-color: white;
+  padding: 10px;
+  margin-top: 10px;
+}
+
 .priceContainer {
   margin: 10px 0px;
   /* border: 1px solid gray;     */
   padding: 10px;
-  box-shadow: 0px 0px 1px 0px;
-  background-color: #fbf9f9;
+  box-shadow: var(--shadow);
+  background-color: white;
 }
 .priceBody {
   margin: 10px 0px;
@@ -153,7 +164,15 @@
   align-items: center;
   width: 100%;
   padding: 10px 0px;
-  box-shadow: 0px 0.11px 1px 0.1px;
+  box-shadow: var(--shadow);
+  background-color: white;
+  border-top: 2px solid var(--light);
+}
+
+.second {
+  box-shadow: var(--shadow);
+  background-color: white;
+  padding: 10px;
 }
 
 .cancel,
@@ -227,7 +246,7 @@
   }
   .cardImage img {
     width: 92vw;
-    height: 300px;
+    height: 600px;
     box-sizing: border-box;
   }
   .ratingContainer {

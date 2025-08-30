@@ -38,12 +38,7 @@ const Products = ({ productList }) => {
       <div className="cat-container">
         {mostBookedProducts?.length > 0 && (
           <div>
-            <div
-              style={{
-                padding: "20px",
-                borderBottom: "2px solid var(--light)",
-              }}
-            >
+            <div className="card-header">
               <h2 className="title">Most Booked Products</h2>
             </div>
             <div className="product-list">
@@ -64,12 +59,7 @@ const Products = ({ productList }) => {
       <div className="cat-container">
         {newProducts?.length > 0 && (
           <div>
-            <div
-              style={{
-                padding: "20px",
-                borderBottom: "2px solid var(--light)",
-              }}
-            >
+            <div className="card-header">
               <h2 className="title">Latest Products</h2>
             </div>
             <div className="product-list">
@@ -90,12 +80,7 @@ const Products = ({ productList }) => {
       <div className="cat-container">
         {productList && (
           <div>
-            <div
-              style={{
-                padding: "20px",
-                borderBottom: "2px solid var(--light)",
-              }}
-            >
+            <div className="card-header">
               <h2 className="title">Your Top Products here</h2>
             </div>
             <div className="product-list">
@@ -116,12 +101,7 @@ const Products = ({ productList }) => {
       <div className="cat-container">
         {productList && (
           <div>
-            <div
-              style={{
-                padding: "20px",
-                borderBottom: "2px solid var(--light)",
-              }}
-            >
+            <div className="card-header">
               <h2 className="title">Discover Products</h2>
             </div>
             <div className="product-list">

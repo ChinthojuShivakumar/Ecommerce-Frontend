@@ -35,11 +35,7 @@ const OrderCard = ({ status, year, setAvailableYear }) => {
         for (let y = minYear; y <= currentYear; y++) {
           allYears.push(y.toString());
         }
-        // console.log(extractYears, "ExtractedYears");
-        // console.log(minYear, "minYear");
-        // console.log(allYears, "all years");
-
-        // successMessage(response.data.message);
+       
         setBookingList(response.data.bookingList);
         setAvailableYear(allYears);
       }

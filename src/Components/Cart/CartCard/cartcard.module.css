@@ -3,14 +3,19 @@
   grid-template-columns: 3fr 1fr;
   gap: 10px;
   margin: 10px 2rem;
-  box-shadow: var(--shadow);
-  background-color: white;
-  padding: 0px 10px ;
+
+  padding: 0px 10px;
 }
 .cartListWrapper {
   overflow-y: auto;
   max-height: 85vh; /* Controls scroll area height */
-  padding-right: 10px; /* For scrollbar spacing */
+  padding: 10px; /* For scrollbar spacing */
+  box-shadow: var(--shadow);
+  background-color: white;
+}
+.priceCard {
+  box-shadow: var(--shadow);
+  background-color: white;
 }
 .cardContent {
   display: flex;
@@ -20,7 +25,9 @@
   padding: 0.3rem;
   margin: 10px 0px;
   border-radius: 0.2rem;
-  box-shadow: 0px 0.11px 1px 0.1px;
+  box-shadow: var(--shadow);
+  background-color: white;
+  border-bottom: 1px solid var(--light);
   box-sizing: border-box;
   color: black;
 }
