@@ -61,8 +61,10 @@ const BookingDetail = () => {
 
     setCurrentStep(step);
     setProduct(findProduct);
+    setStars(findProduct?.review?.rating - 1);
+    setComment(findProduct?.review?.comment);
   }, [state]);
-  // console.log(currentStep);
+  console.log(product);
 
   const handleClickProduct = (booking, productId) => {
     const qP = new URLSearchParams();
@@ -140,7 +142,7 @@ const BookingDetail = () => {
                     size={38}
                     key={i}
                     cursor={"pointer"}
-                    onClick={() => setStars(i)}
+                    // onClick={() => setStars(i)}
                     style={{
                       color: i <= stars ? "green" : "rgb(206, 198, 198)",
                     }}
@@ -153,13 +155,15 @@ const BookingDetail = () => {
                 style={{
                   width: "100%",
                   margin: "15px 0px",
-                  padding: "5px",
+                  padding: "10px",
                   fontSize: "1rem",
                 }}
                 placeholder="Write comment on rating"
                 cols={10}
                 rows={5}
                 onChange={(e) => setComment(e.target.value)}
+                value={comment}
+                readOnly
               ></textarea>
             )}
           </div>
@@ -222,10 +226,10 @@ const BookingDetail = () => {
               </div>
             </div>
           )}
-          {product?.shippedAt && (
+          {product?.shippedAt && !product?.deliveredAt && (
             <div className={styles.footer}>
               <p className={styles.cancel}>Cancel Booking</p>
-              <p className={styles.return}>Return Product</p>
+              {/* <p className={styles.return}>Return Product</p> */}
             </div>
           )}
         </div>

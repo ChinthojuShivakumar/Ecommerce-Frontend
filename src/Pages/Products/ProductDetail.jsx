@@ -234,6 +234,7 @@ const ProductDetail = () => {
       if (!token || !userId) {
         errorMessage("Unauthrozied..! :(");
         errorMessage("Please Login...!");
+        setOpen(false)
         return;
       }
       if (!paymentMode) {
